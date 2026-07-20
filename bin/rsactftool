@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+PYTHON="python"
+exec "$PYTHON" -m RsaCtfTool "$@"

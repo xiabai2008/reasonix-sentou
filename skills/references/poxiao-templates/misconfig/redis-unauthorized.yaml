@@ -1,0 +1,26 @@
+id: redis-unauthorized
+info:
+  name: Redis 未授权访问
+  severity: critical
+  description: Redis 服务未设置密码，可通过 HTTP 接口未授权访问（发送 PING 命令返回 +PONG）
+  tags: redis,unauthorized,critical
+  author: poxiao
+
+http:
+  - raw:
+      - |
+        GET / HTTP/1.1
+        Host: {{Hostname}}
+
+        PING
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "+PONG"
+        part: body
+      - type: word
+        words:
+          - "-DENIED"
+        part: body
+        negative: true

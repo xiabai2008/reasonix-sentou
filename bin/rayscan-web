@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+PYTHON="python"
+SCRIPT_DIR="D:/HZR_PROJECTS/RayScan/RayScan"
+echo "🌐 RayScan Web UI 启动中... http://localhost:5000"
+exec "$PYTHON" "$SCRIPT_DIR/web_ui/app.py"

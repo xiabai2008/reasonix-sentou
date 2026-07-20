@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "⚠️ CDK 二进制在 WSL Ubuntu 26.04 中运行时发生段错误"
+echo "   替代方案: 使用 docker 命令直接操作容器"
+echo "   docker ps / docker exec -it <容器ID> /bin/bash"

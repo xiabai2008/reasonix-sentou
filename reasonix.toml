@@ -1,0 +1,37 @@
+# ============================================================
+# Reasonix 渗透作战工作台 — 项目配置
+# 破晓 persona (AGENTS.md) 自动加载，缓存参数为渗透场景调优
+# ============================================================
+
+# --- Agent 配置 ---
+[agent]
+# 自动加载破晓 persona（不再需要每次手动贴提示词）
+system_prompt_file = "AGENTS.md"
+
+# 缓存调优（渗透场景：长会话 + 工具输出易变）
+cold_resume_prune = true     # 冷恢复时剔除过期工具结果，免费用来 prune
+soft_compact_ratio  = 0.5    # 保留缓存前缀完整
+tool_result_snip_ratio = 0.6 # 修剪旧工具结果（nuclei 海量输出）
+compact_ratio = 0.8           # 触发压缩阈值
+compact_force_ratio = 0.9     # 强制压缩高水位
+
+# 双模型协作（日常用 flash，复杂漏洞链推理切 pro）
+planner_model = "deepseek-pro"
+
+# 安全：渗透场景默认人工批准危险操作
+auto_plan = "off"
+
+# --- 权限配置 ---
+[permissions]
+# 默认：写操作需人工确认（安全第一）
+mode = "ask"
+# 白名单：字典安装操作自动放行
+allow = [
+    "Bash(cd /c/Tools/reasonix_sentou/config/dictionaries && mkdir -p Dict SuperWordlist SaiDict S-BlastingDictionary)",
+    "Bash(cd /c/Tools/reasonix_sentou/config/dictionaries && git clone --depth 1 https://github.com/CrackerCat/SuperWordlist.git SuperWordlist_tmp 2>&1 | tail -5)"
+]
+
+# --- 沙箱（Windows 当前强制 off，未来可启用）---
+[sandbox]
+bash = "off"
+network = true

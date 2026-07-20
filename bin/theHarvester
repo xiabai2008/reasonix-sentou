@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec "D:/tools/Python 3.12.9/python.exe" -m theHarvester "$@"

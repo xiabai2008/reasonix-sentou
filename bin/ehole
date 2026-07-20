@@ -1,0 +1,2 @@
+#!/bin/bash
+exec "/c/Tools/reasonix_sentou/tools/ehole/EHole_windows_amd64/EHole_windows_amd64.exe" "$@"

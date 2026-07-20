@@ -1,0 +1,62 @@
+# ============================================================
+# Reasonix 渗透作战工作台 — .gitignore
+# ============================================================
+
+# --- 大文件与工具二进制 ---
+tools/
+!tools/run
+!tools/brute.py
+!tools/generate_html.py
+!tools/generate_word.py
+!tools/report_renderers/
+!tools/rayscan/
+!tools/poxiao/
+!tools/ccupp/
+!tools/dictx/
+!tools/super-password-dict/
+!tools/vulmap/
+
+# --- 超大字典库 ---
+config/dictionaries/
+
+# --- Reasonix 运行时数据 ---
+.reasonix/
+
+# --- 日志与临时文件 ---
+clean/
+tmp/
+*.log
+nul
+
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# --- 渗透结果（敏感数据） ---
+result.txt
+result.txt.realtime.tmp
+flag.txt
+*.flag
+reports/*.html
+reports/*.docx
+reports/*.pdf
+
+# --- 输出/工件 ---
+.uploads/
+.codegraph/
+zip_from_git.zip
+dist/
+node_modules/
+
+# --- 系统文件 ---
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# --- 敏感配置（含 API key 的环境文件） ---
+.env
+.env.local
+*.secret

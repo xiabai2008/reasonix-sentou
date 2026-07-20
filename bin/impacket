@@ -1,0 +1,11 @@
+#!/bin/bash
+echo "impacket 工具套件: 使用以下命令之一"
+echo "  smbclient    - SMB 客户端"
+echo "  psexec       - 远程执行"
+echo "  wmiexec      - WMI 远程执行"
+echo "  secretsdump  - 密码哈希导出"
+echo "  mimikatz     - 凭证提取"
+echo "  GetADUsers   - AD 用户枚举"
+echo "  lookupsid    - SID 枚举"
+echo ""
+echo "例如: smbclient 域名/用户:密码@目标IP"

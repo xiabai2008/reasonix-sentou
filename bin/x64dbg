@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# x64dbg - Windows 逆向调试器
+# 用法: x64dbg [程序路径]
+X64DBG_DIR="/c/Tools/reasonix_sentou/tools/x64dbg/release"
+if [ "$(uname -m)" = "x86_64" ]; then
+  exec "$X64DBG_DIR/x64/x64dbg.exe" "$@"
+else
+  exec "$X64DBG_DIR/x32/x32dbg.exe" "$@"
+fi

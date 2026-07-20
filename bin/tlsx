@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec "/c/Tools/reasonix_sentou/tools/tlsx.exe" "$@"

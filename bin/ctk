@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "⚠️ CloudToolkit 二进制在 WSL Ubuntu 26.04 中运行时发生段错误"
+echo "   替代方案: 使用 cloud_enum (信息收集) 或直接使用云厂商 CLI"
+echo "   cloud_enum -k <关键词>"

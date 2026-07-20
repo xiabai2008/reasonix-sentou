@@ -1,0 +1,6 @@
+#!/bin/bash
+# Kali WSL wrapper — 在 Windows 下直接调用 Kali 命令
+# 用法: kali <命令> [参数...]
+# 示例: kali nmap -sV 192.168.1.1
+#        kali hydra -l admin -P pass.txt 192.168.1.1 ssh
+exec wsl -d kali-linux "$@"

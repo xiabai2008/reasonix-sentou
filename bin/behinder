@@ -1,0 +1,2 @@
+#!/bin/bash
+exec java -jar "/c/Tools/reasonix_sentou/tools/Behinder/Behinder.jar" "$@"

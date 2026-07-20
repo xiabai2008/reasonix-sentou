@@ -1,0 +1,7 @@
+#!/bin/bash
+# EZ (NSFOCUS 命令行扫描工具) - 需要单独下载
+# 下载地址: https://github.com/teamssix/TscanPlus/releases
+# 下载后解压到 /c/Tools/TscanPlus/
+echo "⚠️ EZ 未安装，请先下载 TscanPlus:"
+echo "  https://github.com/teamssix/TscanPlus"
+exit 1

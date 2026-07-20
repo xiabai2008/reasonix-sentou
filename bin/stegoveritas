@@ -1,0 +1,8 @@
+#!/bin/bash
+# stegoveritas - 图片隐写分析
+# 需要先在 WSL Ubuntu 中安装: pip install stegoveritas
+# 或者直接使用 Windows Python: pip install stegoveritas
+echo "⚠️ stegoveritas 需要安装, 请运行:"
+echo "  pip install stegoveritas"
+echo "  或通过 WSL: wsl -d Ubuntu pip install stegoveritas"
+exit 1

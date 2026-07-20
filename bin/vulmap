@@ -1,0 +1,3 @@
+#!/bin/bash
+cd "/c/Tools/reasonix_sentou/tools/vulmap"
+python3 vulmap.py "$@"

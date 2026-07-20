@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+PYTHON="python"
+NEO_DIR="/c/Tools/reasonix_sentou/tools/Neo-reGeorg-master"
+exec "$PYTHON" "$NEO_DIR/neoreg.py" "$@"

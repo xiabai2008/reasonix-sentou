@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+PYTHON="python"
+SCRIPT_DIR="/c/Tools/reasonix_sentou/tools/cloud_enum"
+cd "$SCRIPT_DIR" && exec "$PYTHON" "cloud_enum.py" "$@"

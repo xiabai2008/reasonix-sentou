@@ -1,0 +1,2 @@
+#!/bin/bash
+MSYS2_ARG_CONV_EXCL="*" wsl.exe -d Ubuntu -- bash -c "export PATH=\$HOME/.local/bin:\$PATH && \$*" - "$@" 2>&1
