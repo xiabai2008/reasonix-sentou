@@ -31,6 +31,28 @@ Write-Host "项目路径: $ProjectPath" -ForegroundColor Yellow
 Write-Host ""
 
 # ============================================================
+# 步骤0：下载工具和字典（从 git clone 后恢复）
+# ============================================================
+Write-Host "[0/7] 检查工具是否已下载..." -ForegroundColor Green
+
+$DownloadScript = Join-Path $ScriptDir "download-tools.ps1"
+$NucleiPath = Join-Path $ProjectPath "tools\nuclei.exe"
+
+if (-not (Test-Path $NucleiPath)) {
+    Write-Host "  工具未下载，正在运行 download-tools.ps1..." -ForegroundColor Yellow
+    if (Test-Path $DownloadScript) {
+        & $DownloadScript
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "  [WARN] 部分工具下载失败，可稍后手动运行: .\scripts\download-tools.ps1" -ForegroundColor Yellow
+        }
+    } else {
+        Write-Host "  [WARN] download-tools.ps1 未找到。请确保完整 clone 了仓库。" -ForegroundColor Yellow
+    }
+} else {
+    Write-Host "  [OK] 工具已就位" -ForegroundColor Green
+}
+
+# ============================================================
 # 步骤1：检查项目完整性
 # ============================================================
 Write-Host "[1/7] 检查项目完整性..." -ForegroundColor Green

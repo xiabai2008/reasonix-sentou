@@ -1,0 +1,103 @@
+# ============================================================
+# 工具下载清单 — JSON manifest
+# 每个条目定义下载来源、目标路径、版本获取方式
+# ============================================================
+{
+  "tools": {
+    "nuclei": {
+      "repo": "projectdiscovery/nuclei",
+      "asset_pattern": "nuclei_.*_windows_amd64\\.zip",
+      "bin": "nuclei.exe",
+      "category": "vuln-scan"
+    },
+    "naabu": {
+      "repo": "projectdiscovery/naabu",
+      "asset_pattern": "naabu_.*_windows_amd64\\.zip",
+      "bin": "naabu.exe",
+      "category": "port-scan"
+    },
+    "httpx": {
+      "repo": "projectdiscovery/httpx",
+      "asset_pattern": "httpx_.*_windows_amd64\\.zip",
+      "bin": "httpx.exe",
+      "category": "web-probe"
+    },
+    "subfinder": {
+      "repo": "projectdiscovery/subfinder",
+      "asset_pattern": "subfinder_.*_windows_amd64\\.zip",
+      "bin": "subfinder.exe",
+      "category": "subdomain"
+    },
+    "katana": {
+      "repo": "projectdiscovery/katana",
+      "asset_pattern": "katana_.*_windows_amd64\\.zip",
+      "bin": "katana.exe",
+      "category": "crawler"
+    },
+    "dnsx": {
+      "repo": "projectdiscovery/dnsx",
+      "asset_pattern": "dnsx_.*_windows_amd64\\.zip",
+      "bin": "dnsx.exe",
+      "category": "dns"
+    },
+    "tlsx": {
+      "repo": "projectdiscovery/tlsx",
+      "asset_pattern": "tlsx_.*_windows_amd64\\.zip",
+      "bin": "tlsx.exe",
+      "category": "tls"
+    },
+    "fscan": {
+      "repo": "shadow1ng/fscan",
+      "asset_pattern": "fscan.*\\.exe",
+      "bin": "fscan.exe",
+      "category": "port-scan",
+      "note": "内网扫描神器，含爆破+POC"
+    },
+    "ffuf": {
+      "repo": "ffuf/ffuf",
+      "asset_pattern": "ffuf_.*_windows_amd64\\.zip",
+      "bin": "ffuf.exe",
+      "category": "fuzzer"
+    },
+    "gau": {
+      "repo": "lc/gau",
+      "asset_pattern": "gau_.*_windows_amd64\\.zip",
+      "bin": "gau.exe",
+      "category": "url-collector"
+    },
+    "jq": {
+      "repo": "jqlang/jq",
+      "asset_pattern": "jq-windows-amd64\\.exe",
+      "bin": "jq.exe",
+      "category": "util",
+      "rename": true
+    }
+  },
+  "dictionaries": {
+    "SecLists": {
+      "repo": "danielmiessler/SecLists",
+      "target": "config/dictionaries/SecLists",
+      "note": "git clone --depth 1（精选核心文件）"
+    },
+    "SuperWordlist": {
+      "repo": "CrackerCat/SuperWordlist",
+      "target": "config/dictionaries/SuperWordlist",
+      "note": "git clone --depth 1"
+    },
+    "Dict": {
+      "repo": "NS-Sp4ce/Dict",
+      "target": "config/dictionaries/Dict",
+      "note": "git clone --depth 1"
+    },
+    "SaiDict": {
+      "repo": "R0B1NL1N/SaiDict",
+      "target": "config/dictionaries/SaiDict",
+      "note": "git clone --depth 1"
+    },
+    "S-BlastingDictionary": {
+      "repo": "rootm0s/S-BlastingDictionary",
+      "target": "config/dictionaries/S-BlastingDictionary",
+      "note": "git clone --depth 1"
+    }
+  }
+}
