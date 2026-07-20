@@ -71,6 +71,45 @@
       "bin": "jq.exe",
       "category": "util",
       "rename": true
+    },
+    "dalfox": {
+      "repo": "hahwul/dalfox",
+      "asset_pattern": "dalfox_.*_windows_amd64\\.tar\\.gz",
+      "bin": "dalfox.exe",
+      "category": "xss-scanner",
+      "note": "XSS 专项扫描器，专精参数分析+DOM XSS"
+    }
+  },
+  "cloned_tools": {
+    "PEASS-ng": {
+      "repo": "carlospolop/PEASS-ng",
+      "target": "tools/peass-ng",
+      "category": "privilege-escalation",
+      "note": "Linux/Windows 系统化提权辅助脚本 (linpeas.sh / winpeas.exe)"
+    },
+    "SSTImap": {
+      "repo": "vladko312/SSTImap",
+      "target": "tools/sstimap",
+      "category": "ssti",
+      "note": "SSTI 自动检测与利用工具"
+    },
+    "SpiderX": {
+      "repo": "LiChaser/SpiderX",
+      "target": "tools/spiderx",
+      "category": "js-reverse",
+      "note": "前端 JS 加密自动化绕过"
+    },
+    "MemShellParty": {
+      "repo": "ReaJason/MemShellParty",
+      "target": "tools/MemShellParty",
+      "category": "memshell",
+      "note": "Java 内存马注入框架（需自行编译 jar）"
+    },
+    "JYso": {
+      "repo": "qi4L/JYso",
+      "target": "tools/JYso",
+      "category": "jndi-deserialization",
+      "note": "JNDI注入+反序列化+回显+内存马，替代旧版 JNDI-Injection-Exploit"
     }
   },
   "dictionaries": {

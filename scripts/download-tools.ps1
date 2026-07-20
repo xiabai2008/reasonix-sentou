@@ -56,7 +56,8 @@ $tools = @(
     @{repo="shadow1ng/fscan";            name="fscan";     bin="fscan.exe"},
     @{repo="ffuf/ffuf";                  name="ffuf";      bin="ffuf.exe"},
     @{repo="lc/gau";                     name="gau";       bin="gau.exe"},
-    @{repo="jqlang/jq";                  name="jq";        bin="jq.exe"}
+    @{repo="jqlang/jq";                  name="jq";        bin="jq.exe"},
+    @{repo="hahwul/dalfox";              name="dalfox";    bin="dalfox.exe"}
 )
 
 $downloaded = 0; $skipped = 0; $failed = 0
@@ -126,10 +127,61 @@ foreach ($tool in $tools) {
 Write-Host "  完成: 下载 $downloaded / 跳过 $skipped / 失败 $failed" -ForegroundColor Yellow
 
 # ============================================================
+# Step 1.5: 克隆源码工具
+# ============================================================
+Write-Host ""
+Write-Host "[Step 1.5/3] 克隆源码工具..." -ForegroundColor Yellow
+
+$clonedTools = @(
+    @{repo="carlospolop/PEASS-ng";  dir="peass-ng";  desc="Linux/Windows提权辅助"},
+    @{repo="vladko312/SSTImap";     dir="sstimap";    desc="SSTI自动检测利用"},
+    @{repo="LiChaser/SpiderX";      dir="spiderx";    desc="前端JS加密绕过"},
+    @{repo="ReaJason/MemShellParty"; dir="MemShellParty"; desc="Java内存马注入"},
+    @{repo="qi4L/JYso";             dir="JYso";       desc="JNDI+反序列化工具"}
+)
+
+foreach ($ct in $clonedTools) {
+    $dest = Join-Path $ToolsDir $ct.dir
+    if (Test-Path $dest -and -not $Force) {
+        Write-Host "  [SKIP] $($ct.dir) ($($ct.desc)) 已存在" -ForegroundColor Gray
+        $skipped++
+        continue
+    }
+    
+    Write-Host "  [CLONE] $($ct.repo) -> $($ct.dir) ($($ct.desc))..." -ForegroundColor Yellow -NoNewline
+    
+    try {
+        if (Test-Path $dest) { Remove-Item $dest -Recurse -Force }
+        git clone --depth 1 "https://github.com/$($ct.repo).git" $dest 2>&1 | Out-Null
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host " [OK]" -ForegroundColor Green
+            $downloaded++
+        } else {
+            Write-Host " [FAIL] git clone error" -ForegroundColor Red
+            $failed++
+        }
+    } catch {
+        Write-Host " [FAIL] $_" -ForegroundColor Red
+        $failed++
+    }
+}
+
+# MemShellParty 特殊处理：如果 README 说明需要编译，提示用户
+$mspDir = Join-Path $ToolsDir "MemShellParty"
+if (Test-Path $mspDir) {
+    Write-Host "  [INFO] MemShellParty 需要 Maven 编译。参照 $mspDir/README.md" -ForegroundColor Gray
+}
+# SpiderX 特殊处理：安装 Python 依赖
+$spxDir = Join-Path $ToolsDir "spiderx"
+if (Test-Path $spxDir) {
+    Write-Host "  [INFO] SpiderX Python依赖安装请参照 $spxDir/README.md" -ForegroundColor Gray
+}
+
+# ============================================================
 # Step 2: 下载字典库
 # ============================================================
 Write-Host ""
-Write-Host "[Step 2/3] 下载字典库..." -ForegroundColor Yellow
+Write-Host "[Step 2/4] 下载字典库..." -ForegroundColor Yellow
 
 $dicts = @(
     @{repo="danielmiessler/SecLists";       dir="SecLists"},
@@ -166,7 +218,7 @@ foreach ($dict in $dicts) {
 # Step 3: 生成自建字典
 # ============================================================
 Write-Host ""
-Write-Host "[Step 3/3] 生成自建字典..." -ForegroundColor Yellow
+Write-Host "[Step 3/4] 生成自建字典..." -ForegroundColor Yellow
 
 $genScript = Join-Path $ProjectDir "config\generate-dicts.py"
 $mergeScript = Join-Path $ProjectDir "config\merge-dicts.py"

@@ -43,6 +43,12 @@
 【漏洞扫描】 pocsuite3（PoC框架）, afrog（Go快速扫描）, ez/tscan（绿盟全扫描）
 【指纹识别】 ehole（红队重点系统指纹）
 【WebShell】 antsword（蚁剑）, behinder（冰蝎）, godzilla（哥斯拉）
+【内存马】   MemShellParty（Java内存马注入框架, tools/MemShellParty/）
+【XSS专项】  dalfox（参数分析+DOM XSS 扫描）
+【SSTI检测】 SSTImap（服务端模板注入自动检测, tools/sstimap/）
+【提权辅助】 PEASS-ng（linpeas.sh/winpeas.exe, tools/peass-ng/）
+【JS逆向】   SpiderX（前端加密自动化绕过, tools/spiderx/）
+【JNDI/反序列化】 JYso（回显+内存马, 替代旧版JNDI-Injection-Exploit, tools/JYso/）
 【代理调试】 mitmproxy/mitmweb（中间人代理）
 【辅助】     jq（JSON处理）, shodan（SHODAN API查询）, pypykatz（LSASS凭证提取）, 224个YAML模板（PoXiao移植）
 
@@ -62,8 +68,16 @@
   rce, lfi, xxe, upload, race-condition, request-smuggling, jwt-oauth,
   deserialization, waf-bypass, subdomain-takeover, websocket-security, 等
 
+增强技能（本次新增）:
+  privilege-escalation  ← PEASS-ng 提权辅助（linpeas.sh / winpeas.exe）
+  memshell-injection    ← MemShellParty Java 内存马注入
+  js-reverse-bypass     ← SpiderX 前端加密绕过
+  dalfox-xss-scanner    ← XSS 专项扫描（dalfox）
+  sstimap-exploit       ← SSTI 自动检测利用（SSTImap）
+  jyso-exploit          ← JNDI注入+反序列化（JYso）
+
 参考数据:
-  product-fingerprints, default-credentials, detection-rules, common-paths
+  product-fingerprints, default-credentials, detection-rules, common-paths, wooyun-cases
 
 ## 常见任务速查
 
@@ -191,6 +205,13 @@
 | WebShell管理(蚁剑) | AntSword | — | 图形化WebShell管理，支持插件 |
 | WebShell管理(冰蝎) | Behinder | — | 动态二进制加密流量 |
 | WebShell管理(哥斯拉) | Godzilla | — | 支持多种编码器/加密器 |
+| XSS专项扫描 | **dalfox** | nuclei（通用） | 专精参数分析+DOM XSS |
+| SSTI检测利用 | **SSTImap** | — | 自动识别模板引擎+利用 |
+| 提权辅助(Linux) | **linpeas.sh** | — | tools/peass-ng/linPEAS/linpeas.sh |
+| 提权辅助(Windows) | **winpeas.exe** | — | tools/peass-ng/winPEAS/winPEASx64.exe |
+| Java内存马注入 | **MemShellParty** | — | tools/MemShellParty/ |
+| 前端JS加密绕过 | **SpiderX** | — | tools/spiderx/ |
+| JNDI+反序列化 | **JYso** | JNDI-Injection-Exploit（旧） | 支持回显+内存马 |
 | Java反序列化 | ysoserial | — |
 | JNDI注入利用 | JNDI-Injection-Exploit | — |
 | 全平台渗透 | Metasploit (msf) | WSL中运行 |
