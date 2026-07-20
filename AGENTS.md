@@ -334,3 +334,53 @@ bash /mnt/c/Tools/reasonix_sentou/scripts/wsl-setup.sh
 ```
 
 目的：长期积累量化数据，验证 DeepSeek 在渗透场景下的真实成本模型和前缀缓存收益，为后续模型选择和架构优化提供数据支撑。
+
+### 6. 攻击链追踪（Attack Chain Graph）
+
+> 借鉴 RedAmon Neo4j 知识图谱：用轻量级方式追踪漏洞之间的关联，不做 Neo4j 运维。
+
+渗透中经常出现"两个低危漏洞组合成高危攻击链"的情况。每次任务后，用以下模板记录攻击链：
+
+```yaml
+# 攻击链模板 — 追加到 pentest-experience-NNN
+attack_chains:
+  - id: CHAIN-001
+    summary: "Apache 2.4.49 路径穿越 → 读取 DB 配置 → MySQL 弱口令 → 写 webshell"
+    nodes:
+      - vuln: CVE-2021-41773（路径穿越）
+        impact: "读取 /etc/passwd 和 application/database.php"
+        prerequisite: 无
+      - vuln: 信息泄露（数据库配置）
+        impact: "获得 root/cJvmb!2G@127.0.0.1:3306"
+        prerequisite: CVE-2021-41773
+      - vuln: MySQL 弱口令
+        impact: "数据库完全控制"
+        prerequisite: 信息泄露
+    final_impact: "RCE via INTO OUTFILE webshell"
+    kill_chain_phase: [recon, exploitation, lateral_movement, exfiltration]
+```
+
+**为什么不用 Neo4j？** 经验记忆（remember）天然支持语义搜索和自动加载，比搭建图数据库更省运维。当链积累到 50+ 条时，Reasonix 的 `conversation_search` 或 RAGFlow skill 可以自然检索相似攻击模式。如果需要可视化，用 `python` 脚本把 YAML 转成 Mermaid 流程图即可。
+
+### 7. 安全沙箱与隔离规范
+
+> 借鉴 Shannon ephemeral worker + RedAmon docker_broker：每次高危操作在独立隔离环境执行。
+
+| 操作类型 | 隔离要求 | 命令模板 |
+|:---------|:---------|:---------|
+| 漏洞扫描（nuclei/fscan） | 普通权限即可 | 直接执行 |
+| 高危利用（sqlmap --os-shell） | **必须 Docker 隔离** | `docker run --rm -it --network host sqlmap ...` |
+| metasploit 利用 | **必须 Kali WSL 隔离** | `kali msfconsole -q -x "..."` |
+| 浏览器自动化 | **必须 Playwright 容器** | `docker run --rm -it mcr.microsoft.com/playwright ...` |
+| 敏感文件操作（写 webshell） | 人工确认后执行 | 先 `/stats` 确认授权状态 |
+
+**Pre-flight 检查（Shannon 风格）**：
+- 目标 URL 可达性：`httpx -u <target> -silent` 确认存活
+- 阻断云元数据链路本地地址（169.254.169.254）
+- 确认目标在 RoE 白名单内（避免打偏）
+
+**不可行操作清单**：
+- 禁止扫描未授权目标
+- 禁止对 .gov / .mil 域名执行任何操作
+- 禁止在生产环境直接写文件/修改配置（仅可读扫描）
+- 禁止批量爆破超过 100 个目标的同一服务
