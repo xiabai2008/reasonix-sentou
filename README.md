@@ -79,21 +79,18 @@ reasonix_sentou/
 - **WSL:** Kali Linux（重型工具），可选但推荐
 - **Python:** 3.10+（`ddddocr`、`requests`）
 
-## 新环境部署
+## 🚀 新环境部署（多设备同步）
 
 ```bash
-# 1. 克隆仓库（工具二进制和字典库不在 git 中）
+# 1. 克隆（只有源码，不含大文件）
 git clone git@github.com:xiabai2004/reasonix-sentou.git
 cd reasonix_sentou
 
-# 2. 自动下载恢复所有工具和字典
-.\scripts\download-tools.ps1
-
-# 3. 一键环境配置（PATH + Python 依赖 + WSL Kali）
+# 2. 一键恢复环境（自动下载工具 + 字典 + 配 PATH + Python + WSL）
 .\scripts\setup-new-pc.ps1
 ```
 
-> `setup-new-pc.ps1` 会自动检测：如果工具未下载，先调用 `download-tools.ps1`。因此也可以只跑第 3 步，它会自动补第 2 步。
+源码 ~5MB，工具和字典由 `setup-new-pc.ps1` 自动从官方源下载最新版，不拖仓库。
 
 ## 注意事项
 
