@@ -40,9 +40,21 @@ result.txt
 result.txt.realtime.tmp
 flag.txt
 *.flag
+results/
+evidence/
+cases/**/evidence/
 reports/*.html
 reports/*.docx
 reports/*.pdf
+*.har
+*.pcap
+*.pcapng
+*.burp
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+*.kdbx
 
 # --- 输出/工件 ---
 .uploads/
@@ -60,3 +72,6 @@ Desktop.ini
 .env
 .env.local
 *.secret
+
+# --- 历史脚本归档（保留但不需要 Git 追踪） ---
+archive/

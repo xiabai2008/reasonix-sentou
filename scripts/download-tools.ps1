@@ -3,7 +3,7 @@
     下载恢复 Reasonix 渗透工作台所需的所有工具二进制和字典库
 .DESCRIPTION
     git clone 后运行此脚本，自动从各工具官方源下载最新版本。
-    工具清单见 config/tools-manifest.json
+    工具清单来自 config/tools-manifest.json，修改工具列表只需编辑该文件。
 .EXAMPLE
     .\scripts\download-tools.ps1
     .\scripts\download-tools.ps1 -Force   # 强制重新下载
@@ -16,6 +16,7 @@ $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $ProjectDir = Split-Path -Parent $ScriptDir
 $ToolsDir = Join-Path $ProjectDir "tools"
 $DictDir = Join-Path $ProjectDir "config\dictionaries"
+$ManifestPath = Join-Path $ProjectDir "config\tools-manifest.json"
 
 Write-Host "╔══════════════════════════════════════════════╗" -ForegroundColor Cyan
 Write-Host "║     Reasonix 渗透工作台 — 工具下载恢复      ║" -ForegroundColor Cyan
@@ -28,7 +29,7 @@ Write-Host ""
 }
 
 # ============================================================
-# Step 0: 检查依赖
+# Step 0: 检查依赖 + 加载 manifest
 # ============================================================
 Write-Host "[Preflight] 检查依赖..." -ForegroundColor Green
 $ghOk = Get-Command "gh" -ErrorAction SilentlyContinue
@@ -39,118 +40,151 @@ if (-not $ghOk) {
 }
 Write-Host "  [OK] GitHub CLI 可用" -ForegroundColor Green
 
-# ============================================================
-# Step 1: 下载工具二进制
-# ============================================================
-Write-Host ""
-Write-Host "[Step 1/3] 下载 Windows 工具二进制..." -ForegroundColor Yellow
+if (-not (Test-Path $ManifestPath)) {
+    Write-Host "  [ERROR] 未找到工具清单: $ManifestPath" -ForegroundColor Red
+    exit 1
+}
+Write-Host "  [OK] 工具清单: config/tools-manifest.json" -ForegroundColor Green
 
-$tools = @(
-    @{repo="projectdiscovery/nuclei";    name="nuclei";    bin="nuclei.exe"},
-    @{repo="projectdiscovery/naabu";     name="naabu";     bin="naabu.exe"},
-    @{repo="projectdiscovery/httpx";     name="httpx";     bin="httpx.exe"},
-    @{repo="projectdiscovery/subfinder"; name="subfinder"; bin="subfinder.exe"},
-    @{repo="projectdiscovery/katana";    name="katana";    bin="katana.exe"},
-    @{repo="projectdiscovery/dnsx";      name="dnsx";      bin="dnsx.exe"},
-    @{repo="projectdiscovery/tlsx";      name="tlsx";      bin="tlsx.exe"},
-    @{repo="shadow1ng/fscan";            name="fscan";     bin="fscan.exe"},
-    @{repo="ffuf/ffuf";                  name="ffuf";      bin="ffuf.exe"},
-    @{repo="lc/gau";                     name="gau";       bin="gau.exe"},
-    @{repo="jqlang/jq";                  name="jq";        bin="jq.exe"},
-    @{repo="hahwul/dalfox";              name="dalfox";    bin="dalfox.exe"}
-)
+$manifest = Get-Content $ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
 
 $downloaded = 0; $skipped = 0; $failed = 0
 
-foreach ($tool in $tools) {
-    $dest = Join-Path $ToolsDir $tool.bin
+# ============================================================
+# Step 1: 下载工具二进制（gh release download）
+# ============================================================
+Write-Host ""
+Write-Host "[Step 1/3] 下载 Windows 工具二进制 (gh release)..." -ForegroundColor Yellow
+
+$toolCount = 0
+foreach ($name in $manifest.tools.PSObject.Properties.Name) {
+    $toolCount++
+}
+$toolIndex = 0
+
+foreach ($name in $manifest.tools.PSObject.Properties.Name) {
+    $toolIndex++
+    $t = $manifest.tools.$name
+    $dest = Join-Path $ToolsDir $t.bin
+    $tmpFile = $null
+
+    Write-Host "  [$toolIndex/$toolCount] " -NoNewline
+
     if (Test-Path $dest -and -not $Force) {
-        Write-Host "  [SKIP] $($tool.name) 已存在" -ForegroundColor Gray
+        Write-Host "[SKIP] $name 已存在" -ForegroundColor Gray
         $skipped++
         continue
     }
 
-    Write-Host "  [DOWNLOAD] $($tool.name) from $($tool.repo)..." -ForegroundColor Yellow -NoNewline
-    
+    Write-Host "[DOWNLOAD] $name from $($t.repo)..." -NoNewline
+
     try {
         # 获取最新 release 信息
-        $releaseJson = gh release view --repo $tool.repo --json tagName,assets 2>&1 | Out-String
+        $releaseJson = gh release view --repo $t.repo --json tagName,assets 2>&1 | Out-String
         if ($LASTEXITCODE -ne 0) { throw "无法获取 release 信息" }
-        
+
         $release = $releaseJson | ConvertFrom-Json
         if (-not $release) { throw "JSON 解析失败" }
-        
-        # 匹配 Windows amd64 资产
-        $asset = $release.assets | Where-Object { 
-            $_.name -match "windows.*amd64" -and ($_.name -match "\.zip$" -or $_.name -match "\.exe$") 
-        } | Select-Object -First 1
-        
+
+        # 优先用 manifest 中的 asset_pattern 精确匹配
+        $asset = $null
+        if ($t.asset_pattern) {
+            $asset = $release.assets | Where-Object {
+                $_.name -match $t.asset_pattern
+            } | Select-Object -First 1
+        }
+
+        # Fallback: 宽松匹配 Windows amd64 zip/exe
         if (-not $asset) {
-            # 放宽匹配：只要含 exe 或 zip
-            $asset = $release.assets | Where-Object { 
+            $asset = $release.assets | Where-Object {
+                $_.name -match "windows.*amd64" -and ($_.name -match "\.zip$" -or $_.name -match "\.exe$")
+            } | Select-Object -First 1
+        }
+
+        # 再次 fallback: 任意 zip/exe
+        if (-not $asset) {
+            $asset = $release.assets | Where-Object {
                 $_.name -match "\.exe$" -or $_.name -match "\.zip$"
             } | Select-Object -First 1
         }
-        
+
         if (-not $asset) { throw "未找到匹配的 Windows 资产" }
-        
-        $assetUrl = $asset.url
+
         $assetName = $asset.name
-        
-        # 下载
         $tmpFile = Join-Path $env:TEMP $assetName
-        gh release download --repo $tool.repo --pattern $assetName --dir $env:TEMP 2>&1 | Out-Null
-        
+
+        # 下载
+        gh release download --repo $t.repo --pattern $assetName --dir $env:TEMP 2>&1 | Out-Null
         if ($LASTEXITCODE -ne 0) { throw "下载失败" }
-        
+
         # 解压或移动
         if ($assetName -match "\.zip$") {
             Expand-Archive -Path $tmpFile -DestinationPath $ToolsDir -Force
             # 如果解压后 .exe 不在 tools/ 根目录，查找并移动
-            $exe = Get-ChildItem $ToolsDir -Recurse -Filter "$($tool.bin)" | Select-Object -First 1
+            $exe = Get-ChildItem $ToolsDir -Recurse -Filter "$($t.bin)" | Select-Object -First 1
             if ($exe -and (Split-Path $exe.FullName -Parent) -ne $ToolsDir) {
                 Move-Item $exe.FullName $dest -Force
             }
-            Remove-Item $tmpFile -Force
+            Remove-Item $tmpFile -Force -ErrorAction SilentlyContinue
+        } elseif ($assetName -match "\.tar\.gz$") {
+            # tar.gz 解压
+            tar -xzf $tmpFile -C $ToolsDir 2>&1 | Out-Null
+            $exe = Get-ChildItem $ToolsDir -Recurse -Filter "$($t.bin)" | Select-Object -First 1
+            if ($exe -and (Split-Path $exe.FullName -Parent) -ne $ToolsDir) {
+                Move-Item $exe.FullName $dest -Force
+            }
+            Remove-Item $tmpFile -Force -ErrorAction SilentlyContinue
         } else {
+            # 直接移动（exe 或其他单文件）
             Move-Item $tmpFile $dest -Force
         }
-        
+
         Write-Host " [OK]" -ForegroundColor Green
         $downloaded++
     } catch {
         Write-Host " [FAIL] $_" -ForegroundColor Red
         $failed++
+        # 清理可能的残留临时文件
+        if ($tmpFile -and (Test-Path $tmpFile)) { Remove-Item $tmpFile -Force -ErrorAction SilentlyContinue }
     }
 }
 
 Write-Host "  完成: 下载 $downloaded / 跳过 $skipped / 失败 $failed" -ForegroundColor Yellow
 
 # ============================================================
-# Step 1.5: 克隆源码工具
+# Step 2: 克隆源码工具（git clone）
 # ============================================================
 Write-Host ""
-Write-Host "[Step 1.5/3] 克隆源码工具..." -ForegroundColor Yellow
+Write-Host "[Step 2/3] 克隆源码工具 (git clone)..." -ForegroundColor Yellow
 
-$clonedTools = @(
-    @{repo="carlospolop/PEASS-ng";  dir="peass-ng";  desc="Linux/Windows提权辅助"},
-    @{repo="vladko312/SSTImap";     dir="sstimap";    desc="SSTI自动检测利用"},
-    @{repo="LiChaser/SpiderX";      dir="spiderx";    desc="前端JS加密绕过"},
-    @{repo="ReaJason/MemShellParty"; dir="MemShellParty"; desc="Java内存马注入"},
-    @{repo="qi4L/JYso";             dir="JYso";       desc="JNDI+反序列化工具"}
-)
+$cloneCount = 0
+foreach ($name in $manifest.cloned_tools.PSObject.Properties.Name) {
+    $cloneCount++
+}
+$cloneIndex = 0
 
-foreach ($ct in $clonedTools) {
-    $dest = Join-Path $ToolsDir $ct.dir
+foreach ($name in $manifest.cloned_tools.PSObject.Properties.Name) {
+    $cloneIndex++
+    $ct = $manifest.cloned_tools.$name
+    # target 格式: "tools/xxx" -> 相对于 ProjectDir
+    $dest = Join-Path $ProjectDir $ct.target
+
+    Write-Host "  [$cloneIndex/$cloneCount] " -NoNewline
+
     if (Test-Path $dest -and -not $Force) {
-        Write-Host "  [SKIP] $($ct.dir) ($($ct.desc)) 已存在" -ForegroundColor Gray
+        Write-Host "[SKIP] $name ($($ct.target)) 已存在" -ForegroundColor Gray
         $skipped++
         continue
     }
-    
-    Write-Host "  [CLONE] $($ct.repo) -> $($ct.dir) ($($ct.desc))..." -ForegroundColor Yellow -NoNewline
-    
+
+    $desc = if ($ct.note) { $ct.note } else { $name }
+    Write-Host "[CLONE] $($ct.repo) -> $($ct.target) ($desc)..." -NoNewline
+
     try {
+        # 确保父目录存在
+        $parentDir = Split-Path $dest -Parent
+        if (-not (Test-Path $parentDir)) { New-Item -ItemType Directory -Path $parentDir -Force | Out-Null }
+
         if (Test-Path $dest) { Remove-Item $dest -Recurse -Force }
         git clone --depth 1 "https://github.com/$($ct.repo).git" $dest 2>&1 | Out-Null
         if ($LASTEXITCODE -eq 0) {
@@ -174,36 +208,46 @@ if (Test-Path $mspDir) {
 # SpiderX 特殊处理：安装 Python 依赖
 $spxDir = Join-Path $ToolsDir "spiderx"
 if (Test-Path $spxDir) {
-    Write-Host "  [INFO] SpiderX Python依赖安装请参照 $spxDir/README.md" -ForegroundColor Gray
+    Write-Host "  [INFO] SpiderX Python 依赖安装请参照 $spxDir/README.md" -ForegroundColor Gray
 }
 
 # ============================================================
-# Step 2: 下载字典库
+# Step 3: 下载字典库 + 生成自建字典
 # ============================================================
 Write-Host ""
-Write-Host "[Step 2/4] 下载字典库..." -ForegroundColor Yellow
+Write-Host "[Step 3/3] 下载字典库 + 生成自建字典..." -ForegroundColor Yellow
 
-$dicts = @(
-    @{repo="danielmiessler/SecLists";       dir="SecLists"},
-    @{repo="CrackerCat/SuperWordlist";       dir="SuperWordlist"},
-    @{repo="NS-Sp4ce/Dict";                  dir="Dict"},
-    @{repo="R0B1NL1N/SaiDict";               dir="SaiDict"},
-    @{repo="rootm0s/S-BlastingDictionary";    dir="S-BlastingDictionary"}
-)
+# 3a: 从 manifest 克隆字典库
+$dictCount = 0
+foreach ($name in $manifest.dictionaries.PSObject.Properties.Name) {
+    $dictCount++
+}
+$dictIndex = 0
 
-foreach ($dict in $dicts) {
-    $dest = Join-Path $DictDir $dict.dir
+foreach ($name in $manifest.dictionaries.PSObject.Properties.Name) {
+    $dictIndex++
+    $d = $manifest.dictionaries.$name
+    # target 格式: "config/dictionaries/xxx" -> 相对于 ProjectDir
+    $dest = Join-Path $ProjectDir $d.target
+
+    Write-Host "  [$dictIndex/$dictCount] " -NoNewline
+
     if (Test-Path $dest -and -not $Force) {
-        Write-Host "  [SKIP] $($dict.dir) 已存在" -ForegroundColor Gray
+        Write-Host "[SKIP] $name 已存在" -ForegroundColor Gray
         continue
     }
-    
-    Write-Host "  [CLONE] $($dict.repo) -> $($dict.dir)..." -ForegroundColor Yellow -NoNewline
-    
+
+    Write-Host "[CLONE] $($d.repo) -> $($d.target)..." -NoNewline
+
     try {
-        git clone --depth 1 "https://github.com/$($dict.repo).git" $dest 2>&1 | Out-Null
+        # 确保父目录存在
+        $parentDir = Split-Path $dest -Parent
+        if (-not (Test-Path $parentDir)) { New-Item -ItemType Directory -Path $parentDir -Force | Out-Null }
+
+        git clone --depth 1 "https://github.com/$($d.repo).git" $dest 2>&1 | Out-Null
         if ($LASTEXITCODE -eq 0) {
             Write-Host " [OK]" -ForegroundColor Green
+            $downloaded++
         } else {
             Write-Host " [FAIL]" -ForegroundColor Red
             $failed++
@@ -214,12 +258,7 @@ foreach ($dict in $dicts) {
     }
 }
 
-# ============================================================
-# Step 3: 生成自建字典
-# ============================================================
-Write-Host ""
-Write-Host "[Step 3/4] 生成自建字典..." -ForegroundColor Yellow
-
+# 3b: 生成自建字典
 $genScript = Join-Path $ProjectDir "config\generate-dicts.py"
 $mergeScript = Join-Path $ProjectDir "config\merge-dicts.py"
 

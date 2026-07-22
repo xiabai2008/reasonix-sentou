@@ -76,6 +76,23 @@
   sstimap-exploit       ← SSTI 自动检测利用（SSTImap）
   jyso-exploit          ← JNDI注入+反序列化（JYso）
 
+AI 辅助渗透技能（Reasonix 专用）:
+  ai-assisted-code-audit      ← 前端 JS / Webpack / SourceMap / API Client 代码审计
+  jwt-privilege-escalation    ← JWT 角色体系、权限矩阵、越权验证专项
+
+AI 编排脚本:
+  scripts/ai-pentest-orchestrator.py ← 工具扫描 + 结构化 AI 研判提示词生成
+  scripts/format-results.py      ← 多工具原始输出统一转 JSON
+  scripts/check-scope.py        ← 授权范围校验（扫描前自动检查）
+
+作战配置:
+  config/modes.yaml            ← 三档作战模式（safe/normal/aggressive）
+  config/combat-templates.yaml ← 5 种目标类型预定义攻击链
+  config/scope.yaml             ← 授权范围白名单（IP/CIDR/域名/URL）
+
+技能索引（机器可读）:
+  skills/skills-index.json     ← 62 个技能的结构化索引，Reasonix 按需加载
+
 参考数据:
   product-fingerprints, default-credentials, detection-rules, common-paths, wooyun-cases
 
@@ -91,6 +108,47 @@
 → 根据技术栈选检测方案
 → nuclei + xray 双引擎跑
 
+### 用户说"审计前端代码 / 看JS / 解包Webpack / 找接口"
+→ **首选加载: `ai-assisted-code-audit`**
+→ 如果有 `.js.map` / SourceMap，优先恢复源码后审计
+→ 审计重点: JWT角色体系、硬编码密钥、API端点、前端权限控制、DOM XSS
+→ 要求输出: P0-P4风险排序、接口清单、权限矩阵、验证命令
+→ DeepSeek-Reasonix 使用 append-only 追问，保持 prefix-cache 命中率
+
+### 发现 JWT / Authorization Bearer / role / isAdmin / permissions
+→ **首选加载: `jwt-privilege-escalation`**
+→ 先解码 JWT，梳理 `role` / `userId` / `orgId` / `permissions` / `scope`
+→ 从前端代码中提取角色映射和接口访问条件
+→ 用低权限 Token 对高权限接口做只读验证
+→ 如发现跨用户 / 跨租户 / 越权访问，立刻记录证据并停止破坏性操作
+
+### 用户说"用AI分析扫描结果 / 自动跑一遍并给我下一步"
+→ **首选: `python scripts/ai-pentest-orchestrator.py --target <target>`**
+→ 脚本执行基础信息收集和轻量漏洞扫描
+→ 自动生成 `results/ai_prompt_*.md`，复制给 Reasonix 继续分析攻击链
+→ 不直接执行高危利用，只生成下一步验证建议
+
+### 用户说"检查环境 / 健康检查 / 工具是否正常 / 新电脑部署后验证"
+→ **首选: `python scripts/health-check.py`**
+→ 检查 `AGENTS.md`、`reasonix.toml`、关键工具、Python依赖、技能索引、旧路径、包装器、工具版本
+→ 如果只出现 `ddddocr` 缺失，表示验证码 OCR 不可用，但不影响主体扫描工具
+→ 如出现 FAIL，先修复环境再执行扫描或利用
+
+### 用户说"用安全模式 / safe mode / 被动扫描"
+→ 读取 `config/modes.yaml` 中的 `safe` 模式约束
+→ 只使用 httpx、subfinder、katana 等被动工具
+→ 禁止 nuclei、fscan、ffuf、sqlmap 等主动攻击工具
+
+### 用户说"全力 / 激进 / 深度渗透"
+→ 读取 `config/modes.yaml` 中的 `aggressive` 模式
+→ 全部工具可用，但高危操作需人工确认
+→ 扫描前必须通过授权范围校验
+
+### 用户说"格式化结果 / 整理扫描结果"
+→ **首选: `python scripts/format-results.py results/`**
+→ 支持 fscan/nuclei/httpx/naabu/subfinder/katana 输出统一转 JSON
+→ 用 `--list` 查看可格式化的文件
+
 ### 用户说"收集信息"
 → subfinder 子域名
 → gau + katana URL收集
@@ -102,6 +160,12 @@
 
 ### 用户说"批量扫"
 → 从文件读目标列表，逐批调度工具
+
+### 输出目录分工
+→ `results/` 保存原始扫描结果、AI prompt、JSON 中间结果
+→ `reports/` 保存最终 HTML / DOCX / PDF 报告
+→ `evidence/` 保存漏洞截图、HTTP 响应、PoC 证据、最小化敏感样本
+→ 上述目录和常见流量/数据库文件已加入 `.gitignore`，避免误提交敏感数据
 
 ### 遇到验证码登录
 → **首选: `python config/brute.py <url> --auto-form --captcha`**
@@ -175,6 +239,9 @@
 | URL收集 | gau + katana | — |
 | SRC挖洞 | poxiao | rayscan |
 | 深度SQLi/XSS | rayscan | — |
+| AI前端代码审计 | `ai-assisted-code-audit` | SpiderX（JS逆向）|
+| JWT权限提升 | `jwt-privilege-escalation` | jwt-oauth-token-attacks |
+| AI扫描结果研判 | `scripts/ai-pentest-orchestrator.py` | 手动整理结果给 Reasonix |
 | JSON处理 | jq | — |
 | 验证码识别 | `config/brute.py --captcha` | ddddocr 自动识别+爆破一体化 |
 | CMS模板RCE | ThinkPHP `{:func()}` 模板标签 | 写 webshell 绕过扩展名限制 |
@@ -217,6 +284,10 @@
 | 全平台渗透 | Metasploit (msf) | WSL中运行 |
 | 端口扫描(黄金标准) | nmap (Kali WSL) | masscan (Kali WSL 超高速) |
 | 密码爆破 | hydra (Kali WSL) | john (Kali WSL 离线) |
+| 授权范围校验 | `scripts/check-scope.py` | config/scope.yaml |
+| 结果格式化 | `scripts/format-results.py` | 手动整理 |
+| 作战模式切换 | config/modes.yaml | safe/normal/aggressive |
+| 战术模板匹配 | config/combat-templates.yaml | 手动选择工具链 |
 
 ## WSL 环境说明
 
@@ -305,7 +376,9 @@ bash /mnt/c/Tools/reasonix_sentou/scripts/wsl-setup.sh
 每次渗透任务结束后，必须执行以下流程：
 
 ### 1. 记录经验到持久记忆
-使用 `remember` 工具创建一个 `pentest-experience-NNN` 的记忆条目（N 为序号递增），
+优先在 `memory/` 中创建一个 `pentest-experience-NNN.md` 文件（N 为序号递增），并同步保留到 Reasonix 持久记忆。
+模板位于 `memory/templates/pentest-experience-template.md`。
+
 记录以下内容：
 
 | 字段 | 说明 |
@@ -326,6 +399,14 @@ bash /mnt/c/Tools/reasonix_sentou/scripts/wsl-setup.sh
 ### 4. 启动时加载的经验
 所有 `pentest-experience-*` 记忆会在下次启动时自动加载到 context 中，
 让你能站在之前的肩膀上继续前进，避免重复踩坑。
+
+文件化经验位于 `memory/`：
+- `memory/pentest-experience-*.md` — 单次任务复盘
+- `memory/attack-chains.yaml` — 可复用攻击链模式
+- `memory/cost-stats.csv` — `/stats` 成本与缓存数据
+- `memory/templates/` — 经验和攻击链模板
+
+遇到相似目标时，先检索 `memory/` 中的历史经验，再决定工具链。
 
 ### 已积累经验索引
 
@@ -356,6 +437,11 @@ bash /mnt/c/Tools/reasonix_sentou/scripts/wsl-setup.sh
 
 目的：长期积累量化数据，验证 DeepSeek 在渗透场景下的真实成本模型和前缀缓存收益，为后续模型选择和架构优化提供数据支撑。
 
+同时把结构化数据追加到 `memory/cost-stats.csv`：
+```csv
+date,experience_id,model,cache_hit_rate,total_tokens,total_cost_cny,turns,effective_turns,notes
+```
+
 ### 6. 攻击链追踪（Attack Chain Graph）
 
 > 借鉴 RedAmon Neo4j 知识图谱：用轻量级方式追踪漏洞之间的关联，不做 Neo4j 运维。
@@ -383,6 +469,8 @@ attack_chains:
 
 **为什么不用 Neo4j？** 经验记忆（remember）天然支持语义搜索和自动加载，比搭建图数据库更省运维。当链积累到 50+ 条时，Reasonix 的 `conversation_search` 或 RAGFlow skill 可以自然检索相似攻击模式。如果需要可视化，用 `python` 脚本把 YAML 转成 Mermaid 流程图即可。
 
+可复用攻击链追加到 `memory/attack-chains.yaml`，单次任务细节保留在对应 `memory/pentest-experience-NNN.md`。
+
 ### 7. 安全沙箱与隔离规范
 
 > 借鉴 Shannon ephemeral worker + RedAmon docker_broker：每次高危操作在独立隔离环境执行。
@@ -395,10 +483,12 @@ attack_chains:
 | 浏览器自动化 | **必须 Playwright 容器** | `docker run --rm -it mcr.microsoft.com/playwright ...` |
 | 敏感文件操作（写 webshell） | 人工确认后执行 | 先 `/stats` 确认授权状态 |
 
-**Pre-flight 检查（Shannon 风格）**：
+**Pre-flight 检查**：
+- **授权范围校验**: `python scripts/check-scope.py <target>` 确认目标在 `config/scope.yaml` 白名单内
 - 目标 URL 可达性：`httpx -u <target> -silent` 确认存活
 - 阻断云元数据链路本地地址（169.254.169.254）
-- 确认目标在 RoE 白名单内（避免打偏）
+- 根据用户输入或 `config/modes.yaml` 确定作战模式（safe/normal/aggressive）
+- 根据 `config/combat-templates.yaml` 匹配战术模板，按预定义攻击链执行
 
 **不可行操作清单**：
 - 禁止扫描未授权目标

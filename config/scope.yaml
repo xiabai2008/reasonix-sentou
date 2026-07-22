@@ -1,0 +1,45 @@
+# Reasonix 渗透作战 — 授权范围配置
+# 扫描前 Reasonix 或编排脚本会自动校验目标是否在白名单内
+#
+# 使用方式:
+#   1. 在此文件中填写授权的 IP/网段/域名
+#   2. Reasonix 扫描前自动校验
+#   3. 编排脚本通过 python scripts/check-scope.py <target> 校验
+
+# 是否启用范围校验（true=启用，false=仅警告不阻断）
+enforce: true
+
+# 全局禁止目标（无论是否授权，永远拒绝）
+blocked:
+  - "10.0.0.0/8"       # 除非明确在 allowed_cidr 中
+  - "172.16.0.0/12"    # 除非明确在 allowed_cidr 中
+  - "192.168.0.0/16"   # 除非明确在 allowed_cidr 中（内网需显式授权）
+  - "*.gov.cn"
+  - "*.gov"
+  - "*.mil"
+
+# 授权的 IP/网段（CIDR 格式）
+allowed_cidr:
+  # - "192.168.1.0/24"   # 示例：授权内网段
+  # - "10.10.10.0/24"    # 示例：授权内网段
+
+# 授权的域名（支持通配符 *）
+allowed_domains:
+  # - "*.example.com"   # 示例：授权域名及子域名
+  # - "test.target.org" # 示例：授权精确域名
+
+# 授权的精确 IP
+allowed_ips:
+  # - "203.0.113.50"    # 示例：授权单个外网 IP
+
+# 授权的 URL 前缀
+allowed_url_prefixes:
+  # - "http://test.example.com"
+  # - "https://test.example.com"
+
+# 备注/授权来源
+notes: |
+  授权文件来源: ___
+  授权日期: ___
+  授权范围: ___
+  有效期至: ___

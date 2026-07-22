@@ -11,7 +11,7 @@
     .\scripts\setup-new-pc.ps1
     
     # 指定新路径
-    .\scripts\setup-new-pc.ps1 -ProjectPath "D:\reasonix渗透助手"
+    .\scripts\setup-new-pc.ps1 -ProjectPath "D:\reasonix_sentou"
 #>
 
 param(

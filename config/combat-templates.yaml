@@ -1,0 +1,152 @@
+# Reasonix 渗透作战 — 战术模板
+# 根据目标类型自动匹配攻击链，Reasonix 按顺序执行
+
+templates:
+  web-target:
+    label: "Web 应用目标"
+    description: "标准 Web 应用渗透流程"
+    triggers: ["网站", "Web", "网址", "http://", "https://", "测一下这个网站", "Web应用"]
+    preconditions:
+      - "目标 URL 可通过 httpx 探活"
+    phases:
+      - name: "技术栈识别"
+        tool: httpx
+        args: "-u {target} -status-code -title -tech-detect -follow-redirects"
+        output: "results/{session}_httpx.json"
+        decision: "根据 tech-detect 结果选择后续方案"
+      - name: "漏洞扫描 (nuclei)"
+        tool: nuclei
+        args: "-u {target} -severity low,medium,high -c 25 -json -o {output}"
+        output: "results/{session}_nuclei.json"
+      - name: "漏洞扫描 (xray)"
+        tool: xray
+        args: "webscan --url {target} --json-output {output}"
+        output: "results/{session}_xray.json"
+        background: true
+      - name: "目录扫描"
+        tool: ffuf
+        args: "-u {target}/FUZZ -w config/web-dirs-common.txt -t 50 -fc 404 -o {output}"
+        output: "results/{session}_ffuf_dirs.json"
+        background: true
+      - name: "URL 收集"
+        tool: katana
+        args: "-u {target} -d 3 -jc -aff -o {output}"
+        output: "results/{session}_katana_urls.txt"
+        background: true
+    post_actions:
+      - "汇总 nuclei + xray 结果，按严重程度排序"
+      - "对高危漏洞进行手动验证"
+      - "生成报告: python scripts/report-gen.py"
+
+  api-target:
+    label: "API 接口目标"
+    description: "REST/GraphQL API 安全测试"
+    triggers: ["API", "接口", "graphql", "swagger", "api.", "/api/", "openapi"]
+    phases:
+      - name: "API 探活"
+        tool: httpx
+        args: "-u {target} -status-code -title -tech-detect"
+        output: "results/{session}_api_httpx.json"
+      - name: "API 文档发现"
+        commands:
+          - "curl -s {target}/swagger-ui.html -o /dev/null -w '%{http_code}'"
+          - "curl -s {target}/api-docs -o /dev/null -w '%{http_code}'"
+          - "curl -s {target}/openapi.json -o /dev/null -w '%{http_code}'"
+          - "curl -s {target}/graphql -o /dev/null -w '%{http_code}'"
+      - name: "参数发现"
+        tool: arjun
+        args: "-u {target} -o {output}"
+        output: "results/{session}_arjun.json"
+      - name: "JWT 分析"
+        condition: "发现 JWT Token 或 Authorization: Bearer 头"
+        skill: "jwt-privilege-escalation"
+      - name: "越权验证"
+        condition: "发现多用户/多角色接口"
+        skill: "api-authorization-and-bola"
+      - name: "漏洞扫描"
+        tool: nuclei
+        args: "-u {target} -tags api,auth,jwt -severity low,medium,high,critical -c 25 -json -o {output}"
+        output: "results/{session}_api_nuclei.json"
+    post_actions:
+      - "生成权限矩阵"
+      - "验证跨用户/跨租户访问"
+
+  internal-network:
+    label: "内网横向目标"
+    description: "内网网段扫描与横向移动"
+    triggers: ["内网", "网段", "横向", "192.168", "10.", "172.16", "fscan", "内网渗透"]
+    phases:
+      - name: "存活探测 + 端口扫描"
+        tool: fscan
+        args: "-h {target} -o {output}"
+        output: "results/{session}_fscan.txt"
+      - name: "结果分析"
+        decision: "从 fscan 结果中提取: 存活IP、开放端口、服务版本、弱口令、POC命中"
+      - name: "漏洞验证"
+        condition: "fscan 发现高危端口或服务"
+        tool: nuclei
+        args: "-l {fscan_alive_hosts} -severity medium,high,critical -c 25"
+      - name: "横向移动"
+        condition: "获得初始凭据"
+        skill: "impacket-toolkit"
+        tools: ["smbclient", "psexec", "wmiexec", "secretsdump"]
+    post_actions:
+      - "汇总凭据和权限"
+      - "标记可进一步横向的目标"
+
+  frontend-audit:
+    label: "前端代码审计"
+    description: "JS/WASM/SourceMap 审计与 API 接口发现"
+    triggers: ["前端代码", "JS", "审计", "Webpack", "SourceMap", "源码", "前端"]
+    phases:
+      - name: "JS 文件收集"
+        tool: katana
+        args: "-u {target} -d 3 -jc -ext js -o {output}"
+        output: "results/{session}_js_files.txt"
+      - name: "SourceMap 检测"
+        commands:
+          - "检查每个 .js 文件是否存在 .js.map"
+          - "如果发现 SourceMap: 用 tools/spiderx 或在线工具恢复源码"
+      - name: "AI 代码审计"
+        skill: "ai-assisted-code-audit"
+        input: "JS 文件列表或恢复的源码"
+      - name: "JWT 权限分析"
+        condition: "代码中发现 JWT/Token/role/permission 相关逻辑"
+        skill: "jwt-privilege-escalation"
+    post_actions:
+      - "输出 P0-P4 风险排序"
+      - "生成接口清单和权限矩阵"
+      - "生成验证 curl 命令"
+
+  subdomain-recon:
+    label: "子域名资产收集"
+    description: "被动+主动子域名枚举"
+    triggers: ["子域名", "域名", "资产收集", "subdomain", "收集信息", "信息收集"]
+    phases:
+      - name: "被动枚举"
+        tool: subfinder
+        args: "-d {target} -o {output}"
+        output: "results/{session}_subfinder.txt"
+      - name: "URL 收集"
+        tool: gau
+        args: "-subs -o {output}"
+        output: "results/{session}_gau_urls.txt"
+      - name: "爬虫补充"
+        tool: katana
+        args: "-list {subfinder_output} -d 3 -jc -aff -o {output}"
+        output: "results/{session}_katana_urls.txt"
+      - name: "存活验证"
+        tool: httpx
+        args: "-l {all_urls} -silent -status-code -title -tech-detect -o {output}"
+        output: "results/{session}_httpx_alive.txt"
+    post_actions:
+      - "汇总存活子域名和技术栈"
+      - "按技术栈分类（ThinkPHP/WordPress/Spring 等）"
+      - "输出资产清单"
+
+# 模板变量说明
+variables:
+  target: "用户提供的原始目标（IP/URL/域名）"
+  session: "会话标识（YYYYMMDD_HHMMSS）"
+  output: "输出文件路径"
+  fscan_alive_hosts: "从 fscan 结果提取的存活主机列表文件"

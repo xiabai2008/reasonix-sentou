@@ -1,0 +1,6 @@
+# Reasonix 攻击链库
+#
+# 将多次任务中可复用的攻击链追加到这里。
+# 单次任务细节写入 pentest-experience-NNN.md，本文件只保存可迁移的方法模式。
+
+attack_chains: []

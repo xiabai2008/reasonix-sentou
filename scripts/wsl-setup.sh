@@ -1,6 +1,6 @@
 #!/bin/bash
 # WSL 渗透工具安装脚本
-# 在 WSL Ubuntu 中执行: bash /mnt/c/Users/HZR/reasonix渗透助手/scripts/wsl-setup.sh
+# 在 WSL Ubuntu 中执行: bash /mnt/c/Tools/reasonix_sentou/scripts/wsl-setup.sh
 
 set -e
 

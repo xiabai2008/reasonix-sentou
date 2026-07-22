@@ -1,2 +1,9 @@
 #!/usr/bin/env bash
-exec "D:/tools/Python 3.12.9/python.exe" -m theHarvester "$@"
+if command -v python >/dev/null 2>&1; then
+  exec python -m theHarvester "$@"
+elif command -v python3 >/dev/null 2>&1; then
+  exec python3 -m theHarvester "$@"
+else
+  echo "python/python3 not found. Install theHarvester dependencies first." >&2
+  exit 127
+fi

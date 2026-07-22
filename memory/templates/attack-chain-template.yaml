@@ -1,0 +1,21 @@
+attack_chains:
+  - id: CHAIN-XXX
+    summary: "简短描述攻击链，例如 SourceMap 泄露 → API 发现 → JWT 越权"
+    target_profile:
+      type: "web / api / intranet / cms / mobile"
+      stack: []
+    nodes:
+      - vuln: "漏洞或线索名称"
+        impact: "造成的影响"
+        prerequisite: "利用前提"
+        evidence: "最小化证据位置或描述"
+      - vuln: "第二个漏洞或线索"
+        impact: "造成的影响"
+        prerequisite: "依赖上一步"
+        evidence: "最小化证据位置或描述"
+    final_impact: "最终影响"
+    kill_chain_phase:
+      - recon
+      - exploitation
+    reusable_pattern: "可复用方法总结"
+    avoid_next_time: "下次应避免的误区"

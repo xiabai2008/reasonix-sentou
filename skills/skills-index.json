@@ -1,0 +1,934 @@
+{
+  "_meta": {
+    "version": 1,
+    "generated": "2026-07-22",
+    "description": "Reasonix 渗透工作台技能索引 — 供 Reasonix 按需加载，避免全量读取",
+    "stats": {
+      "main_skills": 7,
+      "vuln_skills": 55,
+      "total": 62
+    }
+  },
+  "main_skills": [
+    {
+      "id": "pentest-master",
+      "name": "渗透测试总指挥",
+      "path": "skills/pentest-master.md",
+      "description": "渗透测试总指挥 - 智能调度 reasonix_sentou 项目内所有工具和技能，根据目标情况自动选择最优方案。支持：信息收集/端口扫描/漏洞检测/弱口令/内网渗透/报告生成",
+      "triggers": [
+        "渗透",
+        "总指挥",
+        "调度",
+        "全栈",
+        "综合"
+      ],
+      "type": "main"
+    },
+    {
+      "id": "port-scan",
+      "name": "端口扫描与资产探测",
+      "path": "skills/port-scan.md",
+      "description": "端口扫描与资产探测 - 使用 fscan 对内网/外网目标进行存活探测、端口扫描和服务识别",
+      "triggers": [
+        "端口扫描",
+        "扫端口",
+        "nmap",
+        "naabu",
+        "fscan",
+        "资产探测"
+      ],
+      "type": "main"
+    },
+    {
+      "id": "web-poc",
+      "name": "Web 漏洞检测与 POC 扫描",
+      "path": "skills/web-poc.md",
+      "description": "Web 漏洞检测与 POC 扫描 - 对 Web 服务进行漏洞扫描和 POC 检测",
+      "triggers": [
+        "POC",
+        "漏洞检测",
+        "nuclei",
+        "xray",
+        "Web漏洞"
+      ],
+      "type": "main"
+    },
+    {
+      "id": "bruteforce",
+      "name": "弱口令爆破",
+      "path": "skills/bruteforce.md",
+      "description": "弱口令爆破 - 使用 fscan 对常见服务进行弱口令检测（SSH/RDP/MySQL/Redis 等）",
+      "triggers": [
+        "爆破",
+        "弱口令",
+        "密码",
+        "brute",
+        "字典"
+      ],
+      "type": "main"
+    },
+    {
+      "id": "intel-gather",
+      "name": "信息收集",
+      "path": "skills/intel-gather.md",
+      "description": "信息收集 - 目标资产发现、子域名枚举、端口开放探测等侦查手段",
+      "triggers": [
+        "信息收集",
+        "子域名",
+        "资产收集",
+        "指纹",
+        "收集信息"
+      ],
+      "type": "main"
+    },
+    {
+      "id": "report-gen",
+      "name": "报告生成 + 自动修复",
+      "path": "skills/report-gen.md",
+      "description": "报告生成 + 自动修复 PR — 将渗透发现分类/去重/按CVSS排序，生成结构化报告（HTML/Word/JSON），可选自动生成修复代码并开GitHub PR（CypherFix模式）",
+      "triggers": [
+        "报告",
+        "生成报告",
+        "report"
+      ],
+      "type": "main"
+    },
+    {
+      "id": "vuln-hunter",
+      "name": "漏洞专项检测入口",
+      "path": "skills/vuln-hunter.md",
+      "description": "漏洞专项检测入口 - 涵盖 SQLi/XSS/SSRF/IDOR/命令注入/反序列化等 52 个漏洞方向，提供检测流程、Payload、绕过技巧",
+      "triggers": [
+        "漏洞",
+        "检测",
+        "利用",
+        "专项"
+      ],
+      "type": "main"
+    }
+  ],
+  "vuln_skills": [
+    {
+      "id": "sqli-sql-injection",
+      "name": "SQL Injection",
+      "path": "skills/pentest_skills/sqli-sql-injection/SKILL.md",
+      "description": "SQL injection playbook. Use when input reaches SQL queries, authentication logic, sorting, filtering, reporting, or DB-specific blind and out-of-band execution paths.",
+      "category": "injection",
+      "triggers": [
+        "SQL注入",
+        "SQLi",
+        "sql injection",
+        "注入",
+        "数据库注入",
+        "UNION",
+        "报错注入",
+        "盲注"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "cmdi-command-injection",
+      "name": "OS Command Injection",
+      "path": "skills/pentest_skills/cmdi-command-injection/SKILL.md",
+      "description": "Command injection playbook. Use when user input may reach shell commands, process execution, converters, import pipelines, or blind out-of-band command sinks.",
+      "category": "injection",
+      "triggers": [
+        "命令注入",
+        "RCE",
+        "command injection",
+        "OS命令",
+        "系统命令执行",
+        "exec"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "ssti-server-side-template-injection",
+      "name": "Server-Side Template Injection",
+      "path": "skills/pentest_skills/ssti-server-side-template-injection/SKILL.md",
+      "description": "SSTI playbook. Use when template expressions, server-side rendering, preview features, or templating engines may evaluate attacker-controlled content.",
+      "category": "injection",
+      "triggers": [
+        "SSTI",
+        "模板注入",
+        "template injection",
+        "Jinja2",
+        "Twig",
+        "Freemarker"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "expression-language-injection",
+      "name": "Expression Language Injection",
+      "path": "skills/pentest_skills/expression-language-injection/SKILL.md",
+      "description": "Expression Language injection playbook. Use when Java EL, SpEL, OGNL, or MVEL expressions may evaluate attacker-controlled input in Spring, Struts2, Confluence, or similar frameworks.",
+      "category": "injection",
+      "triggers": [
+        "EL注入",
+        "SpEL",
+        "OGNL",
+        "表达式注入",
+        "Spring EL",
+        "MVEL"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "jndi-injection",
+      "name": "JNDI Injection",
+      "path": "skills/pentest_skills/jndi-injection/SKILL.md",
+      "description": "JNDI injection playbook. Use when Java applications perform JNDI lookups with attacker-controlled names, especially via Log4j2, Spring, or any code path reaching InitialContext.lookup().",
+      "category": "injection",
+      "triggers": [
+        "JNDI注入",
+        "Log4Shell",
+        "Log4j",
+        "JNDI lookup",
+        "RMI",
+        "LDAP注入"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "crlf-injection",
+      "name": "CRLF Injection",
+      "path": "skills/pentest_skills/crlf-injection/SKILL.md",
+      "description": "CRLF injection playbook. Use when user input reaches HTTP response headers, Location redirects, Set-Cookie values, or log files where carriage-return/line-feed characters can split or inject content.",
+      "category": "injection",
+      "triggers": [
+        "CRLF注入",
+        "HTTP响应分割",
+        "header injection",
+        "response splitting"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "email-header-injection",
+      "name": "Email Header Injection",
+      "path": "skills/pentest_skills/email-header-injection/SKILL.md",
+      "description": "Email header injection and spoofing playbook. Use when testing contact forms, email APIs, password reset flows, or any feature that constructs SMTP messages with user-controlled fields. Covers CRLF injection in headers, SPF/DKIM/DMARC bypass, and phishing amplification.",
+      "category": "injection",
+      "triggers": [
+        "邮件头注入",
+        "email injection",
+        "SMTP注入",
+        "邮件伪造",
+        "DKIM bypass"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "xslt-injection",
+      "name": "XSLT Injection",
+      "path": "skills/pentest_skills/xslt-injection/SKILL.md",
+      "description": "XSLT injection testing: processor fingerprinting, XXE and document() SSRF, EXSLT write primitives, PHP/Java/.NET extension RCE surfaces. Use when user-controlled XSLT/stylesheet input or transform endpoints are in scope.",
+      "category": "injection",
+      "triggers": [
+        "XSLT注入",
+        "XSLT",
+        "stylesheet injection",
+        "document() SSRF"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "injection-checking",
+      "name": "Injection Testing Router",
+      "path": "skills/pentest_skills/injection-checking/SKILL.md",
+      "description": "Entry P1 category router for injection testing. Use when routing between XSS, SQLi, SSRF, XXE, SSTI, command injection, and NoSQL injection workflows based on how attacker-controlled input is consumed.",
+      "category": "injection",
+      "triggers": [
+        "注入路由",
+        "injection router",
+        "注入分类"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "auth-sec",
+      "name": "Authentication & Authorization Router",
+      "path": "skills/pentest_skills/auth-sec/SKILL.md",
+      "description": "Entry P1 category router for authentication and authorization. Use when testing login flows, sessions, object authorization, JWT, OAuth, CORS, CSRF, and enterprise SSO weaknesses before any deeper auth topic skill.",
+      "category": "auth",
+      "triggers": [
+        "认证授权",
+        "authentication",
+        "authorization",
+        "登录安全",
+        "session"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "authbypass-authentication-flaws",
+      "name": "Authentication Bypass",
+      "path": "skills/pentest_skills/authbypass-authentication-flaws/SKILL.md",
+      "description": "Authentication bypass testing playbook. Use when assessing login flows, password reset logic, account recovery, MFA bypass, token predictability, brute-force resistance, and session boundary flaws.",
+      "category": "auth",
+      "triggers": [
+        "认证绕过",
+        "auth bypass",
+        "登录绕过",
+        "MFA绕过",
+        "密码重置",
+        "session fixation"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "jwt-oauth-token-attacks",
+      "name": "JWT & OAuth Token Attacks",
+      "path": "skills/pentest_skills/jwt-oauth-token-attacks/SKILL.md",
+      "description": "JWT and OAuth token attack playbook. Use when validating token trust, signing algorithms, key handling, claim abuse, bearer flows, and OAuth account-binding weaknesses.",
+      "category": "auth",
+      "triggers": [
+        "JWT攻击",
+        "OAuth攻击",
+        "token攻击",
+        "JWT none",
+        "RS256 HS256",
+        "alg:none"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "jwt-privilege-escalation",
+      "name": "JWT Privilege Escalation",
+      "path": "skills/pentest_skills/jwt-privilege-escalation/SKILL.md",
+      "description": "JWT-based privilege escalation playbook. Use when JWT tokens are present and role-based access control is suspected. Covers horizontal/vertical escalation, role confusion, and cross-tenant access via token manipulation.",
+      "category": "auth",
+      "triggers": [
+        "JWT提权",
+        "JWT越权",
+        "JWT privilege",
+        "角色混淆",
+        "跨租户",
+        "JWT role"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "api-auth-and-jwt-abuse",
+      "name": "API Auth & JWT Abuse",
+      "path": "skills/pentest_skills/api-auth-and-jwt-abuse/SKILL.md",
+      "description": "API authentication and JWT abuse playbook. Use when testing bearer tokens, API keys, claim trust, header spoofing, rate limits, and API auth boundary weaknesses.",
+      "category": "auth",
+      "triggers": [
+        "API认证",
+        "API key abuse",
+        "bearer token",
+        "API鉴权"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "api-authorization-and-bola",
+      "name": "API Authorization & BOLA",
+      "path": "skills/pentest_skills/api-authorization-and-bola/SKILL.md",
+      "description": "API authorization and BOLA testing playbook. Use when APIs expose object identifiers, nested resources, hidden writable fields, or weak function-level authorization.",
+      "category": "auth",
+      "triggers": [
+        "BOLA",
+        "BFLA",
+        "API越权",
+        "API authorization",
+        "对象级别授权"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "idor-broken-object-authorization",
+      "name": "IDOR / Broken Object Authorization",
+      "path": "skills/pentest_skills/idor-broken-object-authorization/SKILL.md",
+      "description": "IDOR and broken object authorization testing playbook. Use when requests expose object identifiers, tenant boundaries, writable fields, or missing object-level authorization checks.",
+      "category": "auth",
+      "triggers": [
+        "IDOR",
+        "越权",
+        "对象授权",
+        "horizontal privilege",
+        "IDOR漏洞"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "oauth-oidc-misconfiguration",
+      "name": "OAuth & OIDC Misconfiguration",
+      "path": "skills/pentest_skills/oauth-oidc-misconfiguration/SKILL.md",
+      "description": "OAuth and OIDC misconfiguration testing playbook. Use when reviewing redirect URI handling, state and nonce validation, PKCE, token audience, callback binding, and identity-provider trust flaws.",
+      "category": "auth",
+      "triggers": [
+        "OAuth配置",
+        "OIDC配置",
+        "redirect URI",
+        "PKCE bypass",
+        "OpenID Connect"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "saml-sso-assertion-attacks",
+      "name": "SAML SSO Assertion Attacks",
+      "path": "skills/pentest_skills/saml-sso-assertion-attacks/SKILL.md",
+      "description": "SAML SSO assertion attack playbook. Use when testing signature validation, assertion wrapping, audience restrictions, ACS handling, XML trust boundaries, and enterprise SSO flaws.",
+      "category": "auth",
+      "triggers": [
+        "SAML",
+        "SSO攻击",
+        "assertion攻击",
+        "SAML签名绕过",
+        "XML签名"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "type-juggling",
+      "name": "PHP Type Juggling",
+      "path": "skills/pentest_skills/type-juggling/SKILL.md",
+      "description": "PHP type juggling and weak comparison (==) bypass. Use when authentication, HMAC/signature checks, or token validation uses loose equality, numeric coercion, or hash comparisons without strict types.",
+      "category": "auth",
+      "triggers": [
+        "类型混淆",
+        "type juggling",
+        "弱类型比较",
+        "PHP magic hash",
+        "0e绕过"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "ai-assisted-code-audit",
+      "name": "AI-Assisted Front-End Code Audit",
+      "path": "skills/pentest_skills/ai-assisted-code-audit/SKILL.md",
+      "description": "AI-assisted front-end code audit playbook. Use when analyzing JavaScript bundles, Webpack source maps, API clients, or front-end code for vulnerabilities. Designed for DeepSeek-Reasonix prefix-cache optimization.",
+      "category": "frontend",
+      "triggers": [
+        "代码审计",
+        "JS审计",
+        "Webpack",
+        "SourceMap",
+        "前端审计",
+        "API接口审计"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "xss-cross-site-scripting",
+      "name": "Cross-Site Scripting (XSS)",
+      "path": "skills/pentest_skills/xss-cross-site-scripting/SKILL.md",
+      "description": "XSS playbook. Use when user-controlled content reaches HTML, attributes, JavaScript, DOM sinks, uploads, or multi-context rendering paths.",
+      "category": "frontend",
+      "triggers": [
+        "XSS",
+        "跨站脚本",
+        "反射型XSS",
+        "存储型XSS",
+        "DOM XSS"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "dalfox-xss-scanner",
+      "name": "XSS Scanning (Dalfox)",
+      "path": "skills/pentest_skills/dalfox-xss-scanner/SKILL.md",
+      "description": "Dalfox XSS scanner. Use when target has input parameters and nuclei XSS templates are too generic. Dalfox specializes in parameter analysis, DOM XSS, and WAF bypass.",
+      "category": "frontend",
+      "triggers": [
+        "Dalfox",
+        "XSS扫描",
+        "XSS scanner",
+        "DOM XSS扫描",
+        "参数挖掘"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "js-reverse-bypass",
+      "name": "Frontend JS Reverse & Encryption Bypass (SpiderX)",
+      "path": "skills/pentest_skills/js-reverse-bypass/SKILL.md",
+      "description": "SpiderX frontend JS reverse engineering and encryption bypass. Use when target web app uses client-side encryption (AES/RSA/SM4) for request parameters and you need to auto-decrypt to send modified payloads.",
+      "category": "frontend",
+      "triggers": [
+        "JS逆向",
+        "前端加密绕过",
+        "SpiderX",
+        "AES绕过",
+        "RSA绕过",
+        "SM4"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "csrf-cross-site-request-forgery",
+      "name": "CSRF",
+      "path": "skills/pentest_skills/csrf-cross-site-request-forgery/SKILL.md",
+      "description": "CSRF testing playbook. Use when reviewing state-changing web flows, anti-CSRF defenses, SameSite behavior, JSON CSRF, login CSRF, and OAuth state handling.",
+      "category": "frontend",
+      "triggers": [
+        "CSRF",
+        "跨站请求伪造",
+        "SameSite",
+        "JSON CSRF",
+        "Token bypass"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "clickjacking",
+      "name": "Clickjacking",
+      "path": "skills/pentest_skills/clickjacking/SKILL.md",
+      "description": "Clickjacking playbook. Use when testing whether target pages can be framed, whether X-Frame-Options or CSP frame-ancestors are properly configured, and whether UI redress attacks can trigger sensitive actions.",
+      "category": "frontend",
+      "triggers": [
+        "点击劫持",
+        "clickjacking",
+        "iframe",
+        "X-Frame-Options",
+        "UI redress"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "cors-cross-origin-misconfiguration",
+      "name": "CORS Misconfiguration",
+      "path": "skills/pentest_skills/cors-cross-origin-misconfiguration/SKILL.md",
+      "description": "CORS misconfiguration testing playbook. Use when analyzing cross-origin trust, credentialed browser reads, origin reflection, preflight policy bugs, and browser-based access to authenticated APIs.",
+      "category": "frontend",
+      "triggers": [
+        "CORS",
+        "跨域",
+        "origin反射",
+        "Access-Control",
+        "跨域资源共享"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "csp-bypass-advanced",
+      "name": "CSP Bypass (Advanced)",
+      "path": "skills/pentest_skills/csp-bypass-advanced/SKILL.md",
+      "description": "Advanced Content Security Policy bypass techniques. Use when XSS or data exfiltration is blocked by CSP and you need to find policy weaknesses, trusted endpoint abuse, nonce leakage, or exfiltration channels that CSP cannot block.",
+      "category": "frontend",
+      "triggers": [
+        "CSP绕过",
+        "Content Security Policy",
+        "nonce泄漏",
+        "CSP bypass",
+        "script-src"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "dangling-markup-injection",
+      "name": "Dangling Markup Injection",
+      "path": "skills/pentest_skills/dangling-markup-injection/SKILL.md",
+      "description": "Dangling markup injection playbook. Use when HTML injection is possible but JavaScript execution is blocked (CSP, sanitizer strips event handlers, WAF blocks script tags) — exfiltrate CSRF tokens, session data, and page content by injecting unclosed HTML tags.",
+      "category": "frontend",
+      "triggers": [
+        "悬挂标记注入",
+        "dangling markup",
+        "HTML注入",
+        "CSP绕过泄露",
+        "无JS数据窃取"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "open-redirect",
+      "name": "Open Redirect",
+      "path": "skills/pentest_skills/open-redirect/SKILL.md",
+      "description": "Open redirect playbook. Use when URL parameters, form actions, or JavaScript sinks control navigation targets and may redirect users to attacker-controlled destinations.",
+      "category": "frontend",
+      "triggers": [
+        "开放重定向",
+        "open redirect",
+        "URL重定向",
+        "钓鱼"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "web-cache-deception",
+      "name": "Web Cache Deception",
+      "path": "skills/pentest_skills/web-cache-deception/SKILL.md",
+      "description": "Web cache deception and poisoning playbook. Use when CDN, reverse proxy, or application caching may serve sensitive authenticated content to other users due to path confusion or cache key manipulation.",
+      "category": "frontend",
+      "triggers": [
+        "缓存欺骗",
+        "cache deception",
+        "缓存投毒",
+        "cache poisoning",
+        "CDN缓存"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "race-condition",
+      "name": "Race Condition",
+      "path": "skills/pentest_skills/race-condition/SKILL.md",
+      "description": "Race condition and TOCTOU testing for web apps. Use when testing one-time operations, concurrent HTTP abuse, rate-limit bypass, Turbo Intruder gates, HTTP/2 single-packet attacks, and CWE-362-style synchronization gaps.",
+      "category": "frontend",
+      "triggers": [
+        "竞态条件",
+        "race condition",
+        "TOCTOU",
+        "并发攻击",
+        "Turbo Intruder"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "business-logic-vuln",
+      "name": "Business Logic Router",
+      "path": "skills/pentest_skills/business-logic-vuln/SKILL.md",
+      "description": "Entry P1 category router for business logic testing. Use when workflow abuse, race conditions, pricing flaws, or multi-step state attacks matter more than parser-level input injection.",
+      "category": "frontend",
+      "triggers": [
+        "业务逻辑路由",
+        "business logic router",
+        "工作流漏洞"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "business-logic-vulnerabilities",
+      "name": "Business Logic Vulnerabilities",
+      "path": "skills/pentest_skills/business-logic-vulnerabilities/SKILL.md",
+      "description": "Business logic vulnerability playbook. Use when reasoning about workflows, race conditions, price manipulation, coupon abuse, state machines, and multi-step authorization gaps.",
+      "category": "frontend",
+      "triggers": [
+        "业务逻辑漏洞",
+        "价格篡改",
+        "优惠券滥用",
+        "状态机攻击",
+        "workflow bypass"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "file-access-vuln",
+      "name": "File Access Router",
+      "path": "skills/pentest_skills/file-access-vuln/SKILL.md",
+      "description": "Entry P1 category router for file access and upload workflows. Use when testing download endpoints, file paths, local file inclusion, upload flows, preview pipelines, archive extraction, or storage and sharing boundaries.",
+      "category": "file",
+      "triggers": [
+        "文件访问",
+        "LFI",
+        "文件上传",
+        "文件读取",
+        "路径遍历"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "xxe-xml-external-entity",
+      "name": "XML External Entity (XXE)",
+      "path": "skills/pentest_skills/xxe-xml-external-entity/SKILL.md",
+      "description": "XXE playbook. Use when XML, SVG, OOXML, SOAP, or parser-driven imports may resolve external entities, files, or internal network resources.",
+      "category": "file",
+      "triggers": [
+        "XXE",
+        "XML外部实体",
+        "entity injection",
+        "OOB XXE",
+        "SOAP XXE"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "insecure-source-code-management",
+      "name": "Insecure Source Code Management",
+      "path": "skills/pentest_skills/insecure-source-code-management/SKILL.md",
+      "description": "Source control and artifact exposure (.git, .svn, .hg, backups, .env). Use when recon finds VCS paths, 403 on hidden dirs, or backup/config leaks during authorized testing.",
+      "category": "file",
+      "triggers": [
+        ".git泄漏",
+        "源码泄露",
+        "SVN泄露",
+        ".env泄漏",
+        "备份文件"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "api-sec",
+      "name": "API Security Router",
+      "path": "skills/pentest_skills/api-sec/SKILL.md",
+      "description": "Entry P1 category router for API security. Use when choosing between API recon, authorization, token abuse, and hidden-parameter workflows before any deeper API topic skill.",
+      "category": "api",
+      "triggers": [
+        "API安全",
+        "API安全路由",
+        "API测试"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "api-recon-and-docs",
+      "name": "API Recon & Docs",
+      "path": "skills/pentest_skills/api-recon-and-docs/SKILL.md",
+      "description": "API reconnaissance and documentation review playbook. Use when discovering endpoints, schemas, versions, OpenAPI specs, hidden docs, and surface area for API testing.",
+      "category": "api",
+      "triggers": [
+        "API侦察",
+        "API文档",
+        "OpenAPI",
+        "Swagger",
+        "API端点发现",
+        "GraphQL introspection"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "graphql-and-hidden-parameters",
+      "name": "GraphQL & Hidden Parameters",
+      "path": "skills/pentest_skills/graphql-and-hidden-parameters/SKILL.md",
+      "description": "GraphQL and hidden parameter testing playbook. Use when exploring introspection, batching, undocumented fields, hidden parameters, schema abuse, and GraphQL authorization gaps.",
+      "category": "api",
+      "triggers": [
+        "GraphQL",
+        "隐藏参数",
+        "introspection",
+        "undocumented fields",
+        "批量查询"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "http2-specific-attacks",
+      "name": "HTTP/2 Specific Attacks",
+      "path": "skills/pentest_skills/http2-specific-attacks/SKILL.md",
+      "description": "HTTP/2 protocol-specific attack playbook. Use when the target supports HTTP/2 and you need to exploit binary framing, HPACK compression, h2c upgrade smuggling, pseudo-header injection, stream multiplexing abuse, or H2→H1 downgrade translation flaws.",
+      "category": "api",
+      "triggers": [
+        "HTTP/2攻击",
+        "HTTP2 smuggling",
+        "HPACK",
+        "h2c升级",
+        "伪标头注入"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "request-smuggling",
+      "name": "HTTP Request Smuggling",
+      "path": "skills/pentest_skills/request-smuggling/SKILL.md",
+      "description": "HTTP request smuggling and desynchronization testing. Use when front proxies, CDNs, or load balancers disagree with the origin on message framing (Content-Length vs Transfer-Encoding), on HTTP/2→HTTP/1 translation, or when exploring client-side desync via browser fetch pipelines.",
+      "category": "api",
+      "triggers": [
+        "请求走私",
+        "request smuggling",
+        "CL.TE",
+        "TE.CL",
+        "desync",
+        "HTTP走私"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "http-parameter-pollution",
+      "name": "HTTP Parameter Pollution (HPP)",
+      "path": "skills/pentest_skills/http-parameter-pollution/SKILL.md",
+      "description": "HTTP Parameter Pollution (HPP): duplicate query/body keys parsed differently by servers, proxies, WAFs, and app frameworks. Use when filters and application layers disagree on which value wins.",
+      "category": "api",
+      "triggers": [
+        "HPP",
+        "参数污染",
+        "HTTP Parameter Pollution",
+        "重复参数"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "http-host-header-attacks",
+      "name": "HTTP Host Header Attacks",
+      "path": "skills/pentest_skills/http-host-header-attacks/SKILL.md",
+      "description": "HTTP Host header injection and routing abuse playbook. Use when the application trusts the Host header for generating URLs, routing requests, or access control — enabling password reset poisoning, web cache poisoning, SSRF via routing, and virtual host bypass.",
+      "category": "api",
+      "triggers": [
+        "Host头注入",
+        "Host header",
+        "密码重置投毒",
+        "虚拟主机绕过"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "websocket-security",
+      "name": "WebSocket Security",
+      "path": "skills/pentest_skills/websocket-security/SKILL.md",
+      "description": "WebSocket handshake, CSWSH, tooling (wsrepl, ws-harness, Burp), and common flaws. Use when apps use real-time channels, chat, notifications, or WS-backed APIs.",
+      "category": "api",
+      "triggers": [
+        "WebSocket",
+        "CSWSH",
+        "实时通信",
+        "ws hijacking",
+        "WebSocket劫持"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "deserialization-insecure",
+      "name": "Insecure Deserialization",
+      "path": "skills/pentest_skills/deserialization-insecure/SKILL.md",
+      "description": "Insecure deserialization playbook. Use when Java, PHP, or Python applications deserialize untrusted data via ObjectInputStream, unserialize, pickle, or similar mechanisms that may lead to RCE, file access, or privilege escalation.",
+      "category": "advanced",
+      "triggers": [
+        "反序列化",
+        "deserialization",
+        "gadget chain",
+        "ysoserial",
+        "pickle"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "jyso-exploit",
+      "name": "JNDI Injection & Deserialization (JYso)",
+      "path": "skills/pentest_skills/jyso-exploit/SKILL.md",
+      "description": "JYso JNDI injection + deserialization + RCE tool. Use instead of legacy JNDI-Injection-Exploit and ysoserial. Supports echo response, memory shell injection, and multiple gadget chains in a single tool.",
+      "category": "advanced",
+      "triggers": [
+        "JYso",
+        "JNDI利用",
+        "反序列化利用",
+        "内存马注入",
+        "回显利用"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "memshell-injection",
+      "name": "Java Memory Shell Injection (MemShellParty)",
+      "path": "skills/pentest_skills/memshell-injection/SKILL.md",
+      "description": "Java memory shell injection via MemShellParty. Use when target is a Java web app (Tomcat, Spring Boot, Jetty, WebLogic, etc.) and you need persistent access without leaving disk artifacts.",
+      "category": "advanced",
+      "triggers": [
+        "内存马",
+        "memory shell",
+        "Java内存注入",
+        "MemShellParty",
+        "无文件Webshell"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "prototype-pollution",
+      "name": "Prototype Pollution",
+      "path": "skills/pentest_skills/prototype-pollution/SKILL.md",
+      "description": "Prototype pollution testing for JavaScript stacks. Use when user input is merged into objects (query parsers, JSON bodies, deep assign), when configuring libraries via untrusted keys, or when hunting RCE gadgets via polluted Object.prototype.",
+      "category": "advanced",
+      "triggers": [
+        "原型链污染",
+        "prototype pollution",
+        "__proto__",
+        "constructor.prototype"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "prototype-pollution-advanced",
+      "name": "Prototype Pollution Advanced",
+      "path": "skills/pentest_skills/prototype-pollution-advanced/SKILL.md",
+      "description": "Advanced prototype pollution playbook — server-side RCE, client-side gadgets, filter bypasses, and detection techniques. Companion to prototype-pollution basics. Use when you've confirmed pollution and need to escalate to code execution.",
+      "category": "advanced",
+      "triggers": [
+        "原型链污染进阶",
+        "PP RCE",
+        "gadget利用",
+        "Node.js RCE"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "dns-rebinding-attacks",
+      "name": "DNS Rebinding Attacks",
+      "path": "skills/pentest_skills/dns-rebinding-attacks/SKILL.md",
+      "description": "DNS rebinding attack playbook. Use when testing applications that trust DNS resolution for origin checks, interact with internal services from browser context, or when SSRF is not possible server-side but the target has client-side fetch/XHR to attacker-controlled domains.",
+      "category": "advanced",
+      "triggers": [
+        "DNS重绑定",
+        "DNS rebinding",
+        "内网穿透",
+        "TTL绕过"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "subdomain-takeover",
+      "name": "Subdomain Takeover",
+      "path": "skills/pentest_skills/subdomain-takeover/SKILL.md",
+      "description": "Subdomain takeover detection and exploitation playbook. Use when targets have dangling CNAME/NS/MX records pointing to deprovisioned cloud resources, expired third-party services, or unclaimed SaaS tenants.",
+      "category": "advanced",
+      "triggers": [
+        "子域名接管",
+        "subdomain takeover",
+        "CNAME接管",
+        "dangling DNS"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "privilege-escalation",
+      "name": "Privilege Escalation (PEASS-ng)",
+      "path": "skills/pentest_skills/privilege-escalation/SKILL.md",
+      "description": "PEASS-ng privilege escalation. Use after getting a shell — linpeas.sh (Linux) or winpeas.exe (Windows) for automated enumeration of misconfigurations, SUID, cron, capabilities, service permissions, and more.",
+      "category": "advanced",
+      "triggers": [
+        "提权",
+        "privilege escalation",
+        "linpeas",
+        "winpeas",
+        "SUID提权"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "sstimap-exploit",
+      "name": "SSTI Automated Exploitation (SSTImap)",
+      "path": "skills/pentest_skills/sstimap-exploit/SKILL.md",
+      "description": "SSTImap automated SSTI detection and exploitation. Use when template expressions or server-side rendering may evaluate attacker-controlled content. Complements the existing ssti-server-side-template-injection skill with automated tooling.",
+      "category": "advanced",
+      "triggers": [
+        "SSTImap",
+        "SSTI自动检测",
+        "模板注入自动化",
+        "SSTI RCE"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "waf-bypass-techniques",
+      "name": "WAF Bypass Techniques",
+      "path": "skills/pentest_skills/waf-bypass-techniques/SKILL.md",
+      "description": "WAF bypass methodology and generic evasion techniques. Use when a web application firewall blocks injection payloads (SQLi, XSS, RCE) and you need to craft bypasses using encoding, protocol-level tricks, or WAF-specific weaknesses.",
+      "category": "advanced",
+      "triggers": [
+        "WAF绕过",
+        "WAF bypass",
+        "防火墙绕过",
+        "Cloudflare绕过",
+        "ModSecurity绕过"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "401-403-bypass-techniques",
+      "name": "401/403 Bypass Techniques",
+      "path": "skills/pentest_skills/401-403-bypass-techniques/SKILL.md",
+      "description": "401/403 bypass playbook. Use when encountering access-denied responses on admin panels, API endpoints, or restricted paths. Covers path manipulation, HTTP method tampering, header injection, protocol downgrade, and automated bypass tools.",
+      "category": "advanced",
+      "triggers": [
+        "403绕过",
+        "401绕过",
+        "forbidden bypass",
+        "路径规范化绕过",
+        "X-Original-URL"
+      ],
+      "type": "vuln"
+    }
+  ]
+}
