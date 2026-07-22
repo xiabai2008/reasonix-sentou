@@ -22,6 +22,9 @@ config/dictionaries/
 # --- Reasonix 运行时数据 ---
 .reasonix/
 
+# --- WorkBuddy 会话记忆（本地专用，不上传远程） ---
+.workbuddy/memory/
+
 # --- 日志与临时文件 ---
 clean/
 tmp/
