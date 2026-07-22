@@ -95,6 +95,10 @@ def parse_scope_simple(path: Path) -> dict:
         list_match = re.match(r'^\s+-\s+(.+)$', raw_line)
         if list_match and current_list_key:
             value = list_match.group(1).strip()
+            # 去除行内注释（不在引号内的 #）
+            comment_pos = _find_comment(value)
+            if comment_pos >= 0:
+                value = value[:comment_pos].strip()
             # 去除引号
             if (value.startswith('"') and value.endswith('"')) or \
                (value.startswith("'") and value.endswith("'")):

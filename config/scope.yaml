@@ -22,20 +22,25 @@ blocked:
 allowed_cidr:
   # - "192.168.1.0/24"   # 示例：授权内网段
   # - "10.10.10.0/24"    # 示例：授权内网段
+  - "172.17.0.0/16"      # 本地 Docker 默认 bridge 网段（靶场容器）
 
 # 授权的域名（支持通配符 *）
 allowed_domains:
   # - "*.example.com"   # 示例：授权域名及子域名
   # - "test.target.org" # 示例：授权精确域名
+  - "localhost"         # 本地 Docker 靶场（vulhub/DVWA/WebGoat...）
 
 # 授权的精确 IP
 allowed_ips:
   # - "203.0.113.50"    # 示例：授权单个外网 IP
+  - "127.0.0.1"         # 本地回环（docker-compose 端口发布到 localhost）
 
 # 授权的 URL 前缀
 allowed_url_prefixes:
   # - "http://test.example.com"
   # - "https://test.example.com"
+  - "http://127.0.0.1"
+  - "http://localhost"
 
 # 备注/授权来源
 notes: |
