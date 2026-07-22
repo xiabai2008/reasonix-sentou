@@ -4,6 +4,13 @@
 > 而不是只在理论上"装了工具"。所有目标均为本地回环（127.0.0.1 / localhost），
 > 已写入 `config/scope.yaml` 白名单，**破晓扫描本地靶机合法合规**。
 
+> 🚀 **嫌逐条敲命令麻烦？** 直接用一键脚本：
+> ```powershell
+> powershell -ExecutionPolicy Bypass -File start-all-ranges.ps1
+> ```
+> 它会自动：检查 Docker → 缺 vulhub 就浅克隆 → 起全部靶场（含 DVWA/Juice Shop）→ 逐个校验 scope.yaml → 打印破晓目标清单。
+> 加 `-WhatIf` 只看不跑，加 `-SkipDockerImages` 只起 vulhub 靶场。
+
 ---
 
 ## 0. 前置条件
