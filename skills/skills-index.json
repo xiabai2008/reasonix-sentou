@@ -5,8 +5,8 @@
     "description": "Reasonix 渗透工作台技能索引 — 供 Reasonix 按需加载，避免全量读取",
     "stats": {
       "main_skills": 7,
-      "vuln_skills": 59,
-      "total": 66
+      "vuln_skills": 64,
+      "total": 71
     }
   },
   "main_skills": [
@@ -817,6 +817,51 @@
         "WebSocket劫持"
       ],
       "type": "vuln"
+    },
+    {
+      "id": "ctf-web",
+      "name": "CTF Web — 快速解题",
+      "path": "skills/pentest_skills/ctf-web/SKILL.md",
+      "description": "CTF Web 专项快速解题模式。覆盖 SQLi/LFI/SSTI/SSRF/PHP反序列化/JWT伪造等 CTF 高频考点，含速效 Payload 集和出题人思维分析。CTF 中速度优先，非预期解也是分。",
+      "category": "ctf",
+      "triggers": ["CTF","ctf","夺旗","Capture The Flag","CTF Web","CTF题","CTF题目"],
+      "type": "ctf"
+    },
+    {
+      "id": "ctf-reverse",
+      "name": "CTF Reverse — 逆向工程",
+      "path": "skills/pentest_skills/ctf-reverse/SKILL.md",
+      "description": "CTF 逆向专项。覆盖 C/C++/Java/Python/C#/Go/Rust/WASM 各平台逆向方法，含常见加密算法识别（TEA/AES/DES/RC4）和花指令/反调试绕过。",
+      "category": "ctf",
+      "triggers": ["逆向","reverse","脱壳","反编译","IDA","Ghidra","jadx"],
+      "type": "ctf"
+    },
+    {
+      "id": "ctf-pwn",
+      "name": "CTF PWN — 二进制漏洞利用",
+      "path": "skills/pentest_skills/ctf-pwn/SKILL.md",
+      "description": "CTF PWN 专项。覆盖栈溢出/堆利用/格式化字符串，含 checksec 安全机制分析、ROP 链构造、ret2libc、one_gadget 等标准利用模板。需要 WSL Kali + pwntools 环境。",
+      "category": "ctf",
+      "triggers": ["PWN","pwn","栈溢出","堆利用","ROP","shellcode","缓冲区溢出"],
+      "type": "ctf"
+    },
+    {
+      "id": "ctf-crypto",
+      "name": "CTF Crypto — 密码学",
+      "path": "skills/pentest_skills/ctf-crypto/SKILL.md",
+      "description": "CTF 密码学专项。覆盖经典密码（凯撒/维吉尼亚/栅栏）和现代密码（RSA攻击/哈希爆破/XOR crib dragging），含 CyberChef/RsaCtfTool 工具链。",
+      "category": "ctf",
+      "triggers": ["密码","crypto","解密","RSA","AES","哈希","编码","encode","decode"],
+      "type": "ctf"
+    },
+    {
+      "id": "ctf-misc",
+      "name": "CTF Misc — 杂项",
+      "path": "skills/pentest_skills/ctf-misc/SKILL.md",
+      "description": "CTF Misc 专项。覆盖图片隐写（LSB/zsteg/steghide）、流量分析（pcap/Wireshark）、压缩包破解（伪加密/爆破）、音频隐写（频谱图）、内存取证（Volatility）。",
+      "category": "ctf",
+      "triggers": ["misc","杂项","隐写","stego","流量分析","pcap","取证","forensics"],
+      "type": "ctf"
     },
     {
       "id": "deserialization-insecure",

@@ -161,6 +161,20 @@ AI 编排脚本:
 ### 用户说"批量扫"
 → 从文件读目标列表，逐批调度工具
 
+### 用户说"打CTF" / "CTF题目" / "这个CTF"
+→ **首先加载对应方向的 CTF 技能**：
+  - Web 题 → 加载 `ctf-web`
+  - 逆向题 → 加载 `ctf-reverse`
+  - PWN 题 → 加载 `ctf-pwn`
+  - 密码题 → 加载 `ctf-crypto`
+  - 杂项题 → 加载 `ctf-misc`
+→ CTF 和常规渗透的关键差异：
+  - **优先级: 速度 > 全面性** — 找到 flag 就停，不要像常规渗透一样做完整评估
+  - **flag 位置固定** — 优先尝试 `/flag`, `/flag.txt`, `flag{xxx}` 格式
+  - **源码泄露是捷径** — .git/www.zip/.bak 优先扫，出题人经常故意留
+  - **非预期解也是分** — 出题人预期用 SQLi，你用 LFI 直接读源码也算对
+→ 解题完成后用 `scripts/exp-add.py` 追加 CTF 经验
+
 ### 输出目录分工
 → `results/` 保存原始扫描结果、AI prompt、JSON 中间结果
 → `reports/` 保存最终 HTML / DOCX / PDF 报告
