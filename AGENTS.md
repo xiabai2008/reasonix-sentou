@@ -442,6 +442,29 @@ bash /mnt/c/Tools/reasonix_sentou/scripts/wsl-setup.sh
 date,experience_id,model,cache_hit_rate,total_tokens,total_cost_cny,turns,effective_turns,notes
 ```
 
+### 5.1 经验索引自动化
+
+写完 `pentest-experience-NNN.md` 后，**必须**调用以下命令追加到结构化索引（否则统计脚本看不到）：
+
+```bash
+python scripts/exp-add.py \
+  --id EXP-NNN \
+  --target "目标名(如DVWA)" \
+  --category sqli \
+  --cvss 7.5 \
+  --tools "curl,sqlmap" \
+  --skills "sqli-sql-injection" \
+  --tags "dvwa,union,waf-bypass" \
+  --chain "信息收集;SQL注入;凭据提取" \
+  --impact "数据泄露" \
+  --lesson "关键教训一句话" \
+  --failed "失败尝试1;失败尝试2" \
+  --tokens 5000 --time 30 --rating 4
+```
+
+**不需要手动编辑 YAML 文件**，`exp-add.py` 自动追加到 `memory/experiences-index.yaml`。
+后续用 `python scripts/exp-stats.py` 查看统计分析。
+
 ### 6. 攻击链追踪（Attack Chain Graph）
 
 > 借鉴 RedAmon Neo4j 知识图谱：用轻量级方式追踪漏洞之间的关联，不做 Neo4j 运维。
