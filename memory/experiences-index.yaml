@@ -135,3 +135,33 @@ experiences:
     cost_time_min: 45
     rating: 5
     tags: [dvwa, sqli, union, boolean-blind, waf-bypass, hex-encoding, real-escape-string, vampi, jwt, alg-none, idor, juiceshop, webgoat, 靶场联动]
+
+  - id: EXP-013
+    date: "2026-07-23"
+    target: "DVWA (localhost:8080)"
+    target_type: url
+    target_tech: [php, mariadb, apache]
+    vuln_category: multi
+    vuln_name: "XSS(3类型) + CMDi + CSRF + LFI + File Upload 全清"
+    cvss: 9.8
+    tools_used: [curl, python3, sed]
+    skills_used: [xss-cross-site-scripting, cmdi-command-injection, csrf-cross-site-request-forgery, path-traversal-lfi, upload-insecure-files]
+    waf_present: false
+    waf_bypassed: false
+    attack_chain:
+      - "XSS Reflected: <script>alert(1)</script> 无过滤直接反射"
+      - "XSS Stored: Guestbook 持久化存储,刷新后仍执行"
+      - "XSS DOM: JS document.write拼接 → '> 闭合value属性注入script"
+      - "CMDi: ;cat /etc/passwd → RCE (www-data)"
+      - "CSRF: GET /csrf/?password_new=xxx 无token保护"
+      - "LFI: /etc/passwd 绝对路径 + php://filter 读config.inc.php源码"
+      - "File Upload: PHP webshell → hackable/uploads/pwn.php?cmd=id"
+    final_impact: "完整攻击链: LFI泄露DB凭据 → Upload WebShell → RCE → 内网横向潜力"
+    lessons: "php://filter/convert.base64-encode/resource= 是LFI转源码读取的标准路径; DOM XSS curl无法验证但JS源码审计可确认; File Upload的curl -F在Windows上有兼容问题,用Python requests更可靠"
+    failed_attempts:
+      - "Windows curl -F multipart上传失败(Python requests替代成功)"
+      - "curl验证DOM XSS不可能(纯客户端JS执行)"
+    cost_tokens: 10000
+    cost_time_min: 35
+    rating: 5
+    tags: [dvwa, xss, reflected, stored, dom, cmdi, csrf, lfi, php-filter, file-upload, webshell, rce, attack-chain]
