@@ -1,0 +1,114 @@
+# ============================================================
+# Reasonix 渗透作战靶场 — Docker Compose
+# ============================================================
+# 启动:  docker compose up -d
+# 停止:  docker compose down
+# 重置:  docker compose down -v && docker compose up -d
+# 状态:  docker compose ps
+#
+# 四个靶场覆盖 4 种技术栈，对应项目内 59 个漏洞技能：
+#
+#   DVWA      (PHP/MySQL)      → SQLi, XSS, CSRF, CMDi, LFI, Upload
+#   Juice Shop (Node.js/Angular) → JWT, SSRF, SSTI, 原型链污染, API 滥用
+#   WebGoat   (Java/Spring)    → 认证绕过, 反序列化, XXE, IDOR, JNDI
+#   VAmPI     (Python/Flask)   → JWT 越权, BOLA, API 信息泄露
+# ============================================================
+
+services:
+  # ==========================================
+  # 1. DVWA — PHP + MySQL 经典靶场
+  # ==========================================
+  dvwa:
+    image: vulnerables/web-dvwa:latest
+    container_name: rx-dvwa
+    ports:
+      - "8080:80"
+    environment:
+      - MYSQL_PASS=reasonix123
+    depends_on:
+      dvwa-db:
+        condition: service_started
+    restart: unless-stopped
+    networks:
+      - range-net
+    labels:
+      - "reasonix.target=dvwa"
+      - "reasonix.stack=php"
+
+  dvwa-db:
+    image: mysql:5.7
+    container_name: rx-dvwa-db
+    environment:
+      MYSQL_ROOT_PASSWORD: reasonix123
+      MYSQL_DATABASE: dvwa
+      MYSQL_USER: dvwa
+      MYSQL_PASSWORD: reasonix123
+    volumes:
+      - dvwa-db-data:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - range-net
+
+  # ==========================================
+  # 2. Juice Shop — Node.js 现代 SPA
+  # ==========================================
+  juiceshop:
+    image: bkimminich/juice-shop:latest
+    container_name: rx-juiceshop
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=unsafe
+    restart: unless-stopped
+    networks:
+      - range-net
+    labels:
+      - "reasonix.target=juiceshop"
+      - "reasonix.stack=nodejs"
+
+  # ==========================================
+  # 3. WebGoat + WebWolf — Java Spring Boot
+  # ==========================================
+  webgoat:
+    image: webgoat/goatandwolf:latest
+    container_name: rx-webgoat
+    ports:
+      - "8081:8080"   # WebGoat
+      - "9090:9090"   # WebWolf
+    environment:
+      - WEBGOAT_PORT=8080
+      - WEBWOLF_PORT=9090
+      - WEBGOAT_HSQLDB_ENABLED=true
+      - TZ=Asia/Shanghai
+    restart: unless-stopped
+    networks:
+      - range-net
+    labels:
+      - "reasonix.target=webgoat"
+      - "reasonix.stack=java"
+
+  # ==========================================
+  # 4. VAmPI — Python Flask REST API
+  # ==========================================
+  vampi:
+    image: erev0s/vampi:latest
+    container_name: rx-vampi
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - SECRET_KEY=reasonix-jwt-secret-dev
+    restart: unless-stopped
+    networks:
+      - range-net
+    labels:
+      - "reasonix.target=vampi"
+      - "reasonix.stack=python"
+
+volumes:
+  dvwa-db-data:
+
+networks:
+  range-net:
+    driver: bridge
+    name: rx-range-net

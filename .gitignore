@@ -82,3 +82,7 @@ Desktop.ini
 
 # --- 历史脚本归档（保留但不需要 Git 追踪） ---
 archive/
+
+# --- Docker & 靶场 ---
+docker-compose.override.yml
+targets/data/

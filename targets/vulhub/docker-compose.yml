@@ -1,0 +1,95 @@
+# ============================================================
+# VulHub CVE 专项练习环境
+# ============================================================
+# 单独启动:  docker compose -f targets/vulhub/docker-compose.yml up -d <service>
+# 停止:      docker compose -f targets/vulhub/docker-compose.yml down
+#
+# 每个 CVE 环境都是独立容器，练完即删。
+# 镜像来源: vulhub 官方镜像 (https://github.com/vulhub/vulhub)
+# ============================================================
+
+services:
+  # ==========================================
+  # ThinkPHP 5.x 远程代码执行
+  # 练习: 框架漏洞利用, RCE, WebShell
+  # 技能: cmdi-command-injection, 通用 RCE
+  # ==========================================
+  thinkphp5-rce:
+    image: vulhub/thinkphp:5.0.23
+    container_name: rx-cve-thinkphp5
+    ports:
+      - "8082:80"
+    restart: "no"
+    networks:
+      - vulhub-net
+    labels:
+      - "reasonix.cve=CVE-2018-20062"
+
+  # ==========================================
+  # Apache Log4j2 JNDI 注入 (Log4Shell)
+  # 练习: JNDI注入, LDAP劫持, 出站利用
+  # 技能: jndi-injection, jyso-exploit
+  # ==========================================
+  log4j-cve:
+    image: vulhub/log4j:2.14.1
+    container_name: rx-cve-log4j
+    ports:
+      - "8083:8080"
+    restart: "no"
+    networks:
+      - vulhub-net
+    labels:
+      - "reasonix.cve=CVE-2021-44228"
+
+  # ==========================================
+  # Apache Shiro 反序列化 (RememberMe)
+  # 练习: Java反序列化, 密钥爆破, 内存马
+  # 技能: deserialization-insecure, jyso-exploit
+  # ==========================================
+  shiro-cve:
+    image: vulhub/shiro:1.2.4
+    container_name: rx-cve-shiro
+    ports:
+      - "8084:8080"
+    restart: "no"
+    networks:
+      - vulhub-net
+    labels:
+      - "reasonix.cve=CVE-2016-4437"
+
+  # ==========================================
+  # Weblogic 反序列化 (T3/IIOP)
+  # 练习: Java反序列化, T3协议, IIOP
+  # 技能: deserialization-insecure, jyso-exploit
+  # ==========================================
+  weblogic-cve:
+    image: vulhub/weblogic:12.2.1.3-2018
+    container_name: rx-cve-weblogic
+    ports:
+      - "7001:7001"
+    restart: "no"
+    networks:
+      - vulhub-net
+    labels:
+      - "reasonix.cve=CVE-2020-14882"
+
+  # ==========================================
+  # Struts2 S2-045 (Jakarta Multipart)
+  # 练习: OGNL注入, 框架RCE, Content-Type注入
+  # 技能: expression-language-injection, cmdi-command-injection
+  # ==========================================
+  struts2-cve:
+    image: vulhub/struts2:2.3.32
+    container_name: rx-cve-struts2
+    ports:
+      - "8085:8080"
+    restart: "no"
+    networks:
+      - vulhub-net
+    labels:
+      - "reasonix.cve=CVE-2017-5638"
+
+networks:
+  vulhub-net:
+    driver: bridge
+    name: rx-vulhub-net
