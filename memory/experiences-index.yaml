@@ -1,0 +1,109 @@
+# ============================================================
+# Reasonix 渗透经验 — 结构化案例索引
+# ============================================================
+# 每次渗透任务后追加一条记录，格式如下。
+# 使用 exp-stats.py 统计分析。
+
+experiences:
+  - id: EXP-001
+    date: "2026-07-15"
+    target: "192.168.1.100"
+    target_type: ip
+    target_tech: [windows, iis, mssql]
+    vuln_category: sqli
+    vuln_name: "SQL Injection (error-based)"
+    cvss: 7.5
+    tools_used: [sqlmap, nuclei, httpx]
+    skills_used: [sqli-sql-injection]
+    waf_present: false
+    waf_bypassed: false
+    attack_chain:
+      - "端口扫描发现 1433 (MSSQL)"
+      - "SQL 注入获取数据库列表"
+      - "xp_cmdshell 执行系统命令"
+    final_impact: "RCE"
+    lessons: "MSSQL 默认配置下 xp_cmdshell 可被 SA 用户启用"
+    failed_attempts:
+      - "尝试 UNION 注入失败（列数不匹配）"
+      - "盲注速度太慢，改用 error-based"
+    cost_tokens: 8000
+    cost_time_min: 30
+    rating: 4  # 1-5, 学习价值评分
+    tags: [mssql, error-based, xp_cmdshell, sa-account]
+
+  - id: EXP-002
+    date: "2026-07-16"
+    target: "exam-web.example.com"
+    target_type: url
+    target_tech: [nginx, php, flask]
+    vuln_category: auth
+    vuln_name: "弱口令登录爆破"
+    cvss: 8.0
+    tools_used: [brute.py, httpx]
+    skills_used: [bruteforce, authbypass-authentication-flaws]
+    waf_present: false
+    waf_bypassed: false
+    attack_chain:
+      - "httpx 识别到 Flask Web 应用"
+      - "登录页无验证码保护"
+      - "admin/admin123 弱口令直接登录"
+    final_impact: "管理员权限获取"
+    lessons: "Flask 考试系统常使用简单默认密码，先试弱口令字典再考虑复杂攻击"
+    failed_attempts:
+      - "SQL 注入未发现注入点"
+      - "SSTI 测试无回显"
+    cost_tokens: 3000
+    cost_time_min: 10
+    rating: 3
+    tags: [flask, weak-password, admin-login, 考试系统]
+
+  - id: EXP-003
+    date: "2026-07-17"
+    target: "cms.example.org"
+    target_type: url
+    target_tech: [apache, php, eyoucms]
+    vuln_category: rce
+    vuln_name: "EyouCMS 模板编辑器 RCE"
+    cvss: 9.8
+    tools_used: [nuclei, burp, ffuf]
+    skills_used: [cmdi-command-injection, business-logic-vulnerabilities]
+    waf_present: false
+    waf_bypassed: false
+    attack_chain:
+      - "ffuf 发现 /admin/ 后台路径"
+      - "admin/admin123 登录后台"
+      - "模板编辑器写入 PHP 代码"
+      - "file_put_contents() 写入 WebShell"
+    final_impact: "RCE"
+    lessons: "CMS 后台的模板编辑器是最危险的入口——代码执行权限通常不受限制"
+    failed_attempts:
+      - "文件上传限制 .php 扩展名，无法直接上传 Webshell"
+    cost_tokens: 12000
+    cost_time_min: 60
+    rating: 5
+    tags: [cms, eyoucms, template-editor, file_put_contents, webshell]
+
+  - id: EXP-004
+    date: "2026-07-18"
+    target: "api.internal.com"
+    target_type: url
+    target_tech: [nodejs, express, jwt]
+    vuln_category: auth
+    vuln_name: "JWT alg:none 绕过"
+    cvss: 8.5
+    tools_used: [jwt_tool, curl, httpx]
+    skills_used: [jwt-privilege-escalation, jwt-oauth-token-attacks]
+    waf_present: false
+    waf_bypassed: false
+    attack_chain:
+      - "httpx 发现 Swagger 文档暴露"
+      - "API 使用 JWT 认证"
+      - "alg:none 绕过签名验证"
+      - "修改 role:admin 获取管理权限"
+    final_impact: "权限提升"
+    lessons: "服务端未强制检查 alg 字段导致 JWT 签名被完全绕过"
+    failed_attempts: []
+    cost_tokens: 5000
+    cost_time_min: 20
+    rating: 4
+    tags: [jwt, alg-none, swagger, api, admin-bypass]
