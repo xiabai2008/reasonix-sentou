@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
-PYTHON="python"
-exec "$PYTHON" -m wvs "$@"
+# RayScan v2.0 — 全栈漏洞扫描器 (8种SQLi + 6种XSS + 12种OA + 多引擎聚合)
+# 如已 pip install: exec python -m wvs "$@"
+SCRIPT_DIR="/d/HZR_PROJECTS/RayScan/RayScan"
+cd "$SCRIPT_DIR" && exec python -m wvs "$@"

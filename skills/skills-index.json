@@ -5,8 +5,8 @@
     "description": "Reasonix 渗透工作台技能索引 — 供 Reasonix 按需加载，避免全量读取",
     "stats": {
       "main_skills": 7,
-      "vuln_skills": 64,
-      "total": 71
+      "vuln_skills": 67,
+      "total": 74
     }
   },
   "main_skills": [
@@ -862,6 +862,33 @@
       "category": "ctf",
       "triggers": ["misc","杂项","隐写","stego","流量分析","pcap","取证","forensics"],
       "type": "ctf"
+    },
+    {
+      "id": "poxiao-src-toolkit",
+      "name": "破晓 PoXiao — SRC挖洞工具链",
+      "path": "skills/pentest_skills/poxiao-src-toolkit/SKILL.md",
+      "description": "破晓 PoXiao v3.0 SRC 挖洞工具链。257 内置 CVE + 215 POC + 三层降噪(误报率5%) + 6 工具链(frostmoon/vernalequinox/jingzhe/guanxing/xiazhi) + MCP AI 接入。实测 110+ 厂商 7.6秒/30目标。",
+      "category": "self-developed",
+      "triggers": ["SRC","挖洞","补天","poxiao","frostmoon","jingzhe","guanxing","xiazhi","vernalequinox"],
+      "type": "self-developed"
+    },
+    {
+      "id": "rayscan-scanner",
+      "name": "RayScan — 全栈Web漏洞扫描器",
+      "path": "skills/pentest_skills/rayscan-scanner/SKILL.md",
+      "description": "RayScan v2.0 全栈 Web 漏洞扫描器。8种SQLi + 6种XSS + 12种OA专项 + 多引擎聚合(Nuclei 12.5w/AWVS/Nessus/MSF)。流式检测、三层降噪、双路径分流。",
+      "category": "self-developed",
+      "triggers": ["rayScan","RayScan","全栈扫描","OA扫描","多引擎","wvs"],
+      "type": "self-developed"
+    },
+    {
+      "id": "ruoyi-scan",
+      "name": "Ruoyi-Scan — 若依框架专项",
+      "path": "skills/pentest_skills/ruoyi-scan/SKILL.md",
+      "description": "Ruoyi-Scan v1.1 若依框架专项漏洞扫描。任意文件读取/SQL注入/Druid弱口令/默认口令 + 3条漏洞利用链(ruoyi_sql_to_rce/defaultpw_to_webshell/nacos_to_dbcreds)。",
+      "category": "self-developed",
+      "triggers": ["若依","RuoYi","ruoyi","ruoyi-scan","/ruoyi/","/prod-api/"],
+      "type": "self-developed"
     },
     {
       "id": "deserialization-insecure",

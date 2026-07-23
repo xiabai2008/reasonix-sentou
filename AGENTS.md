@@ -36,7 +36,7 @@
 【模糊测试】 ffuf（Web Fuzzer）, gobuster（目录/VHost爆破）
 【爬虫/URL】 katana（45MB爬虫）, gau（URL收集）
 【子域名】   subfinder（被动枚举）, dnsx（DNS工具包）, oneforall（综合收集）
-【自研工具】 poxiao（破晓-SRC挖洞）, rayscan（全栈SQLi/XSS扫描）
+【自研工具】 poxiao（破晓 v3.0-SRC挖洞/257CVE/MCP）, rayscan（全栈扫描/8种SQLi/12种OA/多引擎聚合）, ruoyi-scan（若依框架专项/漏洞利用链）
 【SQL注入】  sqlmap（自动检测利用）
 【内网横向】 impacket（psexec/wmiexec/secretsdump）
 【目录扫描】 dirsearch, feroxbuster（高速Rust版）
@@ -174,6 +174,23 @@ AI 编排脚本:
   - **源码泄露是捷径** — .git/www.zip/.bak 优先扫，出题人经常故意留
   - **非预期解也是分** — 出题人预期用 SQLi，你用 LFI 直接读源码也算对
 → 解题完成后用 `scripts/exp-add.py` 追加 CTF 经验
+
+### 用户说"SRC 挖洞" / "补天" / "挖洞"
+→ **首选自研工具 poxiao**（257 内置 CVE + 三层降噪 + 补天报告格式）
+→ 侦察阶段用 frostmoon（子域名）+ vernalequinox（被动收集）
+→ 验证阶段用 jingzhe（默认凭据/Git泄露/配置检测）
+→ 深度扫描用 xiazhi（215 POC + 代理池 + UA 轮换 + 隐匿模式）
+
+### 用户说"全面扫描" / "跑一下这个网站"
+→ **首选 RayScan**（8种SQLi + 6种XSS + 12种OA + 多引擎聚合）
+→ 快速模式: `rayscan scan <url> --rate 10`
+→ SRC 模式: `rayscan use src-quick -u <url>`
+→ 全量模式: `rayscan scan <url> --all-modules`
+
+### 用户说"若依" / "RuoYi" / "/ruoyi/"
+→ **首选 ruoyi-scan**（若依框架专项 + 漏洞利用链）
+→ 综合扫描: `ruoyi-scan -u <url>`
+→ 利用链: `ruoyi-scan --chain ruoyi_sql_to_rce -u <url>`
 
 ### 输出目录分工
 → `results/` 保存原始扫描结果、AI prompt、JSON 中间结果
