@@ -5,8 +5,8 @@
     "description": "Reasonix 渗透工作台技能索引 — 供 Reasonix 按需加载，避免全量读取",
     "stats": {
       "main_skills": 7,
-      "vuln_skills": 55,
-      "total": 62
+      "vuln_skills": 59,
+      "total": 66
     }
   },
   "main_skills": [
@@ -243,6 +243,22 @@
         "注入路由",
         "injection router",
         "注入分类"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "nosql-injection",
+      "name": "NoSQL Injection",
+      "path": "skills/pentest_skills/nosql-injection/SKILL.md",
+      "description": "NoSQL injection playbook. Use when MongoDB, Redis, CouchDB, or Elasticsearch queries accept user-controlled input without proper sanitization. Covers $ne/$regex bypass, Redis unauthorized access to RCE, and blind NoSQL inference.",
+      "category": "injection",
+      "triggers": [
+        "NoSQL注入",
+        "MongoDB注入",
+        "Redis注入",
+        "nosql injection",
+        "$ne绕过",
+        "CouchDB"
       ],
       "type": "vuln"
     },
@@ -638,6 +654,38 @@
       "type": "vuln"
     },
     {
+      "id": "path-traversal-lfi",
+      "name": "Path Traversal & LFI",
+      "path": "skills/pentest_skills/path-traversal-lfi/SKILL.md",
+      "description": "Path traversal and Local File Inclusion (LFI) playbook. Use when file paths, include parameters, or download endpoints accept user-controlled input. Covers directory climbing, PHP wrappers (php://filter, php://input, data://), log poisoning to RCE, and /proc/self/environ injection.",
+      "category": "file",
+      "triggers": [
+        "路径遍历",
+        "目录穿越",
+        "LFI",
+        "文件包含",
+        "php://filter",
+        "日志投毒"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "upload-insecure-files",
+      "name": "Insecure File Upload",
+      "path": "skills/pentest_skills/upload-insecure-files/SKILL.md",
+      "description": "File upload vulnerability playbook. Use when web applications accept file uploads. Covers extension bypass (.php5, .phtml, .pHp), content-type spoofing, magic byte injection, .htaccess override, and parser exploitation (Apache/IIS/Nginx/Tomcat).",
+      "category": "file",
+      "triggers": [
+        "文件上传",
+        "file upload",
+        "上传绕过",
+        "WebShell上传",
+        "扩展名绕过",
+        ".htaccess"
+      ],
+      "type": "vuln"
+    },
+    {
       "id": "insecure-source-code-management",
       "name": "Insecure Source Code Management",
       "path": "skills/pentest_skills/insecure-source-code-management/SKILL.md",
@@ -854,6 +902,22 @@
         "DNS rebinding",
         "内网穿透",
         "TTL绕过"
+      ],
+      "type": "vuln"
+    },
+    {
+      "id": "ssrf-server-side-request-forgery",
+      "name": "Server-Side Request Forgery (SSRF)",
+      "path": "skills/pentest_skills/ssrf-server-side-request-forgery/SKILL.md",
+      "description": "SSRF playbook. Use when server-side URL fetching, webhooks, image proxies, or file import features accept attacker-controlled URLs. Covers cloud metadata exfiltration (AWS/GCP/Azure/Alibaba), internal network scanning, gopher:// Redis RCE, file:// protocol abuse, and URL parser bypass techniques.",
+      "category": "advanced",
+      "triggers": [
+        "SSRF",
+        "服务端请求伪造",
+        "云元数据",
+        "内网探测",
+        "gopher协议",
+        "metadata"
       ],
       "type": "vuln"
     },

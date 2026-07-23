@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 PYTHON="python"
-NEO_DIR="/c/Tools/reasonix_sentou/tools/Neo-reGeorg-master"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+NEO_DIR="$SCRIPT_DIR/../tools/Neo-reGeorg-master"
 exec "$PYTHON" "$NEO_DIR/neoreg.py" "$@"

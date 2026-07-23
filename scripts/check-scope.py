@@ -211,8 +211,14 @@ def load_scope() -> dict:
         for k, v in default.items():
             data.setdefault(k, v)
         return data
-    except Exception:
-        return default
+    except Exception as e:
+        # 安全降级：解析失败时应拒绝所有目标，而非默认全通
+        print(f"[CRITICAL] scope.yaml 解析失败，已拒绝所有目标以确保安全", file=sys.stderr)
+        print(f"  错误: {e}", file=sys.stderr)
+        print(f"  请检查 {SCOPE_FILE} 的 YAML 语法是否正确", file=sys.stderr)
+        safe_default = dict(default)
+        safe_default["enforce"] = True
+        return safe_default
 
 
 def normalize_target(target: str) -> dict:

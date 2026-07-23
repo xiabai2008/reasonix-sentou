@@ -3,7 +3,7 @@
 # ============================================================
 
 # --- 大文件与工具二进制 ---
-tools/
+tools/**
 !tools/run
 !tools/brute.py
 !tools/generate_html.py
@@ -15,6 +15,7 @@ tools/
 !tools/dictx/
 !tools/super-password-dict/
 !tools/vulmap/
+!tools/requirements.txt
 
 # --- 超大字典库 ---
 config/dictionaries/
@@ -37,6 +38,9 @@ __pycache__/
 *.pyo
 .venv/
 venv/
+.pytest_cache/
+.coverage
+htmlcov/
 
 # --- 渗透结果（敏感数据） ---
 result.txt

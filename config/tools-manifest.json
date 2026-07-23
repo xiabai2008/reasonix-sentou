@@ -1,8 +1,12 @@
-# ============================================================
-# 工具下载清单 — JSON manifest
-# 每个条目定义下载来源、目标路径、版本获取方式
-# ============================================================
 {
+  "_meta": {
+    "description": "Reasonix 渗透作战工作台 — 工具下载清单",
+    "note": "每个条目定义下载来源、目标路径、版本获取方式",
+    "generated": "2026-07-22",
+    "total_tools": 12,
+    "total_cloned": 5,
+    "total_dictionaries": 5
+  },
   "tools": {
     "nuclei": {
       "repo": "projectdiscovery/nuclei",

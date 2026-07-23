@@ -1,2 +1,3 @@
 #!/bin/bash
-exec "/c/Tools/reasonix_sentou/tools/ehole/EHole_windows_amd64/EHole_windows_amd64.exe" "$@"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+exec "$SCRIPT_DIR/../tools/ehole/EHole_windows_amd64/EHole_windows_amd64.exe" "$@"

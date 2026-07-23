@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-exec "/c/Tools/reasonix_sentou/tools/katana.exe" "$@"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+exec "$SCRIPT_DIR/../tools/katana.exe" "$@"

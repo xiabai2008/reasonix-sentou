@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
-JADX_DIR="/c/Tools/reasonix_sentou/tools/jadx"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+JADX_DIR="$SCRIPT_DIR/../tools/jadx"
 exec "$JADX_DIR/jadx-gui-1.5.6.exe" "$@"

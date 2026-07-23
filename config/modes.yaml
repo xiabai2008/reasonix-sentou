@@ -49,7 +49,9 @@ modes:
     tool_constraints:
       nuclei: "-severity low,medium,high,critical -c 50"
       fscan: null  # 无限制
-      sqlmap: "--batch --level 5 --risk 3 --os-shell"
+      sqlmap: "--batch --level 5 --risk 3"
+      # --os-shell 为极高危操作，需人工显式确认后追加
+      # 使用方式: sqlmap <base_args> --os-shell (需 Docker 隔离环境下执行)
       ffuf: "-t 200 -fc 404"
       nmap: "-sV -sC -sS -A -p- --script=vuln"
       hydra: "-t 16 -f"
@@ -58,7 +60,7 @@ modes:
     pre_scan_scope_check: true
     require_confirmation: true  # 激进模式操作前需人工确认
     isolation_required:
-      - sqlmap_os_shell  # 需要 Docker 隔离
+      - sqlmap_os_shell  # 需要 Docker 隔离（不再作为默认参数，需显式追加 --os-shell）
       - metasploit       # 需要 Kali WSL 隔离
       - webshell_write   # 需要人工确认
 

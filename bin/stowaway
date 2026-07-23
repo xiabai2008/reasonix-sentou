@@ -1,2 +1,3 @@
 #!/bin/bash
-exec "/c/Tools/reasonix_sentou/tools/stowaway_admin.exe" "$@"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+exec "$SCRIPT_DIR/../tools/stowaway_admin.exe" "$@"
