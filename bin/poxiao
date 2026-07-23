@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 # 破晓 PoXiao v3.0 — SRC 挖洞工具链 (257 CVE + 215 POC + MCP)
-# 如已 pip install: exec python -m poxiao "$@"
-exec python "/d/HZR_PROJECTS/poxiao/poxiao/poxiao.py" "$@"
+exec python "D:/HZR_PROJECTS/poxiao/poxiao/poxiao.py" "$@"
