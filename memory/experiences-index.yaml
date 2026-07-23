@@ -165,3 +165,31 @@ experiences:
     cost_time_min: 35
     rating: 5
     tags: [dvwa, xss, reflected, stored, dom, cmdi, csrf, lfi, php-filter, file-upload, webshell, rce, attack-chain]
+  - id: EXP-014
+    date: "2026-07-23"
+    target: "DVWA Medium/High + WebGoat A1"
+    target_type: url
+    target_tech: [php, mariadb, apache, java, spring]
+    vuln_category: multi
+    vuln_name: "五漏洞 Medium/High 全清 + WebGoat A1 探索"
+    cvss: 9.8
+    tools_used: [curl, python3]
+    skills_used: [xss-cross-site-scripting, cmdi-command-injection, csrf-cross-site-request-forgery, path-traversal-lfi, upload-insecure-files]
+    waf_present: false
+    waf_bypassed: false
+    attack_chain:
+      - "XSS Reflected: 大小写绕过"
+      - "XSS Stored: Script标签绕过"
+      - "CMDi: 管道符绕过"
+      - "过滤"
+      - "CSRF: Referer头绕过"
+      - "LFI: 绝对路径绕过../过滤/file://协议"
+      - "Upload: Content-Type伪造+图片马+LFI执行"
+    final_impact: "完整RCE攻击链: 图片马→LFI→命令执行"
+    lessons: "图片马+LFI组合是绕过扩展名+getimagesize双重防护的经典攻击链;file://协议可绕过fnmatch('file*')限制;管道符|常被遗忘过滤"
+    failed_attempts:
+      - "WebGoat API直接调用失败需浏览器初始化LessonTracker"
+    cost_tokens: 12000
+    cost_time_min: 40
+    rating: 5
+    tags: [dvwa, medium, high, xss-bypass, cmdi-bypass, csrf-token, lfi-bypass, upload-bypass, 图片马, attack-chain, webgoat]

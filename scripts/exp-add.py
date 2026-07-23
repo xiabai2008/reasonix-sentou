@@ -63,7 +63,7 @@ def add_experience(entry: dict):
     with open(INDEX_FILE, "a", encoding="utf-8") as f:
         f.write(yaml_entry)
 
-    print(f"[+] EXP-{entry['id']} 已追加到 memory/experiences-index.yaml")
+    print(f"[+] {entry['id']} 已追加到 memory/experiences-index.yaml")
 
 
 def main():
