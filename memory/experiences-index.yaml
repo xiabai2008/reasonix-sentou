@@ -107,3 +107,31 @@ experiences:
     cost_time_min: 20
     rating: 4
     tags: [jwt, alg-none, swagger, api, admin-bypass]
+
+  - id: EXP-012
+    date: "2026-07-23"
+    target: "DVWA + VAmPI + Juice Shop + WebGoat (localhost)"
+    target_type: url
+    target_tech: [php, mariadb, flask, nodejs, angular, java, spring]
+    vuln_category: multi
+    vuln_name: "SQLi 三级别 + JWT alg:none + 信息收集"
+    cvss: 9.0
+    tools_used: [curl, sed, base64, python3]
+    skills_used: [sqli-sql-injection, jwt-privilege-escalation, intel-gather, idor-broken-object-authorization]
+    waf_present: true
+    waf_bypassed: true
+    attack_chain:
+      - "DVWA Low: UNION注入提取5用户MD5哈希"
+      - "DVWA Medium: 数字型注入+十六进制编码绕过mysql_real_escape_string"
+      - "DVWA High: session-input弹窗+引号闭合+#注释"
+      - "VAmPI: /_debug密码泄露 → IDOR用户枚举 → JWT alg:none伪造admin"
+      - "Juice Shop: 侦察发现/score-board /ftp /administration路径"
+    final_impact: "多靶场: 凭据提取 + 权限提升"
+    lessons: "十六进制编码(0x3a=:, 0x3c62723e=<br>)是绕过字符串过滤的通用技巧; DVWA High使用SESSION传递注入参数,需理解弹窗机制; VAmPI _debug端点生产环境必须禁用"
+    failed_attempts:
+      - "WebGoat纯CLI注册失败 — Spring Security CSRF需浏览器+Burp配合"
+      - "布尔盲注未完整提取MD5 — 32字符×16探测太慢,UNION已拿到结果更高效"
+    cost_tokens: 15000
+    cost_time_min: 45
+    rating: 5
+    tags: [dvwa, sqli, union, boolean-blind, waf-bypass, hex-encoding, real-escape-string, vampi, jwt, alg-none, idor, juiceshop, webgoat, 靶场联动]
