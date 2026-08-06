@@ -63,6 +63,13 @@ targets/data/
 *.docx
 *.xlsx
 
+# --- 本地个人经验库（每位用户的经验是私有的，不入库）---
+# 仓库仅保留 memory/templates/ 模板与 memory/README.md 骨架
+memory/pentest-experience-*.md
+memory/attack-chains.yaml
+memory/cost-stats.csv
+memory/experiences-index.yaml
+
 # --- 前端预览/缓存产物 ---
 .trae-html-share-packages/
 *.har

@@ -125,6 +125,9 @@ Each task writes `memory/pentest-experience-NNN.md`; reusable attack chains go t
 
 每次任务结束写入 `memory/pentest-experience-NNN.md`，可复用攻击链记入 `memory/attack-chains.yaml`，成本数据记入 `memory/cost-stats.csv`。经验会反过来影响下一次判断。
 
+> **Your experience is private / 经验是个人私有的** — Personal experience files are `.gitignore`d and never committed. Every user starts from the shared `memory/templates/` skeleton and builds their own experience library.
+> 个人经验文件已被 `.gitignore` 忽略，永不提交。每位使用者从仓库的 `memory/templates/` 骨架出发，建立属于自己的经验库。
+
 ### Training Ranges (local, Docker) / 本地靶场
 
 `targets/` provides a one-command local training environment (DVWA / Juice Shop / WebGoat / VAmPI) covering PHP / Node.js / Java / Python, with an 8-week learning path.

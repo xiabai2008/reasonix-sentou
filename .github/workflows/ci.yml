@@ -58,7 +58,7 @@ jobs:
           python - <<'PY'
           import yaml, glob, sys
           ok = True
-          for f in glob.glob('config/*.yaml') + glob.glob('config/*.yml') + glob.glob('memory/*.yaml'):
+          for f in glob.glob('config/*.yaml') + glob.glob('config/*.yml') + glob.glob('memory/templates/*.yaml'):
               try:
                   yaml.safe_load(open(f, encoding='utf-8'))
               except Exception as e:

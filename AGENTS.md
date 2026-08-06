@@ -407,6 +407,8 @@ bash /mnt/c/Tools/reasonix_sentou/scripts/wsl-setup.sh
 
 ## 🧠 经验积累系统（每战必记，越战越强）
 
+> **经验是个人私有的**：`memory/` 下的个人经验文件（`pentest-experience-*.md`、`attack-chains.yaml`、`cost-stats.csv`、`experiences-index.yaml`）已被 `.gitignore` 忽略，**永不提交到开源仓库**。每位使用者克隆仓库后从 `memory/templates/` 模板骨架出发，建立属于自己的经验库。只有通用方法论（可复现、不含具体目标/凭据/扫描结果）才允许沉淀到 `AGENTS.md`、`skills/*/SKILL.md` 或 `memory/templates/` 供社区共享。
+
 每次渗透任务结束后，必须执行以下流程：
 
 ### 1. 记录经验到持久记忆
