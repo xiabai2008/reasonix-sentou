@@ -41,6 +41,16 @@ Three things set it apart / 与普通工具箱最大的不同是三点：
 
 ## Quick Start / 快速开始
 
+**One-command clone + setup / 一键克隆 + 下载工具：**
+
+```powershell
+git clone https://github.com/xiabai2008/dawnforge-pentest.git && cd dawnforge-pentest && .\scripts\download-tools.ps1 && .\scripts\setup-new-pc.ps1
+```
+
+> Clones the repo, downloads all tools & dictionaries, then configures the environment (deps + PATH). — 克隆仓库、下载全部工具与字典、并完成环境配置（依赖 + PATH）。
+
+Or step by step / 或分步执行：
+
 ```bash
 git clone https://github.com/xiabai2008/dawnforge-pentest.git
 cd dawnforge-pentest

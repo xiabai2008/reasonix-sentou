@@ -36,6 +36,16 @@
 
 ## 快速开始
 
+**一键克隆 + 下载工具：**
+
+```powershell
+git clone https://github.com/xiabai2008/dawnforge-pentest.git && cd dawnforge-pentest && .\scripts\download-tools.ps1 && .\scripts\setup-new-pc.ps1
+```
+
+> 克隆仓库、下载全部工具与字典、并完成环境配置（依赖 + PATH）。
+
+或分步执行：
+
 ```bash
 git clone https://github.com/xiabai2008/dawnforge-pentest.git
 cd dawnforge-pentest
