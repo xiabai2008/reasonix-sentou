@@ -53,6 +53,10 @@ cases/**/evidence/
 reports/*.html
 reports/*.docx
 reports/*.pdf
+reports/*.md
+
+# --- 前端预览/缓存产物 ---
+.trae-html-share-packages/
 *.har
 *.pcap
 *.pcapng

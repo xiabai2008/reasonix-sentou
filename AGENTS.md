@@ -549,3 +549,38 @@ attack_chains:
 - 禁止对 .gov / .mil 域名执行任何操作
 - 禁止在生产环境直接写文件/修改配置（仅可读扫描）
 - 禁止批量爆破超过 100 个目标的同一服务
+
+---
+
+## 8. 反幻觉铁律（证据强制）
+
+> 对标 VulnClaw 机制，将"证据必须逐字符出现在真实工具输出"落地为代码硬约束。
+> 配套脚本: `python -m scripts.evidence_pack.cli`（harvest/archive/report）
+
+### 铁律
+
+- **任何无 EVID 编号的结论必须标记 `[UNVERIFIED]`**，禁止直接断言为事实。
+- **引用证据统一写 `[EVID-<任务>-<NNN>]`**，例如 `EVID-T01-001`。
+- **发现结论与原始工具输出不符 → 立即停止并复核**，不继续下钻。
+- **编造的 flag/凭证/漏洞告警**是渗透场景最危险的失败模式，必须用 `evidence-pack harvest --verify` 拦截。
+- 报告生成走 `evidence-pack report`，每个结论带证据号 + 可复现命令，确保可复核、可追责。
+
+### 标准流程
+
+```bash
+# 1. 采集证据（stdin 喂原始输出，--claim 声明结论）
+echo "$(nuclei -u $TARGET -as -j)" | python -m scripts.evidence_pack.cli harvest \
+  --tag T01 --target $TARGET --claim "SQL 注入存在于 /api/login" --source-cmd "nuclei -u $TARGET"
+
+# 2. 高信号证据沉淀到经验/攻击链
+python -m scripts.evidence_pack.cli archive evidence/manifest_T01.json
+
+# 3. 生成可复核报告
+python -m scripts.evidence_pack.cli report evidence/manifest_T01.json --format md
+```
+
+### 目录分工
+
+- `evidence/` — 证据包 + manifest + 最小化样本
+- `results/` — 原始扫描结果
+- `reports/` — 最终可复核报告
