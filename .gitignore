@@ -11,11 +11,10 @@ tools/**
 !tools/report_renderers/
 !tools/rayscan/
 !tools/poxiao/
-!tools/ccupp/
 !tools/dictx/
-!tools/super-password-dict/
-!tools/vulmap/
 !tools/requirements.txt
+# 说明：ccupp / super-password-dict / vulmap 为第三方内嵌 git 仓库，
+# 按"工具本体不入库、部署时下载"原则整体忽略（见 scripts/setup-new-pc.ps1）。
 
 # --- 超大字典库 ---
 config/dictionaries/
@@ -54,6 +53,15 @@ reports/*.html
 reports/*.docx
 reports/*.pdf
 reports/*.md
+
+# --- 个人/敏感数据（严禁提交到开源仓库） ---
+ctf_exam_web01/
+解题思路/
+ctf_exam_*/
+targets/data/
+*.zip
+*.docx
+*.xlsx
 
 # --- 前端预览/缓存产物 ---
 .trae-html-share-packages/

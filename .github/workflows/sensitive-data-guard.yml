@@ -1,0 +1,28 @@
+name: Sensitive-data guard
+
+# Fails the PR if a scan-result / credential / evidence file is about to be committed.
+
+on:
+  pull_request:
+    branches: [ master ]
+  push:
+    branches: [ master ]
+
+jobs:
+  guard:
+    name: Block sensitive files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for sensitive paths
+        run: |
+          BAD=$(git ls-files | grep -Ei \
+            '(^|/)(results|evidence)/|\.(pcap|pcapng|har|burp|kdbx|sqlite|sqlite3|db|dump)$' \
+            || true)
+          if [ -n "$BAD" ]; then
+            echo "::error::Sensitive files are tracked and must be removed:"
+            echo "$BAD"
+            exit 1
+          fi
+          echo "No sensitive paths tracked. ✓"

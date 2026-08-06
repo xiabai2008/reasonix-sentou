@@ -515,7 +515,7 @@ attack_chains:
         impact: "读取 /etc/passwd 和 application/database.php"
         prerequisite: 无
       - vuln: 信息泄露（数据库配置）
-        impact: "获得 root/cJvmb!2G@127.0.0.1:3306"
+        impact: "获得 root/<REDACTED_DB_PASSWORD>@127.0.0.1:3306"
         prerequisite: CVE-2021-41773
       - vuln: MySQL 弱口令
         impact: "数据库完全控制"

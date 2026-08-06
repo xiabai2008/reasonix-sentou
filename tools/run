@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# DawnForge 破晓 - 工具统一入口
+# 用法: run <tool-name> [args...]
+
+BASE_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+case "$(basename "$1")" in
+  fscan)
+    shift
+    exec "$BASE_DIR/fscan.exe" "$@"
+    ;;
+  fscan-web)
+    shift
+    exec "$BASE_DIR/fscan-web.exe" "$@"
+    ;;
+  nuclei)
+    shift
+    exec "$BASE_DIR/nuclei.exe" "$@"
+    ;;
+  subfinder)
+    shift
+    exec "$BASE_DIR/subfinder.exe" "$@"
+    ;;
+  ffuf)
+    shift
+    exec "$BASE_DIR/ffuf.exe" "$@"
+    ;;
+  httpx)
+    shift
+    exec "$BASE_DIR/httpx.exe" "$@"
+    ;;
+  ez)
+    shift
+    exec "$BASE_DIR/ez_windows_amd64.exe" "$@"
+    ;;
+  help|--help|-h|"")
+    echo "DawnForge 破晓 - 工具统一入口"
+    echo ""
+    echo "可用工具:"
+    echo "  fscan      端口扫描/服务爆破/Web POC"
+    echo "  fscan-web  fscan WebUI 版"
+    echo "  nuclei     模板化漏洞扫描器"
+    echo "  subfinder  被动子域名枚举"
+    echo "  ffuf       Web 模糊测试工具"
+    echo "  httpx      HTTP 探活与指纹识别"
+    echo "  ez         综合渗透工具"
+    echo ""
+    echo "用法: run <tool-name> [参数...]"
+    echo "示例: run fscan -h 192.168.1.1"
+    ;;
+  *)
+    if [ -n "$1" ]; then
+      echo "未知工具: $1"
+      echo "可用工具: fscan, fscan-web, nuclei, subfinder, ffuf, httpx, ez"
+    fi
+    exit 1
+    ;;
+esac
