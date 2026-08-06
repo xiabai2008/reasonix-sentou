@@ -80,7 +80,9 @@ python scripts/setup-agent-links.py --mode copy      # 用复制代替软链
 
 ### 工具下载
 
-> 工具本体**不入库**（避免仓库臃肿与供应链风险），首次运行自动从各工具官方源下载。
+> **⚠️ 第一步必读**：工具本体**不入库**。克隆后请**先**运行 `download-tools.ps1`，再使用 `bin/` 下的任何命令（`fscan`、`nuclei`、`poxiao`…），否则会提示找不到工具。
+
+> **🪟 平台**：以 **Windows + PowerShell** 为主，可选 WSL Kali 提供 nmap/hydra。工具下载脚本为 `.ps1`；技能库、脚本和证据闭环跨平台可用。
 
 ```bash
 # 一键下载全部工具与字典
@@ -131,9 +133,11 @@ python scripts/setup-agent-links.py --mode copy      # 用复制代替软链
 
 ## 核心能力
 
-### 工具链（60+）
+### 工具链
 
 端口扫描、Web 评估、目录爆破、爬虫、子域名、SQL 注入、XSS、SSTI、反序列化、内网横向、提权……工具本体放 `tools/`，`bin/` 提供统一快捷入口。
+
+> **20 个工具可通过 `download-tools.ps1` 一键下载**（见上方清单）+ 74 个 Agent 技能。工具本体**不入库**，请先运行一键下载。
 
 | 场景 | 首选 | 备选 |
 |:-----|:-----|:-----|
@@ -147,7 +151,7 @@ python scripts/setup-agent-links.py --mode copy      # 用复制代替软链
 | XSS 专项 | dalfox | nuclei |
 | 提权辅助 | PEASS-ng | — |
 
-### 技能库（60+）
+### 技能库（74）
 
 `skills/pentest_skills/<name>/SKILL.md`，带标准 YAML frontmatter，兼容 Anthropic Agent Skills 格式，覆盖 SQLi、XSS、SSRF、IDOR、JWT、反序列化、WAF 绕过、子域名接管等全部主流漏洞方向。
 
@@ -197,7 +201,7 @@ dawnforge-pentest/
 ├── docs/            设计文档、品牌方案
 ├── memory/          经验记忆库、攻击链、成本记录（个人私有，不入库）
 ├── scripts/         部署、编排、证据闭环、通用化脚本
-├── skills/          Agent 技能体系（60+）
+├── skills/          Agent 技能体系（74）
 ├── targets/         本地靶场一键编排
 ├── templates/       多 Agent 配置模板
 └── tools/           工具本体（不入库，部署时下载）

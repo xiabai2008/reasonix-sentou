@@ -85,3 +85,19 @@ jobs:
             exit 1
           fi
           echo "Tool tables are up to date."
+
+  manifest-asset-check:
+    name: Manifest asset-pattern check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate manifest asset patterns against real releases
+        run: |
+          python scripts/validate-manifest.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -92,7 +92,9 @@ Per-agent config templates live in `templates/agent-configs/` (opencode/codex/cl
 
 ### Download the tools / 工具下载
 
-> **Tools are not bundled in the repo** (kept out of git to avoid bloat & supply-chain risks). They are fetched automatically from each tool's official source on first run. — 工具本体**不入库**（避免仓库臃肿与供应链风险），首次运行自动从各工具官方源下载。
+> **⚠️ First step / 第一步必读**：Tool binaries are **not** bundled in the repo. After cloning, run `download-tools.ps1` **before** using any `bin/` command (`fscan`, `nuclei`, `poxiao`…), otherwise they will fail with "not found". — 工具本体**不入库**。克隆后请**先**运行 `download-tools.ps1`，再使用 `bin/` 下的任何命令（`fscan`、`nuclei`、`poxiao`…），否则会提示找不到工具。
+
+> **🪟 Platform / 平台**：Windows + PowerShell is the primary target, with optional WSL Kali for nmap/hydra. The tool downloader is `.ps1`; skills, scripts, and evidence loop are cross-platform. — 以 **Windows + PowerShell** 为主，可选 WSL Kali 提供 nmap/hydra。工具下载脚本为 `.ps1`；技能库、脚本和证据闭环跨平台可用。
 
 ```bash
 # One-command download of all tools + dictionaries / 一键下载全部工具与字典
@@ -145,11 +147,14 @@ The tool list lives in `config/tools-manifest.json` (each entry: source repo + a
 
 ## Core Capabilities / 核心能力
 
-### Toolchain (60+) / 工具链
+### Toolchain / 工具链
 
 Port scanning, web assessment, directory brute-force, crawling, subdomain, SQL injection, XSS, SSTI, deserialization, lateral movement, privilege escalation… Tool binaries live in `tools/`, unified entry points in `bin/`.
 
 端口扫描、Web 评估、目录爆破、爬虫、子域名、SQL 注入、XSS、SSTI、反序列化、内网横向、提权……工具本体放 `tools/`，`bin/` 提供统一快捷入口。
+
+> **20 tools are downloadable via `download-tools.ps1`** (see manifest above) + 74 Agent skills. Tool binaries are **not** bundled in the repo — run the one-command download first.
+> **20 个工具可通过 `download-tools.ps1` 一键下载**（见上方清单）+ 74 个 Agent 技能。工具本体**不入库**，请先运行一键下载。
 
 | 场景 Scenario | 首选 Preferred | 备选 Alt |
 |:-----|:-----|:-----|
@@ -163,7 +168,7 @@ Port scanning, web assessment, directory brute-force, crawling, subdomain, SQL i
 | XSS 专项 | dalfox | nuclei |
 | 提权辅助 Priv-esc assist | PEASS-ng | — |
 
-### Skill Library (60+) / 技能库
+### Skill Library (74) / 技能库
 
 `skills/pentest_skills/<name>/SKILL.md`, standard YAML frontmatter, compatible with the Anthropic Agent Skills format. Covers SQLi, XSS, SSRF, IDOR, JWT, deserialization, WAF bypass, subdomain takeover, and all mainstream vulnerability classes.
 
@@ -221,7 +226,7 @@ dawnforge-pentest/
 ├── docs/            设计文档、品牌方案
 ├── memory/          经验记忆库、攻击链、成本记录
 ├── scripts/         部署、编排、证据闭环、通用化脚本
-├── skills/          Agent 技能体系（60+）
+├── skills/          Agent 技能体系（74）
 ├── targets/         本地靶场一键编排
 ├── templates/       多 Agent 配置模板
 └── tools/           工具本体（不入库，部署时下载）
