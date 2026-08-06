@@ -17,6 +17,8 @@
 **Evidence-enforced anti-hallucination · Agent-agnostic · Continuously growing memory**
 **证据强制反幻觉 · 多 Agent 通用 · 经验持续成长**
 
+![DawnForge social preview](./.github/social-preview.jpg)
+
 </div>
 
 ---
@@ -140,6 +142,7 @@ Each task writes `memory/pentest-experience-NNN.md`; reusable attack chains go t
 - `config/scope.yaml` authorization whitelist check — 授权白名单校验
 - Three combat modes: `safe / normal / aggressive` — 三档作战模式
 - `.gov` / `.mil` blocked; `169.254.169.254` cloud metadata blocked — 禁止 `.gov` / `.mil`；禁止访问云元数据地址
+- Found a vulnerability in DawnForge itself? Report privately via [SECURITY.md](SECURITY.md) — 发现 DawnForge 自身漏洞？请走 [SECURITY.md](SECURITY.md) 私有上报
 
 ---
 
@@ -203,3 +206,21 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Report bugs via [issues](https://github.
 [MIT](LICENSE). Third-party tools, dictionaries, and templates retain their respective copyrights and are provided for learning and research only.
 
 [MIT](LICENSE)。第三方工具、字典与模板版权归各自原作者，仅供学习研究。
+
+---
+
+## Star History / 点亮 Star
+
+If DawnForge helps you, a star is the best way to say thanks and helps others discover it.
+
+如果 DawnForge 帮到了你，点个 Star 是最好的感谢，也能帮助更多人发现它。
+
+[![Star History Chart](https://api.star-history.com/svg?repos=xiabai2008/dawnforge-pentest&type=Date)](https://star-history.com/#xiabai2008/dawnforge-pentest&Date)
+
+### Support / 支持
+
+- ⭐ Star the repo — 点亮 Star
+- 🍴 Fork & PR — 分叉并提交 PR
+- 🐛 Report issues — 提交 issue：[issues](https://github.com/xiabai2008/dawnforge-pentest/issues)
+- 🔒 Report vulnerabilities privately — 安全漏洞私有上报：[SECURITY.md](SECURITY.md)
+- 💬 Share with peers who do authorized pentesting — 分享给做授权渗透的同行
