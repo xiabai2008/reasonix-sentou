@@ -90,6 +90,9 @@ Per-agent config templates live in `templates/agent-configs/` (opencode/codex/cl
 
 各家 Agent 的配置模板见 `templates/agent-configs/`（opencode/codex/claude 示例）。
 
+> **Trae**: no skill symlinks needed — Trae auto-reads root `AGENTS.md` to enter the pentest-expert persona and loads skills on demand via `Read`. `setup-agent-links.py --agents trae` prints this note and skips linking.
+> **Trae**：无需软链技能。Trae 自动读取根目录 `AGENTS.md` 进入渗透专家角色，技能按需 `Read`。`setup-agent-links.py --agents trae` 会给出说明并跳过软链。
+
 ### Download the tools / 工具下载
 
 > **⚠️ First step / 第一步必读**：Tool binaries are **not** bundled in the repo. After cloning, run `download-tools.ps1` **before** using any `bin/` command (`fscan`, `nuclei`, `poxiao`…), otherwise they will fail with "not found". — 工具本体**不入库**。克隆后请**先**运行 `download-tools.ps1`，再使用 `bin/` 下的任何命令（`fscan`、`nuclei`、`poxiao`…），否则会提示找不到工具。

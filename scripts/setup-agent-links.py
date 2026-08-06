@@ -5,6 +5,7 @@ setup-agent-links — 多 Agent 通用化：把技能/配置链接到各家 Agen
 
 让同一份 skills/ 素材服务 Claude Code / Codex / OpenCode / Cline / Trae，
 避免复制粘贴导致的分叉。支持软链（默认）与复制两种模式。
+Trae 为特例：自动读取根 AGENTS.md 进入角色、技能按需 Read，无需软链。
 
 用法:
     python scripts/setup-agent-links.py            # 预览将创建哪些链接
@@ -48,6 +49,14 @@ AGENT_TARGETS = {
     "cursor": {
         "skills_dir": Path(".cursor/skills"),
         "config": "AGENTS.md",
+    },
+    "trae": {
+        # Trae 特例：无需软链技能。Trae 会自动把根目录 AGENTS.md/CLAUDE.md
+        # 读取为工作区规则进入渗透专家角色，技能通过 Read 按需加载。
+        # skills_dir 仅作为可选约定位置，供需要时参考，不强制创建。
+        "skills_dir": Path(".trae/skills"),
+        "config": "AGENTS.md",
+        "no_link": True,  # 标记：Trae 技能按需读取，跳过实际软链
     },
 }
 
@@ -103,7 +112,15 @@ def main():
                 reports[name].append(f"removed: {skills_dst}")
             continue
         if not args.apply:
+            # Trae 特例：无需软链，仅预览提示即可
+            if spec.get("no_link"):
+                reports[name].append("(no-link) Trae 通过 AGENTS.md 自动进入角色，技能按需 Read，无需软链")
+                continue
             reports[name].append(f"would create skills -> {skills_dst}")
+            continue
+        # Trae 特例：跳过实际创建
+        if spec.get("no_link"):
+            reports[name].append("(no-link) Trae 无需软链技能，已跳过")
             continue
         # 逐技能链接
         for skill in sorted(SKILLS_SRC.iterdir()):

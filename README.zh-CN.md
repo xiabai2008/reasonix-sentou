@@ -78,6 +78,8 @@ python scripts/setup-agent-links.py --mode copy      # 用复制代替软链
 
 各家 Agent 的配置模板见 `templates/agent-configs/`（opencode/codex/claude 示例）。
 
+> **Trae**：无需软链技能。Trae 自动读取根目录 `AGENTS.md` 进入渗透专家角色，技能按需 `Read`。`setup-agent-links.py --agents trae` 会给出说明并跳过软链。
+
 ### 工具下载
 
 > **⚠️ 第一步必读**：工具本体**不入库**。克隆后请**先**运行 `download-tools.ps1`，再使用 `bin/` 下的任何命令（`fscan`、`nuclei`、`poxiao`…），否则会提示找不到工具。
