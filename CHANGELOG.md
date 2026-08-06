@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Open-source governance assets: `CODE_OF_CONDUCT.md`, `CHANGELOG.md`,
   `AUTHORS.md`, and GitHub Actions CI workflows.
 - Bilingual (中文 / English) `README.md` with a friendly open-source presentation.
+- Standalone Chinese README (`README.zh-CN.md`) for better zh-CN discoverability.
+- Embedded social-preview banner + Star History chart + Support section in `README.md`.
 - Strengthened `.gitignore` to keep personal/sensitive data out of the repo.
 
 ### Changed
@@ -20,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   skills, and memory; technical paths (`reasonix_sentou`, `reasonix.toml`) preserved.
 - Removed sensitive/historical artifacts (CTF exam data, personal walkthroughs,
   internal research) from the public repository.
+- Swapped the visitor counter badge to the more reliable `hits.sh` service.
 
 ### Removed
 - `ctf_exam_web01/`, `解题思路/`, `vulnclaw-research/`, `vulnclaw-vs-reasonix/`,

@@ -7,10 +7,12 @@
 
 > Forge your dawn on the battlefield. — 在战场上锻造你的黎明
 
+`English` · [**中文**](README.zh-CN.md)
+
 [![Release](https://img.shields.io/github/v/release/xiabai2008/dawnforge-pentest?include_prereleases&label=Release&color=orange)](https://github.com/xiabai2008/dawnforge-pentest/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![CI](https://github.com/xiabai2008/dawnforge-pentest/actions/workflows/ci.yml/badge.svg)](https://github.com/xiabai2008/dawnforge-pentest/actions)
-[![Visitors](https://api.visitorbadge.io/api/visitors?path=xiabai2008.dawnforge-pentest&label=Visitors&countColor=%23263759&labelColor=%23263759)](https://github.com/xiabai2008/dawnforge-pentest)
+[![Hits](https://hits.sh/xiabai2008/dawnforge-pentest.svg?label=Visitors&color=263759&labelColor=263759)](https://hits.sh/xiabai2008/dawnforge-pentest/)
 [![GitHub stars](https://img.shields.io/github/stars/xiabai2008/dawnforge-pentest.svg?style=social&label=Star)](https://github.com/xiabai2008/dawnforge-pentest)
 [![GitHub forks](https://img.shields.io/github/forks/xiabai2008/dawnforge-pentest.svg?style=social&label=Fork)](https://github.com/xiabai2008/dawnforge-pentest)
 
