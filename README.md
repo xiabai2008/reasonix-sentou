@@ -34,7 +34,7 @@
 Three things set it apart / 与普通工具箱最大的不同是三点：
 
 1. **Evidence-enforced anti-hallucination / 证据强制反幻觉** — Every conclusion carries an `EVID` number and is verified character-by-character before being marked `VERIFIED`, structurally preventing AI from fabricating flags / credentials / vulnerability alerts.
-2. **Agent-agnostic / 多 Agent 通用** — One persona + skill library serves **Claude Code / Codex / OpenCode / Cline / Trae**.
+2. **Agent-agnostic / 多 Agent 通用** — One persona + skill library serves **Claude Code / Codex / OpenCode / Cline / Trae / WorkBuddy**.
 3. **Continuously growing memory / 经验持续成长** — Record every battle; the more you use it, the more it understands your playbook (memory layer + attack chains + cost stats).
 
 ---
@@ -90,8 +90,8 @@ Per-agent config templates live in `templates/agent-configs/` (opencode/codex/cl
 
 各家 Agent 的配置模板见 `templates/agent-configs/`（opencode/codex/claude 示例）。
 
-> **Trae**: no skill symlinks needed — Trae auto-reads root `AGENTS.md` to enter the pentest-expert persona and loads skills on demand via `Read`. `setup-agent-links.py --agents trae` prints this note and skips linking.
-> **Trae**：无需软链技能。Trae 自动读取根目录 `AGENTS.md` 进入渗透专家角色，技能按需 `Read`。`setup-agent-links.py --agents trae` 会给出说明并跳过软链。
+> **Trae / WorkBuddy**: no skill symlinks needed — both auto-read root `AGENTS.md` to enter the pentest-expert persona and load skills on demand via `Read`. `setup-agent-links.py --agents trae/workbuddy` prints this note and skips linking.
+> **Trae / WorkBuddy**：均无需软链技能。它们自动读取根目录 `AGENTS.md` 进入渗透专家角色，技能按需 `Read`。`setup-agent-links.py --agents trae/workbuddy` 会给出说明并跳过软链。
 
 ### Download the tools / 工具下载
 

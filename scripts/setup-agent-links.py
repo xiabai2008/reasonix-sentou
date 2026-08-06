@@ -58,6 +58,13 @@ AGENT_TARGETS = {
         "config": "AGENTS.md",
         "no_link": True,  # 标记：Trae 技能按需读取，跳过实际软链
     },
+    "workbuddy": {
+        # WorkBuddy 特例：与 Trae 相同——原生读取根 AGENTS.md 进入角色，
+        # 技能按需加载，无需软链。项目约定目录为 .workbuddy/skills（仅参考）。
+        "skills_dir": Path(".workbuddy/skills"),
+        "config": "AGENTS.md",
+        "no_link": True,  # 与 Trae 一致，跳过实际软链，不触碰任何其他 agent 目录
+    },
 }
 
 
@@ -112,15 +119,15 @@ def main():
                 reports[name].append(f"removed: {skills_dst}")
             continue
         if not args.apply:
-            # Trae 特例：无需软链，仅预览提示即可
+            # no_link 特例（Trae/WorkBuddy）：无需软链，仅预览提示即可
             if spec.get("no_link"):
-                reports[name].append("(no-link) Trae 通过 AGENTS.md 自动进入角色，技能按需 Read，无需软链")
+                reports[name].append(f"(no-link) {name} 通过 AGENTS.md 自动进入角色，技能按需 Read，无需软链")
                 continue
             reports[name].append(f"would create skills -> {skills_dst}")
             continue
-        # Trae 特例：跳过实际创建
+        # no_link 特例（Trae/WorkBuddy）：跳过实际创建
         if spec.get("no_link"):
-            reports[name].append("(no-link) Trae 无需软链技能，已跳过")
+            reports[name].append(f"(no-link) {name} 无需软链技能，已跳过")
             continue
         # 逐技能链接
         for skill in sorted(SKILLS_SRC.iterdir()):

@@ -1,7 +1,7 @@
 # Claude Code — 启动说明
 
 > 本仓库是**多 Agent 通用的 AI 渗透作战工作台**：同一份 persona、技能库、经验系统与证据闭环，
-> 可被 Claude Code / Codex / OpenCode / Cline / Trae 等 Agent 读取使用。
+> 可被 Claude Code / Codex / OpenCode / Cline / Trae / WorkBuddy 等 Agent 读取使用。
 
 ## 请先读取
 

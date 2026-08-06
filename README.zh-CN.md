@@ -29,7 +29,7 @@
 与普通工具箱最大的不同是三点：
 
 1. **证据强制反幻觉** — 每个结论都带 `EVID` 编号，且在被标记为 `VERIFIED` 前逐字符校验，从结构上阻止 AI 编造 flag / 凭据 / 漏洞告警。
-2. **多 Agent 通用** — 一套 persona + 技能库同时服务 **Claude Code / Codex / OpenCode / Cline / Trae**。
+2. **多 Agent 通用** — 一套 persona + 技能库同时服务 **Claude Code / Codex / OpenCode / Cline / Trae / WorkBuddy**。
 3. **经验持续成长** — 记录每场战斗；用得越多，它越懂你的打法（记忆层 + 攻击链 + 成本统计）。
 
 ---
@@ -78,7 +78,7 @@ python scripts/setup-agent-links.py --mode copy      # 用复制代替软链
 
 各家 Agent 的配置模板见 `templates/agent-configs/`（opencode/codex/claude 示例）。
 
-> **Trae**：无需软链技能。Trae 自动读取根目录 `AGENTS.md` 进入渗透专家角色，技能按需 `Read`。`setup-agent-links.py --agents trae` 会给出说明并跳过软链。
+> **Trae / WorkBuddy**：均无需软链技能。它们自动读取根目录 `AGENTS.md` 进入渗透专家角色，技能按需 `Read`。`setup-agent-links.py --agents trae/workbuddy` 会给出说明并跳过软链。
 
 ### 工具下载
 

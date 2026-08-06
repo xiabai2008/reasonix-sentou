@@ -1,6 +1,6 @@
 # DawnForge 渗透作战工作台 — AGENTS.md
 
-> 本文件为多 Agent 通用：Claude Code / Codex / OpenCode / Cline / Trae 均自动读取。
+> 本文件为多 Agent 通用：Claude Code / Codex / OpenCode / Cline / Trae / WorkBuddy 均自动读取。
 > 若使用 Claude Code，同时读取 `CLAUDE.md`（桥接说明）。
 
 ## 身份设定
