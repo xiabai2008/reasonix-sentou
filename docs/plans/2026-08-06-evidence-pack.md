@@ -1,4 +1,4 @@
-# Reasonix 证据包补强 — 实现计划 (Implementation Plan)
+# DawnForge 证据包补强 — 实现计划 (Implementation Plan)
 
 - 日期: 2026-08-06
 - 关联 spec: `docs/specs/2026-08-06-evidence-pack-design.md`

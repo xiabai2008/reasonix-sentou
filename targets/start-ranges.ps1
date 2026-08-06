@@ -1,5 +1,5 @@
 # ============================================================
-# Reasonix 靶场 — 启动脚本
+# DawnForge 靶场 — 启动脚本
 # ============================================================
 # 用法: .\targets\start-ranges.ps1 [target]
 #   .\targets\start-ranges.ps1            # 启动所有靶场
@@ -18,7 +18,7 @@ $COMPOSE_DIR = "$PSScriptRoot"
 
 Write-Host ""
 Write-Host "============================================" -ForegroundColor Cyan
-Write-Host "  Reasonix 渗透靶场启动" -ForegroundColor Cyan
+Write-Host "  DawnForge 渗透靶场启动" -ForegroundColor Cyan
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host ""
 

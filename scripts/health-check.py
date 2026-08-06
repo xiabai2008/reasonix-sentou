@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Reasonix 渗透作战工作台健康检查
+DawnForge 渗透作战工作台健康检查
 
-用于检查 Reasonix 启动环境、工具包装器、技能索引、敏感输出忽略规则和常见迁移问题。
+用于检查 DawnForge 启动环境、工具包装器、技能索引、敏感输出忽略规则和常见迁移问题。
 """
 
 from __future__ import annotations
@@ -69,7 +69,7 @@ def check_project_structure(report: HealthReport) -> None:
 def check_reasonix_config(report: HealthReport) -> None:
     cfg = PROJECT_ROOT / "reasonix.toml"
     if not cfg.exists():
-        report.error("reasonix.toml 缺失，无法检查 Reasonix 配置")
+        report.error("reasonix.toml 缺失，无法检查 DawnForge 配置")
         return
 
     content = read_text(cfg)
@@ -366,7 +366,7 @@ def check_wrapper_consistency(report: HealthReport) -> None:
 
 
 def main() -> int:
-    print("Reasonix 渗透作战工作台健康检查")
+    print("DawnForge 渗透作战工作台健康检查")
     print(f"项目路径: {PROJECT_ROOT}")
     print("=" * 60)
 

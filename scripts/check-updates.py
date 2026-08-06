@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Reasonix 工具链版本检查
+DawnForge 工具链版本检查
 
 读取 config/tools-manifest.json，对比本地工具版本与 GitHub Release 最新版本。
 
@@ -193,7 +193,7 @@ def check_tool(name: str, info: dict, token: str | None, cache: dict) -> dict:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Reasonix 工具链版本检查")
+    parser = argparse.ArgumentParser(description="DawnForge 工具链版本检查")
     parser.add_argument("--json", action="store_true", help="JSON 格式输出")
     parser.add_argument("--tool", help="仅检查指定工具")
     parser.add_argument("--gh-token", help="GitHub Personal Access Token (提高 API 限流)")
@@ -233,7 +233,7 @@ def main():
         print(json.dumps(results, ensure_ascii=False, indent=2))
     else:
         print("\n" + "=" * 65)
-        print("  Reasonix 工具链版本检查")
+        print("  DawnForge 工具链版本检查")
         print(f"  检查时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         print("=" * 65)
 

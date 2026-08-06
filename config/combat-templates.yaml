@@ -1,5 +1,5 @@
-# Reasonix 渗透作战 — 战术模板
-# 根据目标类型自动匹配攻击链，Reasonix 按顺序执行
+# DawnForge 渗透作战 — 战术模板
+# 根据目标类型自动匹配攻击链，DawnForge 按顺序执行
 
 templates:
   web-target:

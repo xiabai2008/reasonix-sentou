@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    下载恢复 Reasonix 渗透工作台所需的所有工具二进制和字典库
+    下载恢复 DawnForge 渗透工作台所需的所有工具二进制和字典库
 .DESCRIPTION
     git clone 后运行此脚本，自动从各工具官方源下载最新版本。
     工具清单来自 config/tools-manifest.json，修改工具列表只需编辑该文件。
@@ -19,7 +19,7 @@ $DictDir = Join-Path $ProjectDir "config\dictionaries"
 $ManifestPath = Join-Path $ProjectDir "config\tools-manifest.json"
 
 Write-Host "╔══════════════════════════════════════════════╗" -ForegroundColor Cyan
-Write-Host "║     Reasonix 渗透工作台 — 工具下载恢复      ║" -ForegroundColor Cyan
+Write-Host "║     DawnForge 渗透工作台 — 工具下载恢复      ║" -ForegroundColor Cyan
 Write-Host "╚══════════════════════════════════════════════╝" -ForegroundColor Cyan
 Write-Host ""
 

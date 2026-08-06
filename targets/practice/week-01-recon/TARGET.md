@@ -60,7 +60,7 @@ naabu -host localhost -top-ports 1000
 # 运行编排脚本
 python scripts/ai-pentest-orchestrator.py --target http://localhost:8080 --type url
 
-# 将生成的 ai_prompt_*.md 内容在 Reasonix 中分析
+# 将生成的 ai_prompt_*.md 内容在 DawnForge 中分析
 # 让 AI 给出下一步建议
 ```
 

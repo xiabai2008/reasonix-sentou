@@ -81,7 +81,7 @@ done
 
 ```bash
 # 将收集到的 JS 文件和发现整理好
-# 使用 Reasonix 加载 ai-assisted-code-audit 技能
+# 使用 DawnForge 加载 ai-assisted-code-audit 技能
 # 粘贴关键代码片段，让 AI 分析:
 # - 安全风险排序 (P0-P4)
 # - API 接口清单

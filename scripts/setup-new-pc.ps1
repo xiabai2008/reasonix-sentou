@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Reasonix 渗透助手 — 新电脑一键部署脚本
+    DawnForge 渗透助手 — 新电脑一键部署脚本
 .DESCRIPTION
     把整个项目文件夹复制到新电脑后，运行此脚本即可自动配置环境。
     包括：WSL Kali Linux 安装、渗透工具安装、Python 依赖、PATH 配置、路径替换。
@@ -25,7 +25,7 @@ if (-not $ProjectPath) {
 }
 
 Write-Host "╔══════════════════════════════════════════════════╗" -ForegroundColor Cyan
-Write-Host "║    Reasonix 渗透助手 — 新电脑部署工具         ║" -ForegroundColor Cyan
+Write-Host "║    DawnForge 渗透助手 — 新电脑部署工具         ║" -ForegroundColor Cyan
 Write-Host "╚══════════════════════════════════════════════════╝" -ForegroundColor Cyan
 Write-Host "项目路径: $ProjectPath" -ForegroundColor Yellow
 Write-Host ""

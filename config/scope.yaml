@@ -1,9 +1,9 @@
-# Reasonix 渗透作战 — 授权范围配置
-# 扫描前 Reasonix 或编排脚本会自动校验目标是否在白名单内
+# DawnForge 渗透作战 — 授权范围配置
+# 扫描前 DawnForge 或编排脚本会自动校验目标是否在白名单内
 #
 # 使用方式:
 #   1. 在此文件中填写授权的 IP/网段/域名
-#   2. Reasonix 扫描前自动校验
+#   2. DawnForge 扫描前自动校验
 #   3. 编排脚本通过 python scripts/check-scope.py <target> 校验
 
 # 是否启用范围校验（true=启用，false=仅警告不阻断）

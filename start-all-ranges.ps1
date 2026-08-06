@@ -1,5 +1,5 @@
 ﻿# start-all-ranges.ps1
-# One-click launcher for all local pentest ranges used to validate 破晓 (Reasonix Sentou) capabilities.
+# One-click launcher for all local pentest ranges used to validate 破晓 (DawnForge Sentou) capabilities.
 # Validates: JYso (log4shell / fastjson / Spring4Shell), SSTImap (Flask SSTI),
 #            dalfox (DVWA / Juice Shop XSS), PEASS-ng (in-container privesc).
 #

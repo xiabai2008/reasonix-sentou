@@ -19,27 +19,22 @@
 | **OmniRed** | 全境红队 | Omni(多 Agent/全场景) + Red(红队)，强调通用性 | ★★★ | 偏工具感 |
 | **ProofDawn** | 黎明见证 | Proof(证据) + Dawn(破晓)，双关"黎明即证据确凿" | ★★★ | 含蓄 |
 
-## 主推荐：DawnForge（破晓锻造）
+## 决定
 
-理由：
-- **品牌延续**：项目的既有代号"破晓"(Po Xiao) 已被 AGENTS.md / 经验库 / 社区知晓，保留它零迁移成本。
-- **语义契合**：Forge 既是"锻造"（持续成长、经验累积），也隐含"铸造武器"（红队工具库），一语双关。
-- **可延展**：DawnForge 可拆出口号 *"Forge your dawn on the battlefield."*（在战场上锻造你的黎明），适合做 slogan 和 logo。
+**最终品牌名 = DawnForge**（仓库名 / 代号 / 社区话题统一）
+- 保留"破晓"作为中文代号与 persona 身份，DawnForge 作为英文品牌名。
+- 主 slogan：**Forge your dawn on the battlefield.**（在战场上锻造你的黎明）
+- 次要 slogan：**Evidence-forced, memory-grown, agent-agnostic.**（证据强制、记忆成长、Agent 无关）
 
-### 备选：Grimoire（魔法书）
-若更看重**独立记忆点与 star 吸引力**，Grimoire 是更强的单字品牌——它把"技能库 + 经验记忆 + 攻击链"抽象成一本会生长的魔法书，开发者看到就会产生好奇。缺点是放弃"破晓"既有资产。
+### 落地约定
 
-## 商标 / 仓库占用提示
+| 场景 | 值 |
+|:-----|:---|
+| 英文品牌名 | `DawnForge` |
+| 中文代号 | 破晓（persona / 技能身份） |
+| GitHub 仓库名 | `dawnforge`（若占用则 `dawnforge-pentest`） |
+| README 标题 | `DawnForge · 破晓` |
+| AGENTS.md 标题 | `DawnForge 渗透作战工作台` |
+| 版权头 | `Copyright (c) 2026 DawnForge Contributors` |
 
-- GitHub 仓库名：`dawnforge`（需先 `gh repo ` 搜索确认未被占用）。
-- 若 `dawnforge` 被占，可退用 `dawnforge-pentest` 或 `dawnforge-agent`。
-- 用前建议做一次 GitHub / npm / PyPI 的占用与商标检索。
-
-## 推荐 Slogan
-
-- 主：**Forge your dawn on the battlefield.**（在战场上锻造你的黎明）
-- 备：**Evidence-forced, memory-grown, agent-agnostic.**（证据强制、记忆成长、Agent 无关）
-
----
-
-**决定后请在此记录**：最终品牌名 = __________（仓库名 / 代号 / 社区话题统一）
+> 技术路径（本地文件夹 `reasonix_sentou`、`reasonix.toml` 文件名）为硬编码基础设施，保持不动，避免破坏脚本与包装器。

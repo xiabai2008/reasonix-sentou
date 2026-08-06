@@ -1,4 +1,4 @@
-# Reasonix 渗透作战 — 操作模式定义
+# DawnForge 渗透作战 — 操作模式定义
 # 启动时指定模式: "用安全模式扫一下 192.168.1.1"
 # 默认: normal
 
@@ -64,7 +64,7 @@ modes:
       - metasploit       # 需要 Kali WSL 隔离
       - webshell_write   # 需要人工确认
 
-# 模式触发关键词（Reasonix 从用户输入中自动识别）
+# 模式触发关键词（DawnForge 从用户输入中自动识别）
 triggers:
   safe: ["安全模式", "safe mode", "被动扫描", "只收集", "侦察", "recon only", "不要攻击", "只看看"]
   normal: ["标准模式", "normal", "默认"]

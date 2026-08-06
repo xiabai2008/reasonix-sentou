@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Reasonix 扫描结果格式化工具
+DawnForge 扫描结果格式化工具
 
 将各种工具的原始输出统一转换为 JSON 格式，便于报告生成和 AI 分析。
 
@@ -213,7 +213,7 @@ def format_file(filepath: Path, forced_type: str | None = None) -> dict:
     }
 
 def main():
-    parser = argparse.ArgumentParser(description="Reasonix 扫描结果格式化工具")
+    parser = argparse.ArgumentParser(description="DawnForge 扫描结果格式化工具")
     parser.add_argument("paths", nargs="+", help="文件或目录路径")
     parser.add_argument("--type", "-t", help="强制指定工具类型")
     parser.add_argument("--list", action="store_true", help="仅列出可格式化的文件")

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Reasonix 渗透经验统计分析
+DawnForge 渗透经验统计分析
 
 用法:
     python scripts/exp-stats.py                    # 全量统计
@@ -137,7 +137,7 @@ def filter_experiences(experiences: list, tag=None, category=None, tool=None) ->
 def print_stats(stats: dict):
     """格式化输出"""
     print("=" * 60)
-    print("  Reasonix 渗透经验统计分析")
+    print("  DawnForge 渗透经验统计分析")
     print("=" * 60)
     print(f"  总经验数: {stats['total']}")
     print(f"  日期范围: {stats['date_range']['first']} ~ {stats['date_range']['last']}")
@@ -193,7 +193,7 @@ def print_stats(stats: dict):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Reasonix 渗透经验统计分析")
+    parser = argparse.ArgumentParser(description="DawnForge 渗透经验统计分析")
     parser.add_argument("--tag", help="按标签筛选")
     parser.add_argument("--category", help="按漏洞类型筛选")
     parser.add_argument("--tool", help="按使用的工具筛选")

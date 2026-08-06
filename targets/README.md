@@ -1,4 +1,4 @@
-# Reasonix 渗透靶场 — 实战训练环境
+# DawnForge 渗透靶场 — 实战训练环境
 
 > 一键启动 4 个真实漏洞环境，覆盖 PHP / Node.js / Java / Python 四大技术栈。
 > 对应项目内 **59 个漏洞技能**，配合 `AGENTS.md` 中的 AI 辅助分析能力，
@@ -97,7 +97,7 @@
 # 对靶场执行基础扫描
 python scripts/ai-pentest-orchestrator.py --target http://localhost:8080 --type url
 
-# 将生成的 ai_prompt_*.md 在 Reasonix 中分析攻击链
+# 将生成的 ai_prompt_*.md 在 DawnForge 中分析攻击链
 # 结合 AGENTS.md 中的作战经验，进行深度研判
 
 # 或直接对扫描结果格式化

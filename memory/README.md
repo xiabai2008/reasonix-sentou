@@ -1,6 +1,6 @@
-# Reasonix 经验记忆库
+# DawnForge 经验记忆库
 
-`memory/` 用来保存渗透任务后的经验沉淀。它不是普通日志目录，而是 Reasonix 下次启动和分析相似目标时可以参考的长期记忆层。
+`memory/` 用来保存渗透任务后的经验沉淀。它不是普通日志目录，而是 DawnForge 下次启动和分析相似目标时可以参考的长期记忆层。
 
 ## 目录结构
 
@@ -34,7 +34,7 @@ memory/
 
 ## 使用方式
 
-遇到相似目标时，Reasonix 应先检索本目录：
+遇到相似目标时，DawnForge 应先检索本目录：
 
 ```text
 EyouCMS / ThinkPHP / Flask / JWT / Webpack / SourceMap / 内网弱口令
@@ -48,7 +48,7 @@ EyouCMS / ThinkPHP / Flask / JWT / Webpack / SourceMap / 内网弱口令
 
 ## 成本记录
 
-任务结束后在 Reasonix 中执行：
+任务结束后在 DawnForge 中执行：
 
 ```text
 /stats
@@ -66,4 +66,4 @@ JWT 低权限账号 → API 越权 → 横向读取用户数据
 SourceMap 泄露 → 接口发现 → 权限矩阵分析 → BOLA
 ```
 
-攻击链记录越清晰，Reasonix 后续越容易复用相似路径。
+攻击链记录越清晰，DawnForge 后续越容易复用相似路径。

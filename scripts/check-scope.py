@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Reasonix 授权范围校验工具
+DawnForge 授权范围校验工具
 
 用法:
     python scripts/check-scope.py 192.168.1.1
@@ -345,7 +345,7 @@ def check_target(target: str, scope: dict) -> tuple:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Reasonix 授权范围校验",
+        description="DawnForge 授权范围校验",
         epilog="示例:\n"
                "  python scripts/check-scope.py 192.168.1.1\n"
                "  python scripts/check-scope.py http://example.com\n"

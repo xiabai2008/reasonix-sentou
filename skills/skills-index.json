@@ -2,7 +2,7 @@
   "_meta": {
     "version": 1,
     "generated": "2026-07-22",
-    "description": "Reasonix 渗透工作台技能索引 — 供 Reasonix 按需加载，避免全量读取",
+    "description": "DawnForge 渗透工作台技能索引 — 供 DawnForge 按需加载，避免全量读取",
     "stats": {
       "main_skills": 7,
       "vuln_skills": 67,
@@ -418,7 +418,7 @@
       "id": "ai-assisted-code-audit",
       "name": "AI-Assisted Front-End Code Audit",
       "path": "skills/pentest_skills/ai-assisted-code-audit/SKILL.md",
-      "description": "AI-assisted front-end code audit playbook. Use when analyzing JavaScript bundles, Webpack source maps, API clients, or front-end code for vulnerabilities. Designed for DeepSeek-Reasonix prefix-cache optimization.",
+      "description": "AI-assisted front-end code audit playbook. Use when analyzing JavaScript bundles, Webpack source maps, API clients, or front-end code for vulnerabilities. Designed for DeepSeek-DawnForge prefix-cache optimization.",
       "category": "frontend",
       "triggers": [
         "代码审计",

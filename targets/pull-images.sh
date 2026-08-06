@@ -1,9 +1,9 @@
 #!/bin/bash
-# Reasonix 靶场 — 镜像拉取脚本 (通过 1ms.run 镜像加速)
+# DawnForge 靶场 — 镜像拉取脚本 (通过 1ms.run 镜像加速)
 # 用法: bash targets/pull-images.sh
 
 MIRROR="docker.1ms.run"
-echo "=== Reasonix 靶场镜像拉取 ==="
+echo "=== DawnForge 靶场镜像拉取 ==="
 echo "镜像源: $MIRROR"
 echo ""
 
