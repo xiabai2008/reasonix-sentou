@@ -113,3 +113,20 @@ archive/
 # --- Docker & 靶场 ---
 docker-compose.override.yml
 targets/data/
+
+# --- 本地私人专属资产（保留在本地使用，绝不随开源仓库提交） ---
+docs/phase-neg1-experiment.md
+specs/
+kb/
+scripts/ctf-decode.py
+scripts/ctf-start.py
+scripts/kb.py
+skills/binary-triage/
+skills/ctf-ai/
+skills/ctf-crypto/
+skills/ctf-misc/
+skills/ctf-pwn/
+skills/ctf-rev/
+skills/ctf-web/
+skills/deep-analysis/
+skills/unpacking/
