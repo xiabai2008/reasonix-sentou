@@ -66,3 +66,22 @@ jobs:
           print('OK' if ok else 'ERRORS')
           sys.exit(0 if ok else 1)
           PY
+
+  tool-table-sync:
+    name: Tool table sync (manifest ↔ README)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Check tool tables are in sync
+        run: |
+          python scripts/gen-tool-table.py --dry-run
+          if python scripts/gen-tool-table.py --dry-run | grep -q "DRY-RUN"; then
+            echo "::error::README tool tables are out of sync with config/tools-manifest.json. Run: python scripts/gen-tool-table.py"
+            exit 1
+          fi
+          echo "Tool tables are up to date."
