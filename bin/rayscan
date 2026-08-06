@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # RayScan v2.0 — 全栈漏洞扫描器 (8种SQLi + 6种XSS + 12种OA + 多引擎聚合)
-# 如已 pip install: exec python -m wvs "$@"
-SCRIPT_DIR="/d/HZR_PROJECTS/RayScan/RayScan"
-cd "$SCRIPT_DIR" && exec python -m wvs "$@"
+# 工具由 download-tools.ps1 克隆到 tools/rayscan，首次使用前先运行一次下载脚本
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$SCRIPT_DIR/../tools/rayscan"
+exec python -m wvs "$@"

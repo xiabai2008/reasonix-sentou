@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 # 破晓 PoXiao v3.0 — SRC 挖洞工具链 (257 CVE + 215 POC + MCP)
-exec python "D:/HZR_PROJECTS/poxiao/poxiao/poxiao.py" "$@"
+# 工具由 download-tools.ps1 克隆到 tools/poxiao，首次使用前先运行一次下载脚本
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$SCRIPT_DIR/../tools/poxiao"
+exec python -m src.cli "$@"

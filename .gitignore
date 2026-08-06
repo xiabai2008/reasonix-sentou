@@ -9,12 +9,10 @@ tools/**
 !tools/generate_html.py
 !tools/generate_word.py
 !tools/report_renderers/
-!tools/rayscan/
-!tools/poxiao/
 !tools/dictx/
 !tools/requirements.txt
-# 说明：ccupp / super-password-dict / vulmap 为第三方内嵌 git 仓库，
-# 按"工具本体不入库、部署时下载"原则整体忽略（见 scripts/setup-new-pc.ps1）。
+# 说明：自研工具 poxiao / rayscan / ruoyi-scan 及第三方工具（ccupp / super-password-dict / vulmap 等）
+# 均按"工具本体不入库、部署时下载"原则整体忽略，由 download-tools.ps1 克隆到 tools/。
 
 # --- 超大字典库 ---
 config/dictionaries/

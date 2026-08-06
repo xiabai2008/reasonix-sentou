@@ -120,6 +120,9 @@ python scripts/setup-agent-links.py --mode copy      # 用复制代替软链
 | SpiderX | 前端 JS 加密绕过 | [LiChaser/SpiderX](https://github.com/LiChaser/SpiderX) |
 | MemShellParty | Java 内存马注入 | [ReaJason/MemShellParty](https://github.com/ReaJason/MemShellParty) |
 | JYso | JNDI 注入 + 反序列化 | [qi4L/JYso](https://github.com/qi4L/JYso) |
+| poxiao | SRC 挖洞工具链（257 CVE） | [xiabai2008/poxiao](https://github.com/xiabai2008/poxiao) |
+| rayscan | Web 全栈漏洞扫描（8种SQLi/XSS/OA） | [xiabai2008/rayscan](https://github.com/xiabai2008/rayscan) |
+| ruoyi-scan | 若依框架专项扫描 | [xiabai2008/ruoyi-scan](https://github.com/xiabai2008/ruoyi-scan) |
 <!-- TOOL-TABLE:END -->
 
 > 字典库：`SecLists` · `SuperWordlist` · `Dict` · `SaiDict` · `S-BlastingDictionary` — 按需克隆到 `config/dictionaries/`。

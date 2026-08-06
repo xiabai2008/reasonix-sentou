@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
-# Ruoyi-Scan v1.1 — 若依框架综合漏洞检测工具
-exec python "D:/HZR_PROJECTS/shengtou_tools/2026-7-16安全开发&Ruoyi综合漏洞检测工具/main.py" "$@"
+# Ruoyi-Scan v1.1 — 若依框架专项漏洞扫描器 (文件读取/SQLi/默认口令/利用链)
+# 工具由 download-tools.ps1 克隆到 tools/ruoyi-scan，首次使用前先运行一次下载脚本
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$SCRIPT_DIR/../tools/ruoyi-scan"
+exec python main.py "$@"

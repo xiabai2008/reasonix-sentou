@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-PYTHON="python"
-SCRIPT_DIR="D:/HZR_PROJECTS/RayScan/RayScan"
+# RayScan Web UI — 启动 Web 管理界面 http://localhost:5000
+# 工具由 download-tools.ps1 克隆到 tools/rayscan，首次使用前先运行一次下载脚本
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 echo "🌐 RayScan Web UI 启动中... http://localhost:5000"
-exec "$PYTHON" "$SCRIPT_DIR/web_ui/app.py"
+exec python "$SCRIPT_DIR/../tools/rayscan/web_ui/app.py"

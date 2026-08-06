@@ -52,6 +52,10 @@ ROLE_MAP = {
     "SpiderX": ("Frontend JS anti-encryption bypass / 前端加密绕过", "前端 JS 加密绕过"),
     "MemShellParty": ("Java memory-shell injection / Java 内存马注入", "Java 内存马注入"),
     "JYso": ("JNDI + deserialization / JNDI 反序列化", "JNDI 注入 + 反序列化"),
+    # 自研工具
+    "poxiao": ("SRC hunting toolchain (257 CVE) / SRC 挖洞工具链", "SRC 挖洞工具链（257 CVE）"),
+    "rayscan": ("Web vuln scanner (SQLi/XSS/OA) / Web 全栈漏洞扫描", "Web 全栈漏洞扫描（8种SQLi/XSS/OA）"),
+    "ruoyi-scan": ("RuoYi-framework scanner / 若依框架专项扫描", "若依框架专项扫描"),
 }
 
 

@@ -4,7 +4,7 @@
     "note": "每个条目定义下载来源、目标路径、版本获取方式",
     "generated": "2026-07-22",
     "total_tools": 12,
-    "total_cloned": 5,
+    "total_cloned": 8,
     "total_dictionaries": 5
   },
   "tools": {
@@ -52,7 +52,7 @@
     },
     "fscan": {
       "repo": "shadow1ng/fscan",
-      "asset_pattern": "fscan.*\\.exe",
+      "asset_pattern": "fscan_[0-9].*_windows.*\\.exe",
       "bin": "fscan.exe",
       "category": "port-scan",
       "note": "内网扫描神器，含爆破+POC"
@@ -78,7 +78,7 @@
     },
     "dalfox": {
       "repo": "hahwul/dalfox",
-      "asset_pattern": "dalfox_.*_windows_amd64\\.tar\\.gz",
+      "asset_pattern": "dalfox.*windows.*\\.zip",
       "bin": "dalfox.exe",
       "category": "xss-scanner",
       "note": "XSS 专项扫描器，专精参数分析+DOM XSS"
@@ -114,6 +114,24 @@
       "target": "tools/JYso",
       "category": "jndi-deserialization",
       "note": "JNDI注入+反序列化+回显+内存马，替代旧版 JNDI-Injection-Exploit"
+    },
+    "poxiao": {
+      "repo": "xiabai2008/poxiao",
+      "target": "tools/poxiao",
+      "category": "scanner",
+      "note": "破晓 v3.0 — 二十四节气安全工具链 (SRC 挖洞，257 CVE + 三层降噪)"
+    },
+    "rayscan": {
+      "repo": "xiabai2008/rayscan",
+      "target": "tools/rayscan",
+      "category": "scanner",
+      "note": "RayScan — 开箱即用的 Web 漏洞扫描器 (8种SQLi + 6种XSS + 12种OA)"
+    },
+    "ruoyi-scan": {
+      "repo": "xiabai2008/ruoyi-scan",
+      "target": "tools/ruoyi-scan",
+      "category": "scanner",
+      "note": "RuoYi 若依框架专项漏洞扫描器 (文件读取/SQLi/默认口令/利用链)"
     }
   },
   "dictionaries": {

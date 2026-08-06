@@ -134,6 +134,9 @@ The tool list lives in `config/tools-manifest.json` (each entry: source repo + a
 | SpiderX | Frontend JS anti-encryption bypass / 前端加密绕过 | [LiChaser/SpiderX](https://github.com/LiChaser/SpiderX) |
 | MemShellParty | Java memory-shell injection / Java 内存马注入 | [ReaJason/MemShellParty](https://github.com/ReaJason/MemShellParty) |
 | JYso | JNDI + deserialization / JNDI 反序列化 | [qi4L/JYso](https://github.com/qi4L/JYso) |
+| poxiao | SRC hunting toolchain (257 CVE) / SRC 挖洞工具链 | [xiabai2008/poxiao](https://github.com/xiabai2008/poxiao) |
+| rayscan | Web vuln scanner (SQLi/XSS/OA) / Web 全栈漏洞扫描 | [xiabai2008/rayscan](https://github.com/xiabai2008/rayscan) |
+| ruoyi-scan | RuoYi-framework scanner / 若依框架专项扫描 | [xiabai2008/ruoyi-scan](https://github.com/xiabai2008/ruoyi-scan) |
 <!-- TOOL-TABLE:END -->
 
 > Dictionaries / 字典库：`SecLists` · `SuperWordlist` · `Dict` · `SaiDict` · `S-BlastingDictionary` — cloned on demand into `config/dictionaries/`（按需克隆到 `config/dictionaries/`）。

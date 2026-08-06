@@ -225,6 +225,29 @@ if (Test-Path $spxDir) {
     Write-Host "  [INFO] SpiderX Python 依赖安装请参照 $spxDir/README.md" -ForegroundColor Gray
 }
 
+# 自研工具 (poxiao / rayscan / ruoyi-scan) Python 依赖安装
+# 这些工具是 DawnForge 首推工具，必须装依赖才能运行
+if ($pythonOk) {
+    $selfTools = @("poxiao", "rayscan", "ruoyi-scan")
+    foreach ($name in $selfTools) {
+        $toolDir = Join-Path $ToolsDir $name
+        if (-not (Test-Path $toolDir)) { continue }
+        $req = Join-Path $toolDir "requirements.txt"
+        Write-Host "  [DEPS] 安装 $name 的 Python 依赖..."
+        if (Test-Path $req) {
+            & $python.Source -m pip install -q -r $req 2>&1 | Out-Null
+        } else {
+            # rayscan 无 requirements.txt，直接装 pyproject 核心依赖
+            & $python.Source -m pip install -q rich requests httpx flask beautifulsoup4 lxml pyyaml colorama aiohttp 2>&1 | Out-Null
+        }
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "  [OK] $name 依赖就绪" -ForegroundColor Green
+        } else {
+            Write-Host "  [WARN] $name 依赖安装失败，请手动执行 pip install" -ForegroundColor Yellow
+        }
+    }
+}
+
 # ============================================================
 # Step 3: 下载字典库 + 生成自建字典
 # ============================================================
