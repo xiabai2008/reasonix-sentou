@@ -7,12 +7,12 @@
 
 > Forge your dawn on the battlefield. — 在战场上锻造你的黎明
 
+[![Release](https://img.shields.io/github/v/release/xiabai2008/dawnforge-pentest?include_prereleases&label=Release&color=orange)](https://github.com/xiabai2008/dawnforge-pentest/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![CI](https://github.com/xiabai2008/dawnforge-pentest/actions/workflows/ci.yml/badge.svg)](https://github.com/xiabai2008/dawnforge-pentest/actions)
+[![Visitors](https://api.visitorbadge.io/api/visitors?path=xiabai2008.dawnforge-pentest&label=Visitors&countColor=%23263759&labelColor=%23263759)](https://github.com/xiabai2008/dawnforge-pentest)
 [![GitHub stars](https://img.shields.io/github/stars/xiabai2008/dawnforge-pentest.svg?style=social&label=Star)](https://github.com/xiabai2008/dawnforge-pentest)
-[![Agent: Universal](https://img.shields.io/badge/Agent-Claude%20%7C%20Codex%20%7C%20OpenCode%20%7C%20Cline%20%7C%20Trae-4d5cff)]()
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)]()
-[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20WSL-informational)]()
+[![GitHub forks](https://img.shields.io/github/forks/xiabai2008/dawnforge-pentest.svg?style=social&label=Fork)](https://github.com/xiabai2008/dawnforge-pentest)
 
 **Evidence-enforced anti-hallucination · Agent-agnostic · Continuously growing memory**
 **证据强制反幻觉 · 多 Agent 通用 · 经验持续成长**
