@@ -102,6 +102,30 @@ The tool list lives in `config/tools-manifest.json` (each entry: source repo + a
 
 工具清单见 `config/tools-manifest.json`（每项含来源仓库、资产匹配、目标路径）。编辑它即可定制你的工具链。
 
+#### Tool manifest / 工具清单
+
+| Tool / 工具 | Role / 用途 | Source / 来源 |
+|:---|:---|:---|
+| fscan | Intranet port scan + brute-force + POC / 内网扫描 | [shadow1ng/fscan](https://github.com/shadow1ng/fscan) |
+| naabu | Fast port scan / 快速端口扫描 | [projectdiscovery/naabu](https://github.com/projectdiscovery/naabu) |
+| nuclei | Vulnerability scan (125k+ templates) / 漏洞扫描 | [projectdiscovery/nuclei](https://github.com/projectdiscovery/nuclei) |
+| httpx | HTTP probing / tech-stack fingerprint / Web 探活 | [projectdiscovery/httpx](https://github.com/projectdiscovery/httpx) |
+| subfinder | Passive subdomain enumeration / 子域名被动枚举 | [projectdiscovery/subfinder](https://github.com/projectdiscovery/subfinder) |
+| katana | Crawler / 爬虫 | [projectdiscovery/katana](https://github.com/projectdiscovery/katana) |
+| dnsx | DNS toolkit / DNS 工具包 | [projectdiscovery/dnsx](https://github.com/projectdiscovery/dnsx) |
+| tlsx | TLS certificate fetch / TLS 证书 | [projectdiscovery/tlsx](https://github.com/projectdiscovery/tlsx) |
+| ffuf | Web fuzzer / 目录与参数模糊测试 | [ffuf/ffuf](https://github.com/ffuf/ffuf) |
+| gau | URL collection / URL 收集 | [lc/gau](https://github.com/lc/gau) |
+| dalfox | XSS scanner / XSS 专项扫描 | [hahwul/dalfox](https://github.com/hahwul/dalfox) |
+| jq | JSON processing / JSON 处理 | [jqlang/jq](https://github.com/jqlang/jq) |
+| PEASS-ng | Priv-esc assist / 提权辅助 | [carlospolop/PEASS-ng](https://github.com/carlospolop/PEASS-ng) |
+| SSTImap | SSTI detect & exploit / SSTI 检测利用 | [vladko312/SSTImap](https://github.com/vladko312/SSTImap) |
+| SpiderX | Frontend JS anti-encryption bypass / 前端加密绕过 | [LiChaser/SpiderX](https://github.com/LiChaser/SpiderX) |
+| MemShellParty | Java memory-shell injection / Java 内存马注入 | [ReaJason/MemShellParty](https://github.com/ReaJason/MemShellParty) |
+| JYso | JNDI + deserialization / JNDI 反序列化 | [qi4L/JYso](https://github.com/qi4L/JYso) |
+
+> Dictionaries / 字典库：`SecLists` · `SuperWordlist` · `Dict` · `SaiDict` · `S-BlastingDictionary` — cloned on demand into `config/dictionaries/`（按需克隆到 `config/dictionaries/`）。
+
 ---
 
 ## Core Capabilities / 核心能力

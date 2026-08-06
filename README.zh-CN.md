@@ -88,6 +88,30 @@ python scripts/setup-agent-links.py --mode copy      # 用复制代替软链
 
 工具清单见 `config/tools-manifest.json`（每项含来源仓库、资产匹配、目标路径）。编辑它即可定制你的工具链。
 
+#### 工具清单
+
+| 工具 | 用途 | 来源 |
+|:---|:---|:---|
+| fscan | 内网扫描（端口+爆破+POC） | [shadow1ng/fscan](https://github.com/shadow1ng/fscan) |
+| naabu | 快速端口扫描 | [projectdiscovery/naabu](https://github.com/projectdiscovery/naabu) |
+| nuclei | 漏洞扫描（12.5w+ 模板） | [projectdiscovery/nuclei](https://github.com/projectdiscovery/nuclei) |
+| httpx | Web 探活 / 技术栈指纹 | [projectdiscovery/httpx](https://github.com/projectdiscovery/httpx) |
+| subfinder | 子域名被动枚举 | [projectdiscovery/subfinder](https://github.com/projectdiscovery/subfinder) |
+| katana | 爬虫 | [projectdiscovery/katana](https://github.com/projectdiscovery/katana) |
+| dnsx | DNS 工具包 | [projectdiscovery/dnsx](https://github.com/projectdiscovery/dnsx) |
+| tlsx | TLS 证书信息 | [projectdiscovery/tlsx](https://github.com/projectdiscovery/tlsx) |
+| ffuf | 目录与参数模糊测试 | [ffuf/ffuf](https://github.com/ffuf/ffuf) |
+| gau | URL 收集 | [lc/gau](https://github.com/lc/gau) |
+| dalfox | XSS 专项扫描 | [hahwul/dalfox](https://github.com/hahwul/dalfox) |
+| jq | JSON 处理 | [jqlang/jq](https://github.com/jqlang/jq) |
+| PEASS-ng | 提权辅助 | [carlospolop/PEASS-ng](https://github.com/carlospolop/PEASS-ng) |
+| SSTImap | SSTI 检测利用 | [vladko312/SSTImap](https://github.com/vladko312/SSTImap) |
+| SpiderX | 前端 JS 加密绕过 | [LiChaser/SpiderX](https://github.com/LiChaser/SpiderX) |
+| MemShellParty | Java 内存马注入 | [ReaJason/MemShellParty](https://github.com/ReaJason/MemShellParty) |
+| JYso | JNDI 注入 + 反序列化 | [qi4L/JYso](https://github.com/qi4L/JYso) |
+
+> 字典库：`SecLists` · `SuperWordlist` · `Dict` · `SaiDict` · `S-BlastingDictionary` — 按需克隆到 `config/dictionaries/`。
+
 ---
 
 ## 核心能力
