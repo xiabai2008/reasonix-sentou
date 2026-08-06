@@ -47,6 +47,22 @@ jobs:
             || python scripts/health-check.py \
             || echo "::warning::health-check produced non-zero exit"
 
+  unit-tests:
+    name: Unit tests (pytest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pytest
+        run: pip install pytest
+
+      - name: Run unit tests
+        run: python -m pytest tests/ -q
+
   yaml-lint:
     name: YAML config sanity
     runs-on: ubuntu-latest

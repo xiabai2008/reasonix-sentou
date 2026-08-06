@@ -105,6 +105,7 @@ def write_experience_file(manifest: dict, new_evidence: list) -> Path:
             f"| {ev['id']} | {ev['type']} | {ev['claim']} | {ev.get('source_cmd','')} |"
         )
     lines.append("")
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines), encoding="utf-8")
     print(f"[+] 经验沉淀: {path.name} ({len(new_evidence)} 条高信号证据)")
     return path
@@ -124,6 +125,7 @@ def append_attack_chains(manifest: dict) -> None:
     if ATTACK_CHAINS_FILE.exists():
         existing = ATTACK_CHAINS_FILE.read_text(encoding="utf-8")
 
+    ATTACK_CHAINS_FILE.parent.mkdir(parents=True, exist_ok=True)
     with open(ATTACK_CHAINS_FILE, "a", encoding="utf-8") as f:
         if existing and not existing.endswith("\n"):
             f.write("\n")

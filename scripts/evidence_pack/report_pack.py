@@ -157,6 +157,7 @@ def output_report(manifest: dict, fmt: str, ai_analysis: str) -> Path:
     else:
         content = render_markdown(manifest, ai_analysis)
         out = REPORTS_DIR / f"report_{task_id}_{ts}.md"
+    out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(content, encoding="utf-8")
     print(f"[+] 报告已生成: {out}")
     return out

@@ -141,6 +141,7 @@ def harvest(raw_output: str, tag: str, claims: list, target: str = "",
 
 def write_manifest(tag: str, manifest: dict) -> Path:
     out = EVIDENCE_DIR / f"manifest_{tag}.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
     with open(out, "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2, ensure_ascii=False)
     print(f"[+] 证据清单已写入: {out}")
