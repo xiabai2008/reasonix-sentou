@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed sensitive/historical artifacts (CTF exam data, personal walkthroughs,
   internal research) from the public repository.
 - Swapped the visitor counter badge to the more reliable `hits.sh` service.
+- `scripts/download-tools.ps1` rewritten to use the native GitHub API instead of
+  the `gh` CLI (no `gh` install required), with optional `GITHUB_TOKEN` support
+  to avoid rate-limiting and a fix for the `Test-Path` skip-check bug.
 
 ### Removed
 - `ctf_exam_web01/`, `解题思路/`, `vulnclaw-research/`, `vulnclaw-vs-reasonix/`,

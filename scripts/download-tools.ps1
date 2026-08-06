@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     下载恢复 DawnForge 渗透工作台所需的所有工具二进制和字典库
 .DESCRIPTION
@@ -32,13 +32,23 @@ Write-Host ""
 # Step 0: 检查依赖 + 加载 manifest
 # ============================================================
 Write-Host "[Preflight] 检查依赖..." -ForegroundColor Green
-$ghOk = Get-Command "gh" -ErrorAction SilentlyContinue
-if (-not $ghOk) {
-    Write-Host "  [ERROR] 未找到 GitHub CLI (gh)。请安装: winget install GitHub.cli" -ForegroundColor Red
-    Write-Host "  或从 https://cli.github.com 下载" -ForegroundColor Red
-    exit 1
+
+# 检查 git（克隆源码工具/字典用）
+$gitOk = Get-Command "git" -ErrorAction SilentlyContinue
+if (-not $gitOk) {
+    Write-Host "  [WARN] 未找到 git。克隆类工具（PEASS-ng/SSTImap/SpiderX 等）和字典库将无法下载。" -ForegroundColor Yellow
+    Write-Host "        请安装 git: https://git-scm.com/downloads" -ForegroundColor Yellow
+} else {
+    Write-Host "  [OK] git 可用" -ForegroundColor Green
 }
-Write-Host "  [OK] GitHub CLI 可用" -ForegroundColor Green
+
+# 检查 python（生成字典用，可选）
+$pythonOk = Get-Command "python" -ErrorAction SilentlyContinue
+if (-not $pythonOk) {
+    Write-Host "  [INFO] 未找到 python，将跳过自建字典生成（不影响二进制工具下载）。" -ForegroundColor Gray
+} else {
+    Write-Host "  [OK] python 可用" -ForegroundColor Green
+}
 
 if (-not (Test-Path $ManifestPath)) {
     Write-Host "  [ERROR] 未找到工具清单: $ManifestPath" -ForegroundColor Red
@@ -49,6 +59,43 @@ Write-Host "  [OK] 工具清单: config/tools-manifest.json" -ForegroundColor Gr
 $manifest = Get-Content $ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
 
 $downloaded = 0; $skipped = 0; $failed = 0
+
+# GitHub API 下载辅助函数（无需 gh CLI、无需认证）
+function Get-GitHubReleaseAsset {
+    param(
+        [string]$Repo,
+        [string]$RawPattern,
+        [string]$DestDir
+    )
+    $headers = @{ "User-Agent" = "DawnForge-download" }
+    # 若设置了 GITHUB_TOKEN 环境变量则用认证请求（提高速率限制），否则匿名请求（零门槛）
+    if ($env:GITHUB_TOKEN) {
+        $headers["Authorization"] = "token $env:GITHUB_TOKEN"
+        Write-Host "  [AUTH] 使用 GITHUB_TOKEN 认证（提高 API 速率限制）" -ForegroundColor Gray
+    }
+    $latest = Invoke-RestMethod -Uri "https://api.github.com/repos/$Repo/releases/latest" -Headers $headers -ErrorAction Stop
+    $asset = $null
+    if ($RawPattern) {
+        $asset = $latest.assets | Where-Object { $_.name -match $RawPattern } | Select-Object -First 1
+    }
+    # Fallback: 宽松匹配 Windows amd64 zip/exe
+    if (-not $asset) {
+        $asset = $latest.assets | Where-Object {
+            $_.name -match "windows.*amd64" -and ($_.name -match "\.zip$" -or $_.name -match "\.exe$")
+        } | Select-Object -First 1
+    }
+    # 再次 fallback: 任意 exe/zip/tar.gz
+    if (-not $asset) {
+        $asset = $latest.assets | Where-Object {
+            $_.name -match "\.exe$" -or $_.name -match "\.zip$" -or $_.name -match "\.tar\.gz$"
+        } | Select-Object -First 1
+    }
+    if (-not $asset) { throw "未找到匹配的 Windows 资产 (repo=$Repo)" }
+
+    $destFile = Join-Path $DestDir $asset.name
+    Invoke-WebRequest -Uri $asset.browser_download_url -Headers $headers -OutFile $destFile -ErrorAction Stop
+    return $destFile
+}
 
 # ============================================================
 # Step 1: 下载工具二进制（gh release download）
@@ -70,7 +117,7 @@ foreach ($name in $manifest.tools.PSObject.Properties.Name) {
 
     Write-Host "  [$toolIndex/$toolCount] " -NoNewline
 
-    if (Test-Path $dest -and -not $Force) {
+    if ((Test-Path $dest) -and (-not $Force)) {
         Write-Host "[SKIP] $name 已存在" -ForegroundColor Gray
         $skipped++
         continue
@@ -79,43 +126,10 @@ foreach ($name in $manifest.tools.PSObject.Properties.Name) {
     Write-Host "[DOWNLOAD] $name from $($t.repo)..." -NoNewline
 
     try {
-        # 获取最新 release 信息
-        $releaseJson = gh release view --repo $t.repo --json tagName,assets 2>&1 | Out-String
-        if ($LASTEXITCODE -ne 0) { throw "无法获取 release 信息" }
+        # 通过 GitHub API 获取最新 release 资产（无需 gh CLI）
+        $tmpFile = Get-GitHubReleaseAsset -Repo $t.repo -RawPattern $t.asset_pattern -DestDir $env:TEMP
 
-        $release = $releaseJson | ConvertFrom-Json
-        if (-not $release) { throw "JSON 解析失败" }
-
-        # 优先用 manifest 中的 asset_pattern 精确匹配
-        $asset = $null
-        if ($t.asset_pattern) {
-            $asset = $release.assets | Where-Object {
-                $_.name -match $t.asset_pattern
-            } | Select-Object -First 1
-        }
-
-        # Fallback: 宽松匹配 Windows amd64 zip/exe
-        if (-not $asset) {
-            $asset = $release.assets | Where-Object {
-                $_.name -match "windows.*amd64" -and ($_.name -match "\.zip$" -or $_.name -match "\.exe$")
-            } | Select-Object -First 1
-        }
-
-        # 再次 fallback: 任意 zip/exe
-        if (-not $asset) {
-            $asset = $release.assets | Where-Object {
-                $_.name -match "\.exe$" -or $_.name -match "\.zip$"
-            } | Select-Object -First 1
-        }
-
-        if (-not $asset) { throw "未找到匹配的 Windows 资产" }
-
-        $assetName = $asset.name
-        $tmpFile = Join-Path $env:TEMP $assetName
-
-        # 下载
-        gh release download --repo $t.repo --pattern $assetName --dir $env:TEMP 2>&1 | Out-Null
-        if ($LASTEXITCODE -ne 0) { throw "下载失败" }
+        $assetName = Split-Path $tmpFile -Leaf
 
         # 解压或移动
         if ($assetName -match "\.zip$") {
@@ -171,7 +185,7 @@ foreach ($name in $manifest.cloned_tools.PSObject.Properties.Name) {
 
     Write-Host "  [$cloneIndex/$cloneCount] " -NoNewline
 
-    if (Test-Path $dest -and -not $Force) {
+    if ((Test-Path $dest) -and (-not $Force)) {
         Write-Host "[SKIP] $name ($($ct.target)) 已存在" -ForegroundColor Gray
         $skipped++
         continue
@@ -232,7 +246,7 @@ foreach ($name in $manifest.dictionaries.PSObject.Properties.Name) {
 
     Write-Host "  [$dictIndex/$dictCount] " -NoNewline
 
-    if (Test-Path $dest -and -not $Force) {
+    if ((Test-Path $dest) -and (-not $Force)) {
         Write-Host "[SKIP] $name 已存在" -ForegroundColor Gray
         continue
     }

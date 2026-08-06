@@ -68,6 +68,26 @@ python scripts/setup-agent-links.py --mode copy      # 用复制代替软链
 
 各家 Agent 的配置模板见 `templates/agent-configs/`（opencode/codex/claude 示例）。
 
+### 工具下载
+
+> 工具本体**不入库**（避免仓库臃肿与供应链风险），首次运行自动从各工具官方源下载。
+
+```bash
+# 一键下载全部工具与字典
+.\scripts\download-tools.ps1
+# 强制重新下载
+.\scripts\download-tools.ps1 -Force
+```
+
+前置条件（Windows）：
+- **git** — 克隆类工具与字典库需要（[git-scm.com](https://git-scm.com/downloads)）
+- **python** — 可选，用于生成自建字典（[python.org](https://www.python.org/downloads/)）
+- **网络** — 需要能访问 GitHub Releases
+
+> **限流提示**：匿名 GitHub API 限流约 60 次/小时，单次下载够用。若遇 `403`，设置 `$env:GITHUB_TOKEN` 指向个人访问令牌后重跑即可。
+
+工具清单见 `config/tools-manifest.json`（每项含来源仓库、资产匹配、目标路径）。编辑它即可定制你的工具链。
+
 ---
 
 ## 核心能力

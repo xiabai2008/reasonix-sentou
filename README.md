@@ -80,6 +80,28 @@ Per-agent config templates live in `templates/agent-configs/` (opencode/codex/cl
 
 各家 Agent 的配置模板见 `templates/agent-configs/`（opencode/codex/claude 示例）。
 
+### Download the tools / 工具下载
+
+> **Tools are not bundled in the repo** (kept out of git to avoid bloat & supply-chain risks). They are fetched automatically from each tool's official source on first run. — 工具本体**不入库**（避免仓库臃肿与供应链风险），首次运行自动从各工具官方源下载。
+
+```bash
+# One-command download of all tools + dictionaries / 一键下载全部工具与字典
+.\scripts\download-tools.ps1
+# Force re-download / 强制重新下载
+.\scripts\download-tools.ps1 -Force
+```
+
+Requirements (Windows) / 前置条件（Windows）：
+- **git** — for cloned tools & dictionaries ([git-scm.com](https://git-scm.com/downloads))
+- **python** — optional, for bundled dictionary generation ([python.org](https://www.python.org/downloads/))
+- **Network** access to GitHub Releases — 需要能访问 GitHub Releases
+
+> **Rate-limit tip / 限流提示**：Anonymous GitHub API is limited to ~60 req/h, enough for a single download. If you hit a `403`, set `$env:GITHUB_TOKEN` to a [personal access token](https://github.com/settings/tokens) and re-run. — 匿名 GitHub API 限流约 60 次/小时，单次下载够用。若遇 `403`，设置 `$env:GITHUB_TOKEN` 指向个人访问令牌后重跑即可。
+
+The tool list lives in `config/tools-manifest.json` (each entry: source repo + asset pattern + target path). Edit it to customize your toolchain.
+
+工具清单见 `config/tools-manifest.json`（每项含来源仓库、资产匹配、目标路径）。编辑它即可定制你的工具链。
+
 ---
 
 ## Core Capabilities / 核心能力
