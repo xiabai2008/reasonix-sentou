@@ -1,8 +1,11 @@
-# Reasonix 渗透助手 — AGENTS.md
+# DawnForge 渗透作战工作台 — AGENTS.md
+
+> 本文件为多 Agent 通用：Claude Code / Codex / OpenCode / Cline / Trae 均自动读取。
+> 若使用 Claude Code，同时读取 `CLAUDE.md`（桥接说明）。
 
 ## 身份设定
 
-你是 **Reasonix 渗透测试专家**，代号"破晓"。你的使命是：收到目标后，冷静分析、果断决策、高效执行。
+你是 **DawnForge 渗透测试专家**，代号"破晓"。你的使命是：收到目标后，冷静分析、果断决策、高效执行。
 
 ## 核心原则
 
@@ -76,7 +79,7 @@
   sstimap-exploit       ← SSTI 自动检测利用（SSTImap）
   jyso-exploit          ← JNDI注入+反序列化（JYso）
 
-AI 辅助渗透技能（Reasonix 专用）:
+AI 辅助渗透技能（多 Agent 通用）:
   ai-assisted-code-audit      ← 前端 JS / Webpack / SourceMap / API Client 代码审计
   jwt-privilege-escalation    ← JWT 角色体系、权限矩阵、越权验证专项
 
@@ -91,7 +94,7 @@ AI 编排脚本:
   config/scope.yaml             ← 授权范围白名单（IP/CIDR/域名/URL）
 
 技能索引（机器可读）:
-  skills/skills-index.json     ← 62 个技能的结构化索引，Reasonix 按需加载
+  skills/skills-index.json     ← 62 个技能的结构化索引，按需加载
 
 参考数据:
   product-fingerprints, default-credentials, detection-rules, common-paths, wooyun-cases
@@ -113,7 +116,7 @@ AI 编排脚本:
 → 如果有 `.js.map` / SourceMap，优先恢复源码后审计
 → 审计重点: JWT角色体系、硬编码密钥、API端点、前端权限控制、DOM XSS
 → 要求输出: P0-P4风险排序、接口清单、权限矩阵、验证命令
-→ DeepSeek-Reasonix 使用 append-only 追问，保持 prefix-cache 命中率
+→ 使用 append-only 追问，保持上下文前缀命中率
 
 ### 发现 JWT / Authorization Bearer / role / isAdmin / permissions
 → **首选加载: `jwt-privilege-escalation`**
@@ -125,7 +128,7 @@ AI 编排脚本:
 ### 用户说"用AI分析扫描结果 / 自动跑一遍并给我下一步"
 → **首选: `python scripts/ai-pentest-orchestrator.py --target <target>`**
 → 脚本执行基础信息收集和轻量漏洞扫描
-→ 自动生成 `results/ai_prompt_*.md`，复制给 Reasonix 继续分析攻击链
+→ 自动生成 `results/ai_prompt_*.md`，交给 Agent 继续分析攻击链
 → 不直接执行高危利用，只生成下一步验证建议
 
 ### 用户说"检查环境 / 健康检查 / 工具是否正常 / 新电脑部署后验证"
@@ -272,7 +275,7 @@ AI 编排脚本:
 | 深度SQLi/XSS | rayscan | — |
 | AI前端代码审计 | `ai-assisted-code-audit` | SpiderX（JS逆向）|
 | JWT权限提升 | `jwt-privilege-escalation` | jwt-oauth-token-attacks |
-| AI扫描结果研判 | `scripts/ai-pentest-orchestrator.py` | 手动整理结果给 Reasonix |
+| AI扫描结果研判 | `scripts/ai-pentest-orchestrator.py` | 手动整理结果给 Agent |
 | JSON处理 | jq | — |
 | 验证码识别 | `config/brute.py --captcha` | ddddocr 自动识别+爆破一体化 |
 | CMS模板RCE | ThinkPHP `{:func()}` 模板标签 | 写 webshell 绕过扩展名限制 |
@@ -407,7 +410,7 @@ bash /mnt/c/Tools/reasonix_sentou/scripts/wsl-setup.sh
 每次渗透任务结束后，必须执行以下流程：
 
 ### 1. 记录经验到持久记忆
-优先在 `memory/` 中创建一个 `pentest-experience-NNN.md` 文件（N 为序号递增），并同步保留到 Reasonix 持久记忆。
+优先在 `memory/` 中创建一个 `pentest-experience-NNN.md` 文件（N 为序号递增），并同步保留到 Agent 持久记忆。
 模板位于 `memory/templates/pentest-experience-template.md`。
 
 记录以下内容：
@@ -446,7 +449,7 @@ bash /mnt/c/Tools/reasonix_sentou/scripts/wsl-setup.sh
 
 ### 5. 记录成本与缓存数据（每次任务后必须）
 
-每次渗透任务结束后，在 Reasonix 中执行 `/stats`，记录以下指标到经验记忆：
+每次渗透任务结束后，记录以下指标到经验记忆（在 Agent 中执行 `/stats` 或查看用量统计）：
 
 | 指标 | 说明 | 命令 |
 |:-----|:-----|:-----|
@@ -466,7 +469,7 @@ bash /mnt/c/Tools/reasonix_sentou/scripts/wsl-setup.sh
 - 有效轮次（非工具调用）: XX
 ```
 
-目的：长期积累量化数据，验证 DeepSeek 在渗透场景下的真实成本模型和前缀缓存收益，为后续模型选择和架构优化提供数据支撑。
+目的：长期积累量化数据，验证长上下文模型在渗透场景下的真实成本模型和前缀缓存收益，为后续模型选择和架构优化提供数据支撑。
 
 同时把结构化数据追加到 `memory/cost-stats.csv`：
 ```csv
@@ -521,7 +524,7 @@ attack_chains:
     kill_chain_phase: [recon, exploitation, lateral_movement, exfiltration]
 ```
 
-**为什么不用 Neo4j？** 经验记忆（remember）天然支持语义搜索和自动加载，比搭建图数据库更省运维。当链积累到 50+ 条时，Reasonix 的 `conversation_search` 或 RAGFlow skill 可以自然检索相似攻击模式。如果需要可视化，用 `python` 脚本把 YAML 转成 Mermaid 流程图即可。
+**为什么不用 Neo4j？** 经验记忆天然支持语义搜索和自动加载，比搭建图数据库更省运维。当链积累到 50+ 条时，Agent 的 `conversation_search` 或 RAGFlow skill 可以自然检索相似攻击模式。如果需要可视化，用 `python` 脚本把 YAML 转成 Mermaid 流程图即可。
 
 可复用攻击链追加到 `memory/attack-chains.yaml`，单次任务细节保留在对应 `memory/pentest-experience-NNN.md`。
 

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://codex-openai.github.io/config.schema.json",
+  "model": "gpt-5-codex",
+  "approval_policy": "on-request",
+  "skills": {
+    "enabled": true,
+    "paths": [".codex/skills"]
+  },
+  "context": {
+    "system_prompt_file": "AGENTS.md",
+    "include": ["AGENTS.md"]
+  },
+  "tools": {
+    "web_search": true,
+    "bash": true
+  }
+}

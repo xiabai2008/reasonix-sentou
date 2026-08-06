@@ -87,6 +87,16 @@ Desktop.ini
 # --- 历史脚本归档（保留但不需要 Git 追踪） ---
 archive/
 
+# --- Agent 运行时目录（由 setup-agent-links.py 生成，勿入库） ---
+.claude/
+.codex/
+.opencode/
+.cline/
+.cursor/
+!templates/agent-configs/
+!templates/agent-configs/.claude/
+!templates/agent-configs/.claude/settings.example.json
+
 # --- Docker & 靶场 ---
 docker-compose.override.yml
 targets/data/
